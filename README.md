@@ -16,6 +16,7 @@ Note: Completeness, Code Quality, Functionality, UI, Bonus RESTful API implement
   - [ ] Browse Purchase History
 
 - [ ] Assign roles
+
 Front-end Developers (2 people):
 - Work on HTML, CSS, JS for the application interface.
 - Implement views using Thymeleaf or React.js.
@@ -23,7 +24,8 @@ Front-end Developers (2 people):
 Back-end Developers (4 people?)
 - Develop controllers, services, and repository layers.
 - Implement business logic and database interactions using Spring Boot and JPA.
-- Handle routing and URL mappings.
+- Handle routing and URL mappings
+- Validation
 
 Database (1 person):
 - Design and implement the database schema in MySQL.
