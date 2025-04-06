@@ -22,7 +22,7 @@ public class Orders {
     @ManyToOne
     private Customer customer;
 
-    @OneToMany(mappedBy = "order")
+    @OneToMany(mappedBy = "orders")
     private List<OrderDetails> orderDetails;
 
     // constructors
