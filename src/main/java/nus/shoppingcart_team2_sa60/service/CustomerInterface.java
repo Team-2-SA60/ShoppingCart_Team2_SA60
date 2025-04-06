@@ -1,7 +1,9 @@
 package nus.shoppingcart_team2_sa60.service;
 
+import nus.shoppingcart_team2_sa60.model.Customer;
+
 public interface CustomerInterface {
 
-    public String loginCustomer(String email, String password);
+    public Customer loginCustomer(String email, String password);
 
 }

@@ -2,17 +2,15 @@ package nus.shoppingcart_team2_sa60.config;
 
 import nus.shoppingcart_team2_sa60.model.Product;
 import nus.shoppingcart_team2_sa60.repository.ProductRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
 @Component
 public class ProductDataInitialiser implements CommandLineRunner {
-
-    private final ProductRepository productRepo;
-
-    public ProductDataInitialiser(ProductRepository productRepo) {
-        this.productRepo = productRepo;
-    }
+    
+    @Autowired
+    private ProductRepository pRepo;
 
     @Override
     public void run(String... args) throws Exception {
@@ -22,7 +20,7 @@ public class ProductDataInitialiser implements CommandLineRunner {
         product1.setPrice(15.00);
         product1.setDiscount(0);
         product1.setImage("duckyou.png");
-        productRepo.save(product1);
+        pRepo.save(product1);
 
         Product product2 = new Product();
         product2.setName("Mewing");
@@ -30,7 +28,7 @@ public class ProductDataInitialiser implements CommandLineRunner {
         product2.setPrice(15.00);
         product2.setDiscount(5.00);
         product2.setImage("mewing.png");
-        productRepo.save(product2);
+        pRepo.save(product2);
 
         Product product3 = new Product();
         product3.setName("What The Sigma");
@@ -38,7 +36,7 @@ public class ProductDataInitialiser implements CommandLineRunner {
         product3.setPrice(15.00);
         product3.setDiscount(5.00);
         product3.setImage("whatthesigma.png");
-        productRepo.save(product3);
+        pRepo.save(product3);
 
         Product product4 = new Product();
         product4.setName("Chill Guy");
@@ -46,7 +44,7 @@ public class ProductDataInitialiser implements CommandLineRunner {
         product4.setPrice(15.00);
         product4.setDiscount(0.00);
         product4.setImage("chillguy.png");
-        productRepo.save(product4);
+        pRepo.save(product4);
 
         Product product5 = new Product();
         product5.setName("Me Monkey");
@@ -54,7 +52,7 @@ public class ProductDataInitialiser implements CommandLineRunner {
         product5.setPrice(15.00);
         product5.setDiscount(5.00);
         product5.setImage("memonkey.png");
-        productRepo.save(product5);
+        pRepo.save(product5);
 
         Product product6 = new Product();
         product6.setName("Ohio Sigma Rizzler");
@@ -62,7 +60,7 @@ public class ProductDataInitialiser implements CommandLineRunner {
         product6.setPrice(15.00);
         product6.setDiscount(0.00);
         product6.setImage("ohiosigmarizzler.png");
-        productRepo.save(product6);
+        pRepo.save(product6);
 
         Product product7 = new Product();
         product7.setName("Professional Napper");
@@ -70,6 +68,6 @@ public class ProductDataInitialiser implements CommandLineRunner {
         product7.setPrice(15.00);
         product7.setDiscount(0.00);
         product7.setImage("professionalnapper.png");
-        productRepo.save(product7);
+        pRepo.save(product7);
     }
 }
