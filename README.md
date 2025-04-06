@@ -1,3 +1,17 @@
+For Front-End Development:
+- Install node.js v20.19.0 at [https://nodejs.org/en/download(](https://nodejs.org/en/download)
+- Make sure node is installed by testing in terminal with 'npm -v'
+- Open project 'ShoppingCart_Team2_SA60'
+- On terminal, enter 'cd /frontend'
+- Afterwards, enter 'npm start'
+- Access page with "[http://localhost:3000/](http://localhost:3000/)
+
+For Production:
+- Open project 'ShoppingCart_Team2_SA60'
+- On terminal, enter './mvnw clean install'
+- Afterwards, enter './mvnw spring-boot:run'
+- Access page with "[http://localhost:8080/](http://localhost:8080/)
+
 To-do List/ Timeline
 Note: Completeness, Code Quality, Functionality, UI, Bonus RESTful API implementation and additional features
 
@@ -32,7 +46,7 @@ Database (1 person):
 - Collaborate with back-end developers for integration.
 
 #### 4 Apr (Fri)
-- [ ] Complete remaing diagrams and class diagram mapping - stretch to Sat if cannot finish
+- [ ] Complete remaining diagrams and class diagram mapping - stretch to Sat if cannot finish
   
 #### 5 Apr (Sat)
 - [ ] START CODING LATEST
