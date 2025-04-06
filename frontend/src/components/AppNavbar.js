@@ -29,6 +29,9 @@ const AppNavbar = () => {
             <Collapse isOpen={isOpen} navbar>
                 <Nav className="flex flex-auto justify-end items-center mr-16" style={{ width: "100%"}} navbar>
                     <NavItem>
+                        <NavLink tag={Link} to="/login">Login</NavLink>
+                    </NavItem>
+                    <NavItem>
                         <NavLink href="#">Account</NavLink>
                     </NavItem>
                     <NavItem>

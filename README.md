@@ -46,7 +46,7 @@ Database (1 person):
 - Collaborate with back-end developers for integration.
 
 #### 4 Apr (Fri)
-- [ ] Complete remaing diagrams and class diagram mapping - stretch to Sat if cannot finish
+- [ ] Complete remaining diagrams and class diagram mapping - stretch to Sat if cannot finish
   
 #### 5 Apr (Sat)
 - [ ] START CODING LATEST
