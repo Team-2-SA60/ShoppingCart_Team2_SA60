@@ -8,18 +8,19 @@ import lombok.Setter;
 @Setter
 @Entity
 public class OrderDetails {
-    @EmbeddedId
-    private OrderDetailsId orderDetailsId;
 
     // attributes
 
-    @ManyToOne
-    @MapsId("orderId")
-    @JoinColumn(name = "order_id")
-    private Orders orders;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "order_item_id")
+    private int id;
 
     @ManyToOne
-    @MapsId("productId")
+    @JoinColumn(name = "order_id")
+    private Order order;
+
+    @ManyToOne
     @JoinColumn(name = "product_id")
     private Product product;
 

@@ -4,26 +4,25 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.List;
+
 @Getter
 @Setter
 @Entity
 public class Cart {
-    @EmbeddedId
-    private CartId cartId;
 
     // attributes
 
-    @ManyToOne
-    @MapsId("customerId")
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
+
+    @OneToOne
     @JoinColumn(name = "customer_id")
     private Customer customer;
 
-    @ManyToOne
-    @MapsId("productId")
-    @JoinColumn(name = "product_id")
-    private Product product;
-
-    private int productQty;
+    @OneToMany(mappedBy = "cart")
+    private List<CartDetails> cartDetails;
 
     // constructors
 

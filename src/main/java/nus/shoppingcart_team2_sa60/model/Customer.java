@@ -12,6 +12,7 @@ import java.util.List;
 public class Customer {
 
     // attributes
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
@@ -24,8 +25,11 @@ public class Customer {
     private int creditCardExpiryMonth;
     private int creditCardExpiryYear;
 
+    @OneToOne(mappedBy = "customer")
+    private Cart cart;
+
     @OneToMany(mappedBy = "customer")
-    private List<Orders> orders;
+    private List<Order> orders;
 
     // constructors
 
