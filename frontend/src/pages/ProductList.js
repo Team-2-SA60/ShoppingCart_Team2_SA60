@@ -2,12 +2,12 @@ import React, { useEffect, useState } from 'react';
 import { Button, ButtonGroup, Container, Table } from 'reactstrap';
 import AppNavbar from '../components/AppNavbar';
 import { Link } from 'react-router-dom';
+import api from '../utilities/axios';
 
 const ProductList = () => {
 
     const [products, setProducts] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
-    const [loading, setLoading] = useState(false);
 
     /* 
     Fetches products from localhost:8080/api/products
@@ -16,20 +16,14 @@ const ProductList = () => {
     product = { "id" , "name" , "description" , "price" , "discount" , "image"}
     */
     useEffect(() => {
-        setLoading(true);
-
-        fetch('api/products')
-            .then(response => response.json())
-            .then(data => {
-                setProducts(data);
-                setLoading(false);
-            })
+        api.get("/products")
+        .then(res => {
+            setProducts(res.data);
+        })
+        .catch(res => {
+            console.log("Unable to fetch products", res);
+        })
     }, []);
-
-    // Shows loading if products not fetched yet
-    if (loading) {
-        return <p>Loading...</p>;
-    }
 
     // Pagination logic start
     const productsPerPage = 4;

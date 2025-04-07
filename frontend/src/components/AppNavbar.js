@@ -1,10 +1,24 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Collapse, Nav, Navbar, NavbarBrand, NavbarToggler, NavItem, NavLink, Input } from 'reactstrap';
 import { Link } from 'react-router-dom';
+import api from '../utilities/axios';
 
 const AppNavbar = () => {
 
     const [isOpen, setIsOpen] = useState(false);
+    const [customer, setCustomer] = useState(null);
+
+    useEffect(() => {
+        api.get("/check-session")
+            .then(res => {
+                console.log(res.data);
+                setCustomer(res.data);
+            })
+            .catch(res => {
+                console.log("Invalid session:", res);
+                setCustomer(null);
+            })
+    }, []);
 
     return (
         <Navbar color="light" light expand="md">
@@ -28,15 +42,20 @@ const AppNavbar = () => {
             </Collapse>
             <Collapse isOpen={isOpen} navbar>
                 <Nav className="flex flex-auto justify-end items-center mr-16" style={{ width: "100%"}} navbar>
-                    <NavItem>
-                        <NavLink tag={Link} to="/login">Login</NavLink>
-                    </NavItem>
-                    <NavItem>
-                        <NavLink href="#">Account</NavLink>
-                    </NavItem>
-                    <NavItem>
-                        <NavLink href="#">Cart</NavLink>
-                    </NavItem>
+                    {customer != null ? (
+                        <>
+                            <NavItem>
+                                <NavLink href="#">Account</NavLink>
+                            </NavItem>
+                            <NavItem>
+                                <NavLink href="#">Cart</NavLink>
+                            </NavItem>
+                        </>
+                    ) : (
+                        <NavItem>
+                            <NavLink tag={Link} to="/login">Login</NavLink>
+                        </NavItem>
+                    )}
                 </Nav>
             </Collapse>
         </Navbar>
