@@ -7,6 +7,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
 @Component
+@org.springframework.core.annotation.Order(2)
 public class CustomerDataInitialiser implements CommandLineRunner {
 
     @Autowired
