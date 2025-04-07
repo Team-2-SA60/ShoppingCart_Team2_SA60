@@ -21,9 +21,9 @@ public class Customer {
     private String password;
     private String address;
     private String creditCardName;
-    private int creditCardNumber;
-    private int creditCardExpiryMonth;
-    private int creditCardExpiryYear;
+    private Integer creditCardNumber;
+    private Integer creditCardExpiryMonth;
+    private Integer creditCardExpiryYear;
 
     @OneToOne(mappedBy = "customer")
     private Cart cart;
