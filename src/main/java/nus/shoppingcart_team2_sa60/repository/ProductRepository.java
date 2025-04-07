@@ -8,7 +8,7 @@ import java.util.List;
 
 @Repository
 public interface ProductRepository extends JpaRepository<Product, Integer> {
-
+    /*
     @Query("SELECT p " +
             "FROM Product p " +
             "ORDER BY name ")
@@ -41,5 +41,5 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
             "FROM Products p " +
             "ORDER BY p.price DESC")
     public List<Product> findProductByPriceDESC();
-
+    */
 }
