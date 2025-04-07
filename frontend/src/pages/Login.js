@@ -1,21 +1,28 @@
 import React, {useState} from 'react';
-import axios from 'axios';
 import AppNavbar from "../components/AppNavbar";
 import './Login.css'
+import { useNavigate } from 'react-router-dom';
+import api from '../utilities/axios';
 
 const Login = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [message, setMessage] = useState('');
+    const navigate = useNavigate();
 
     const handleLogin = async (event) => {
+
         event.preventDefault();
-        try {
-            const response = await axios.post("http://localhost:8080/api/login", {email, password});
-            setMessage(response.data);
-        } catch (error) {
-            setMessage("An error occurred. Please try again.");
-        }
+        api.post('/login', {
+            email, password
+        })
+            .then(res => {
+                console.log('Login success:', res.data);
+                navigate("/")
+            })
+            .catch(err => {
+                console.error('Login failed:', err.response?.data);
+            });
     };
 
     return (

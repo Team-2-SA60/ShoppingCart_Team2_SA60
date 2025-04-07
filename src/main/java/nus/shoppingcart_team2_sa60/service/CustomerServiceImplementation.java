@@ -14,17 +14,19 @@ public class CustomerServiceImplementation implements CustomerInterface {
     private CustomerRepository cRepo;
 
     @Override
-    public String loginCustomer(String email, String password) {
+    public Customer loginCustomer(String email, String password) {
         Customer customer = cRepo.findByEmail(email);
 
         if(customer == null) {
-            return "Customer not found";
+            System.out.println("Customer not found");
+            return null;
         }
 
         if(!customer.getPassword().equals(password)) {
-            return "Password is incorrect";
+            System.out.println("Password does not match");
+            return null;
         }
 
-        return "Login successful";
+        return customer;
     }
 }
