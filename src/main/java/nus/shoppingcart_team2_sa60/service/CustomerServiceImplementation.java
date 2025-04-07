@@ -8,25 +8,19 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @Transactional
-public class CustomerServiceImplementation implements CustomerInterface {
+public class CustomerServiceImplementation implements CustomerService {
 
     @Autowired
     private CustomerRepository cRepo;
 
     @Override
-    public Customer loginCustomer(String email, String password) {
-        Customer customer = cRepo.findByEmail(email);
+    public Customer findCustomerByEmail(String email) {
+        return cRepo.findByEmail( email);
+    };
 
-        if(customer == null) {
-            System.out.println("Customer not found");
-            return null;
-        }
-
-        if(!customer.getPassword().equals(password)) {
-            System.out.println("Password does not match");
-            return null;
-        }
-
-        return customer;
-    }
+    @Override
+    public boolean checkPassword(Customer existingCustomer, String password) {
+        String correctPassword = existingCustomer.getPassword();
+        return password.equals(correctPassword);
+    };
 }

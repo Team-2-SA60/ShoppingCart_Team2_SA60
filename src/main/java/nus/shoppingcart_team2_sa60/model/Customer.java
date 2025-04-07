@@ -28,8 +28,8 @@ public class Customer {
     @OneToOne(mappedBy = "customer")
     private Cart cart;
 
-    @OneToMany(mappedBy = "customer")
-    private List<Order> orders;
+    //@OneToMany(mappedBy = "customer")
+    //private List<Order> orders;
 
     // constructors
 

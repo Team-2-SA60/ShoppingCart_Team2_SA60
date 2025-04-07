@@ -13,15 +13,25 @@ const Login = () => {
     const handleLogin = async (event) => {
 
         event.preventDefault();
-        api.post('/login', {
+        api.post("/login", {
             email, password
         })
             .then(res => {
-                console.log('Login success:', res.data);
+                console.log("Login success:", res.data);
                 navigate("/")
             })
             .catch(err => {
-                console.error('Login failed:', err.response?.data);
+                const statusCode = err.response?.status;
+                const responseMessage = err.response?.data.message;
+
+                if (statusCode === 404) {
+                    setMessage("User not found");
+                } else if (statusCode === 401) {
+                    setMessage("Password is incorrect");
+                } else {
+                    setMessage(responseMessage || "Login failed");
+                }
+                console.error('Login failed:', responseMessage);
             });
     };
 
@@ -53,6 +63,11 @@ const Login = () => {
                                     required
                                 />
                             </div>
+                            {message && (
+                                <div className="alert alert-info">
+                                    {message}
+                                </div>
+                            )}
                             <button type="submit" className="login-button">LOGIN</button>
                         </form>
                     </div>
@@ -60,9 +75,9 @@ const Login = () => {
                         <h2>Don't have an account?</h2>
                         <p>Create one now to:</p>
                         <ul>
-                            <li>❤️ add items to wishlist</li>
-                            <li>📍 easily track orders</li>
-                            <li>🛒 view order history</li>
+                            <li>❤️ Add items to wishlist</li>
+                            <li>📍 Easily track orders</li>
+                            <li>🛒 View order history</li>
                         </ul>
                         <button className="signup-button">CREATE AN ACCOUNT</button>
                     </div>
