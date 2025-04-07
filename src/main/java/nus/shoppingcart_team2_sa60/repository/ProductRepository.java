@@ -4,15 +4,10 @@ import nus.shoppingcart_team2_sa60.model.Product;
 import org.springframework.data.jdbc.repository.query.Query;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
+import java.util.List;
 
 @Repository
 public interface ProductRepository extends JpaRepository<Product, Integer> {
-
-    Product findByName(String name);
-
-    Product findByProductId(int productId);
-
-    Product findByProductName(String productName);
 
     @Query("SELECT p " +
             "FROM Product p " +
@@ -41,5 +36,10 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
             "FROM Products p " +
             "ORDER BY p.price")
     public List<Product> findProductByPrice();
+
+    @Query("Select p " +
+            "FROM Products p " +
+            "ORDER BY p.price DESC")
+    public List<Product> findProductByPriceDESC();
 
 }
