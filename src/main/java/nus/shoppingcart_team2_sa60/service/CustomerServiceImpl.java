@@ -8,7 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @Transactional
-public class CustomerServiceImplementation implements CustomerService {
+public class CustomerServiceImpl implements CustomerService {
 
     @Autowired
     private CustomerRepository cRepo;
