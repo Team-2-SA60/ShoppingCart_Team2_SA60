@@ -14,30 +14,30 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
 
     Product findByProductName(String productName);
 
-    @Query("SELECT p" +
-            "FROM Product p" +
+    @Query("SELECT p " +
+            "FROM Product p " +
             "ORDER BY name ")
     public List<Product> findProductByName(); //sorting by Alphabetical, from A
 
-    @Query("SELECT p" +
-            "FROM Product p" +
+    @Query("SELECT p " +
+            "FROM Product p " +
             "ORDER BY name DESC")
     public List<Product> findProductByNameDesc(); //sorting by Alphabetical, from Z
 
 
-    @Query("SELECT p" +
+    @Query("SELECT p " +
             "FROM Products p " +
             "WHERE p.description LIKE '%n'" +
             "ORDER BY name")
     public List<Product> findProductByDescriptionN();
 
-    @Query("SELECT p" +
+    @Query("SELECT p " +
             "FROM Products p " +
             "WHERE p.description LIKE '%n'" +
             "ORDER BY name DESC")
     public List<Product> findProductByDescriptionNDESC();
 
-    @Query("Select p" +
+    @Query("Select p " +
             "FROM Products p " +
             "ORDER BY p.price")
     public List<Product> findProductByPrice();
