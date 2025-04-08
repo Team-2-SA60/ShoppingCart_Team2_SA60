@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 import java.util.ArrayList;
 import java.util.Optional;
 
-@Component
+//@Component
 @org.springframework.core.annotation.Order(4)
 public class OrderDataInitialiser implements CommandLineRunner {
 
