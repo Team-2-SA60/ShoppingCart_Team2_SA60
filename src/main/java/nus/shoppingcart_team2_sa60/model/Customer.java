@@ -29,7 +29,6 @@ public class Customer {
     @OneToOne(mappedBy = "customer")
     private Cart cart;
 
-    @JsonIgnore
     @OneToMany(mappedBy = "customer")
     private List<Order> orders;
 
