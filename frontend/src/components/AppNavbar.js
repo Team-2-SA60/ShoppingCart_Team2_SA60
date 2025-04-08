@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { Collapse, Nav, Navbar, NavbarBrand, NavbarToggler, NavItem, NavLink, Input } from 'reactstrap';
 import { Link } from 'react-router-dom';
+import {Modal, ModalBody, ModalFooter, Button} from 'reactstrap';
 import api from '../utilities/axios';
 
 const AppNavbar = () => {
 
     const [isOpen, setIsOpen] = useState(false);
     const [customer, setCustomer] = useState(null);
+    const [loggedOut, setLoggedOut] = useState(false);
 
     useEffect(() => {
         api.get("/check-session")
@@ -20,7 +22,22 @@ const AppNavbar = () => {
             })
     }, []);
 
+    const handleLogout = () => {
+        api.get("/logout")
+            .then(()=> {
+                setCustomer(null);
+                setLoggedOut(true);
+                console.log("Logout successful");
+            })
+            .catch(err => {
+                console.log("Logout failed:", err);
+            })
+    };
+
+    const toggleModal = () => setLoggedOut(!loggedOut);
+
     return (
+        <>
         <Navbar color="light" light expand="md">
             <NavbarBrand tag={Link} to="/"><img src="./images/Delulu.png" alt="DeluluLogo" className="w-[200px] min-w-[200px] ml-8" /></NavbarBrand>
             <div className="hidden md:flex flex-auto justify-center items-center px-4">
@@ -50,6 +67,9 @@ const AppNavbar = () => {
                             <NavItem>
                                 <NavLink href="#">Cart</NavLink>
                             </NavItem>
+                            <NavItem>
+                                <NavLink href="#" onClick={handleLogout}>Logout</NavLink>
+                            </NavItem>
                         </>
                     ) : (
                         <NavItem>
@@ -59,6 +79,17 @@ const AppNavbar = () => {
                 </Nav>
             </Collapse>
         </Navbar>
+
+    {/*Modal: Alert "Logout successful" upon Logout*/}
+    <Modal isOpen={loggedOut} toggle ={toggleModal}>
+        <ModalBody>
+            Logout successful
+        </ModalBody>
+        <ModalFooter>
+            <Button color="primary" onClick={toggleModal}>OK</Button>
+        </ModalFooter>
+    </Modal>
+    </>
     );
 };
 

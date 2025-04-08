@@ -6,7 +6,10 @@ For Front-End Development:
 - Afterwards, enter 'npm start'
 - Access page with "[http://localhost:3000/](http://localhost:3000/)
 
-For Production:
+Additional Components to install:
+- Install Modal for dialog boxes (e.g., Logout confirmation), enter 'npm install --save react-modal' 
+
+- For Production:
 - Open project 'ShoppingCart_Team2_SA60'
 - On terminal, enter './mvnw clean install'
 - Afterwards, enter './mvnw spring-boot:run'
