@@ -62,7 +62,7 @@ const AppNavbar = () => {
                     {customer != null ? (
                         <>
                             <NavItem>
-                                <NavLink href="#">Account</NavLink>
+                                <NavLink tag={Link} to="/orders">Account</NavLink>
                             </NavItem>
                             <NavItem>
                                 <NavLink href="#">Cart</NavLink>
