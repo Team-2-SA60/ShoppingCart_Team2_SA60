@@ -38,7 +38,7 @@ const AppNavbar = () => {
         setLoggedOut(!loggedOut)
         navigate("/");
     };
-
+    
     return (
         <>
         <Navbar color="light" light expand="md">
@@ -48,7 +48,7 @@ const AppNavbar = () => {
             </div>
             <NavbarToggler onClick={() => { setIsOpen(!isOpen) }} />
             <Collapse isOpen={isOpen} navbar>
-                <Nav className="flex flex-grow justify-evenly items-center" style={{ width: "100%" }} navbar>
+                <Nav className="flex flex-grow justify-evenly items-center ms-auto" style={{ width: "100%" }} navbar>
                     <NavItem className='hover:underline'>
                         <NavLink href="#">WOMEN</NavLink>
                     </NavItem>
@@ -61,39 +61,50 @@ const AppNavbar = () => {
                 </Nav>
             </Collapse>
             <Collapse isOpen={isOpen} navbar>
-                <Nav className="flex flex-auto justify-end mr-16" navbar>
+                <Nav className="flex flex-auto justify-end items-center mr-[15%] gap-16" navbar>
                     {customer != null ? (
                         <>
-                            <UncontrolledDropdown direction='end'>
+                            <UncontrolledDropdown className="me-2 cursor-pointer" inNavbar="true" direction="left">
                                 <DropdownToggle className="nav-link" tag="a">
-                                    Account
+                                        <div className='inline-flex text-[10px] gap-4 items-center text-center hover:bg-slate-100 rounded-lg py-0.5 px-3 shadow-md'>
+                                        <img src="./images/account-icon.png" alt='account-icon' style={{width: '30px', height: '30px'}}/>
+                                        <div className='text-[15px]'>
+                                            Hello! <br/>
+                                            {customer.name}
+                                        </div>
+                                    </div>
                                 </DropdownToggle>
-                                <DropdownMenu>
-                                    <DropdownItem href="#" tag="a">
+                                <DropdownMenu className="drop-shadow-md mt-4">
+                                    <DropdownItem className="hover:underline" tag={Link} to="/">
                                         Account
                                     </DropdownItem>
-                                        <DropdownItem href="/orders" tag="a">
-                                        Purchase History
+                                    <DropdownItem className="hover:underline" tag={Link} to="/orders">
+                                        My Orders
                                     </DropdownItem>
-                                    <DropdownItem href="#" onClick={handleLogout} tag="a">
-                                        Logout
+                                    <DropdownItem className="hover:underline" tag={Link} to="/" onClick={handleLogout}>
+                                        Log Out
                                     </DropdownItem>
                                 </DropdownMenu>
                             </UncontrolledDropdown>
-                           
                             <NavItem>
-                                <NavLink tag={Link} to="/orders">Account</NavLink>
-                            </NavItem>
-                            <NavItem>
-                                <NavLink href="#">Cart</NavLink>
-                            </NavItem>
-                            <NavItem>
-                                <NavLink href="#" onClick={handleLogout}>Logout</NavLink>
+                                <NavLink href="#">
+                                    <div className='relative'>
+                                        <img src="./images/shopping-cart.png" alt='cart-icon' style={{ width: '30px', height: '30px' }}/>
+                                        <span className='absolute -top-2 -right-2 bg-yellow-400 text-black text-xs rounded-full px-1.5 py-0.5 shadow-md'>
+                                            1
+                                        </span>
+                                    </div>
+                                </NavLink>
                             </NavItem>
                         </>
                     ) : (
                         <NavItem>
-                            <NavLink tag={Link} to="/login">Login</NavLink>
+                            <NavLink tag={Link} to="/login">
+                                <div className='flex gap-2 items-center'>
+                                    <img src="./images/login.png" alt='cart-icon' style={{ width: '30px', height: '30px' }} />
+                                    Login
+                                </div>
+                            </NavLink>
                         </NavItem>
                     )}
                 </Nav>
@@ -101,13 +112,13 @@ const AppNavbar = () => {
         </Navbar>
 
     {/*Modal: Alert "Logout successful" upon Logout*/}
-    <Modal isOpen={loggedOut} toggle ={toggleModal}>
+    <Modal className='text-center' size='sm' isOpen={loggedOut} toggle ={toggleModal}>
         <ModalBody>
             Logout successful
-        </ModalBody>
-        <ModalFooter>
+            <br/>
+            <br/>
             <Button color="primary" onClick={toggleModal}>OK</Button>
-        </ModalFooter>
+        </ModalBody>
     </Modal>
     </>
     );
