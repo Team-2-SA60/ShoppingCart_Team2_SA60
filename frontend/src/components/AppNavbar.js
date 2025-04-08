@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { Collapse, Nav, Navbar, NavbarBrand, NavbarToggler, NavItem, NavLink, Input } from 'reactstrap';
-import { Link } from 'react-router-dom';
+import { Collapse, Nav, Navbar, NavbarBrand, NavbarToggler, NavItem, NavLink, Input, UncontrolledDropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
+import { Link, useNavigate } from 'react-router-dom';
 import {Modal, ModalBody, ModalFooter, Button} from 'reactstrap';
 import api from '../utilities/axios';
 
 const AppNavbar = () => {
-
+    const navigate = useNavigate();
     const [isOpen, setIsOpen] = useState(false);
     const [customer, setCustomer] = useState(null);
     const [loggedOut, setLoggedOut] = useState(false);
@@ -34,7 +34,10 @@ const AppNavbar = () => {
             })
     };
 
-    const toggleModal = () => setLoggedOut(!loggedOut);
+    const toggleModal = () => {
+        setLoggedOut(!loggedOut)
+        navigate("/");
+    };
 
     return (
         <>
@@ -58,9 +61,26 @@ const AppNavbar = () => {
                 </Nav>
             </Collapse>
             <Collapse isOpen={isOpen} navbar>
-                <Nav className="flex flex-auto justify-end items-center mr-16" style={{ width: "100%"}} navbar>
+                <Nav className="flex flex-auto justify-end mr-16" navbar>
                     {customer != null ? (
                         <>
+                            <UncontrolledDropdown direction='end'>
+                                <DropdownToggle className="nav-link" tag="a">
+                                    Account
+                                </DropdownToggle>
+                                <DropdownMenu>
+                                    <DropdownItem href="#" tag="a">
+                                        Account
+                                    </DropdownItem>
+                                        <DropdownItem href="/orders" tag="a">
+                                        Purchase History
+                                    </DropdownItem>
+                                    <DropdownItem href="#" onClick={handleLogout} tag="a">
+                                        Logout
+                                    </DropdownItem>
+                                </DropdownMenu>
+                            </UncontrolledDropdown>
+                           
                             <NavItem>
                                 <NavLink tag={Link} to="/orders">Account</NavLink>
                             </NavItem>
