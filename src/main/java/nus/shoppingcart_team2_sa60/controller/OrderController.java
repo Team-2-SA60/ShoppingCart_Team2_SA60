@@ -1,6 +1,8 @@
 package nus.shoppingcart_team2_sa60.controller;
 
 import jakarta.servlet.http.HttpSession;
+import nus.shoppingcart_team2_sa60.dto.OrderDetailsResponseDTO;
+import nus.shoppingcart_team2_sa60.dto.OrderResponseDTO;
 import nus.shoppingcart_team2_sa60.model.Customer;
 import nus.shoppingcart_team2_sa60.model.Order;
 import nus.shoppingcart_team2_sa60.service.OrderService;
@@ -21,13 +23,15 @@ public class OrderController {
     private OrderService oService;
 
     @GetMapping("/orders")
-    public ResponseEntity<List<Order>> orders(HttpSession session, @RequestParam(name = "filter", required=false) String filter) {
+    public ResponseEntity<List<OrderResponseDTO>> orders(HttpSession session, @RequestParam(name = "filter", required=false) String filter) {
         Customer customer = (Customer) session.getAttribute("customer");
         if (customer == null) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
         }
         List<Order> orders = oService.searchOrdersByCustomerId(customer.getId(), filter);
-        return ResponseEntity.ok(orders);
+        return ResponseEntity.ok(orders.stream()
+                .map(order -> new OrderResponseDTO(order))
+                .toList());
     }
 
 }

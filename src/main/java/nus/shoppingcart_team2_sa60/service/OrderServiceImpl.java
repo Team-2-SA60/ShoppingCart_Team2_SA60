@@ -10,7 +10,7 @@ import java.util.List;
 
 @Service
 @Transactional
-public class OrderServiceImplementation implements OrderService {
+public class OrderServiceImpl implements OrderService {
     @Autowired
     private OrderRepository oRepo;
 
