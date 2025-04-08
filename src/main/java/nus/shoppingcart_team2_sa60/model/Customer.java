@@ -1,5 +1,6 @@
 package nus.shoppingcart_team2_sa60.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -28,8 +29,8 @@ public class Customer {
     @OneToOne(mappedBy = "customer")
     private Cart cart;
 
-    //@OneToMany(mappedBy = "customer")
-    //private List<Order> orders;
+    @OneToMany(mappedBy = "customer")
+    private List<Order> orders;
 
     // constructors
 

@@ -19,6 +19,7 @@ public class Order {
     private int id;
 
     @ManyToOne
+    @JoinColumn(name = "customer_id")
     private Customer customer;
 
     private int orderDate;
@@ -30,7 +31,7 @@ public class Order {
     // constructors
 
     public Order () {}
-    public Order (int id, Customer customer, int orderDate, String orderStatus) {
+    public Order (Customer customer, int orderDate, String orderStatus) {
         this.customer = customer;
         this.orderDate = orderDate;
         this.orderStatus = orderStatus;
