@@ -1,26 +1,19 @@
 import React, { useEffect, useState } from 'react';
-import { Collapse, Nav, Navbar, NavbarBrand, NavbarToggler, NavItem, NavLink, Input } from 'reactstrap';
-import { Link } from 'react-router-dom';
-import {Modal, ModalBody, ModalFooter, Button} from 'reactstrap';
+import { Collapse, Nav, Navbar, NavbarBrand, NavbarToggler, NavItem, NavLink, UncontrolledDropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
+import { Link, useNavigate } from 'react-router-dom';
+import {Modal, ModalBody, Button} from 'reactstrap';
 import api from '../utilities/axios';
+import { useAuth } from '../context/AuthContext';
 
 const AppNavbar = () => {
-
+    const navigate = useNavigate();
     const [isOpen, setIsOpen] = useState(false);
-    const [customer, setCustomer] = useState(null);
+    const { customer, setCustomer, checkSession } = useAuth();
     const [loggedOut, setLoggedOut] = useState(false);
 
     useEffect(() => {
-        api.get("/check-session")
-            .then(res => {
-                console.log(res.data);
-                setCustomer(res.data);
-            })
-            .catch(res => {
-                console.log("Invalid session:", res);
-                setCustomer(null);
-            })
-    }, []);
+        checkSession();
+    }, [checkSession]);
 
     const handleLogout = () => {
         api.get("/logout")
@@ -34,8 +27,11 @@ const AppNavbar = () => {
             })
     };
 
-    const toggleModal = () => setLoggedOut(!loggedOut);
-
+    const toggleModal = () => {
+        setLoggedOut(!loggedOut)
+        navigate("/");
+    };
+    
     return (
         <>
         <Navbar color="light" light expand="md">
@@ -45,7 +41,7 @@ const AppNavbar = () => {
             </div>
             <NavbarToggler onClick={() => { setIsOpen(!isOpen) }} />
             <Collapse isOpen={isOpen} navbar>
-                <Nav className="flex flex-grow justify-evenly items-center" style={{ width: "100%" }} navbar>
+                <Nav className="flex flex-grow justify-evenly items-center ms-auto" style={{ width: "100%" }} navbar>
                     <NavItem className='hover:underline'>
                         <NavLink href="#">WOMEN</NavLink>
                     </NavItem>
@@ -58,22 +54,50 @@ const AppNavbar = () => {
                 </Nav>
             </Collapse>
             <Collapse isOpen={isOpen} navbar>
-                <Nav className="flex flex-auto justify-end items-center mr-16" style={{ width: "100%"}} navbar>
+                <Nav className="flex flex-auto justify-end items-center mr-[15%] gap-16" navbar>
                     {customer != null ? (
                         <>
+                            <UncontrolledDropdown className="me-2 cursor-pointer" inNavbar="true" direction="left">
+                                <DropdownToggle className="nav-link" tag="a">
+                                        <div className='inline-flex text-[10px] gap-4 items-center text-center hover:bg-slate-100 rounded-lg py-0.5 px-3 shadow-md'>
+                                        <img src="./images/account-icon.png" alt='account-icon' style={{width: '30px', height: '30px'}}/>
+                                        <div className='text-[15px]'>
+                                            Hello! <br/>
+                                            {customer.name}
+                                        </div>
+                                    </div>
+                                </DropdownToggle>
+                                <DropdownMenu className="drop-shadow-md mt-4">
+                                    <DropdownItem className="hover:underline" tag={Link} to="/">
+                                        Account
+                                    </DropdownItem>
+                                    <DropdownItem className="hover:underline" tag={Link} to="/orders">
+                                        My Orders
+                                    </DropdownItem>
+                                    <DropdownItem className="hover:underline" tag={Link} onClick={handleLogout}>
+                                        Log Out
+                                    </DropdownItem>
+                                </DropdownMenu>
+                            </UncontrolledDropdown>
                             <NavItem>
-                                <NavLink tag={Link} to="/orders">Account</NavLink>
-                            </NavItem>
-                            <NavItem>
-                                <NavLink href="#">Cart</NavLink>
-                            </NavItem>
-                            <NavItem>
-                                <NavLink href="#" onClick={handleLogout}>Logout</NavLink>
+                                <NavLink href="#">
+                                    <div className='relative'>
+                                        <img src="./images/shopping-cart.png" alt='cart-icon' style={{ width: '30px', height: '30px' }}/>
+                                        <span className='absolute -top-2 -right-2 bg-yellow-400 text-black text-xs rounded-full px-1.5 py-0.5 shadow-md'>
+                                            1
+                                        </span>
+                                    </div>
+                                </NavLink>
                             </NavItem>
                         </>
                     ) : (
                         <NavItem>
-                            <NavLink tag={Link} to="/login">Login</NavLink>
+                            <NavLink tag={Link} to="/login">
+                                <div className='flex gap-2 items-center'>
+                                    <img src="./images/login.png" alt='cart-icon' style={{ width: '30px', height: '30px' }} />
+                                    Login
+                                </div>
+                            </NavLink>
                         </NavItem>
                     )}
                 </Nav>
@@ -81,13 +105,13 @@ const AppNavbar = () => {
         </Navbar>
 
     {/*Modal: Alert "Logout successful" upon Logout*/}
-    <Modal isOpen={loggedOut} toggle ={toggleModal}>
+    <Modal className='text-center' size='sm' isOpen={loggedOut} toggle ={toggleModal}>
         <ModalBody>
             Logout successful
-        </ModalBody>
-        <ModalFooter>
+            <br/>
+            <br/>
             <Button color="primary" onClick={toggleModal}>OK</Button>
-        </ModalFooter>
+        </ModalBody>
     </Modal>
     </>
     );

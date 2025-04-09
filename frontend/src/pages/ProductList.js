@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { Button, ButtonGroup, Container, Table } from 'reactstrap';
+import { Button, ButtonGroup } from 'reactstrap';
 import AppNavbar from '../components/AppNavbar';
-import { Link } from 'react-router-dom';
 import api from '../utilities/axios';
 
 const ProductList = () => {
