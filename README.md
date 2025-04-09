@@ -1,17 +1,14 @@
 For Front-End Development:
-- Install node.js v20.19.0 at [https://nodejs.org/en/download(](https://nodejs.org/en/download)
+- Install node.js v20.19.0 at [https://nodejs.org/en/download](https://nodejs.org/en/download)
 - Make sure node is installed by testing in terminal with 'npm -v'
 - Open project 'ShoppingCart_Team2_SA60'
 - On terminal, enter 'cd /frontend'
-- Afterwards, enter 'npm start'
+- Afterwards, enter 'npm start' << If you encounter error, type in terminal 'npm install' << make sure still in frontend directory
 - Access page with "[http://localhost:3000/](http://localhost:3000/)
-
-Additional Components to install:
-- Install Modal for dialog boxes (e.g., Logout confirmation), enter 'npm install --save react-modal' 
 
 - For Production:
 - Open project 'ShoppingCart_Team2_SA60'
-- On terminal, enter './mvnw clean install'
+- On terminal, enter './mvnw clean install' << For first run, subsequently use './mvnw clean package'
 - Afterwards, enter './mvnw spring-boot:run'
 - Access page with "[http://localhost:8080/](http://localhost:8080/)
 

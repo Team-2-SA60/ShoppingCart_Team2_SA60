@@ -3,13 +3,13 @@ import AppNavbar from "../components/AppNavbar";
 import './Login.css'
 import { useNavigate } from 'react-router-dom';
 import api from '../utilities/axios';
-import { useAuth } from '../context/AuthContext';
+import { useSession } from '../context/SessionContext';
 
 const Login = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [message, setMessage] = useState('');
-    const { customer } = useAuth();
+    const { customer } = useSession();
     const navigate = useNavigate();
 
     useEffect(() => {
