@@ -3,19 +3,20 @@ import { Button, ButtonGroup, Container, Table } from 'reactstrap';
 import AppNavbar from '../components/AppNavbar';
 import { Link, useNavigate } from 'react-router-dom';
 import api from '../utilities/axios';
-import { useAuth } from '../context/AuthContext';
+import { useSession } from '../context/SessionContext';
 
 
 const OrderList = () => {
 
-    const { customer } = useAuth();
+    const { customer, checkSession } = useSession();
     const [orders, setOrders] = useState([]);
     const navigate = useNavigate();
 
     useEffect(() => {
-        if (!customer) {
-            navigate("/login");
-        }
+        
+        checkSession();
+        if (!customer) navigate("/login");
+
         api.get("/orders")
             .then(res => {
                 setOrders(res.data);

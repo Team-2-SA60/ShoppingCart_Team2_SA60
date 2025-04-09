@@ -3,17 +3,13 @@ import { Collapse, Nav, Navbar, NavbarBrand, NavbarToggler, NavItem, NavLink, Un
 import { Link, useNavigate } from 'react-router-dom';
 import {Modal, ModalBody, Button} from 'reactstrap';
 import api from '../utilities/axios';
-import { useAuth } from '../context/AuthContext';
+import { useSession } from '../context/SessionContext';
 
 const AppNavbar = () => {
-    const navigate = useNavigate();
     const [isOpen, setIsOpen] = useState(false);
-    const { customer, setCustomer, checkSession } = useAuth();
+    const { customer, setCustomer } = useSession();
     const [loggedOut, setLoggedOut] = useState(false);
-
-    useEffect(() => {
-        checkSession();
-    }, [checkSession]);
+    const navigate = useNavigate();
 
     const handleLogout = () => {
         api.get("/logout")

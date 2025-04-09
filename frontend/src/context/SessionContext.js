@@ -1,9 +1,9 @@
 import { createContext, useContext, useState } from "react";
 import api from "../utilities/axios";
 
-export const AuthContext = createContext();
+export const SessionContext = createContext();
 
-export function AuthProvider({children}) {
+export function SessionProvider({children}) {
     const [ customer, setCustomer ] = useState(null);
 
     async function checkSession() {
@@ -18,12 +18,12 @@ export function AuthProvider({children}) {
     }
 
     return (
-        <AuthContext.Provider value={{customer, setCustomer, checkSession}}>
+        <SessionContext.Provider value={{customer, setCustomer, checkSession}}>
             {children}
-        </AuthContext.Provider>
+        </SessionContext.Provider>
     )
 }
 
-export function useAuth() {
-    return useContext(AuthContext);
+export function useSession() {
+    return useContext(SessionContext);
 }
