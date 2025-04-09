@@ -12,7 +12,7 @@ public class OrderResponseDTO {
     private int orderDate;
     private String orderStatus;
     private String shippingMethod;
-    private double shippingFee;
+    private Double shippingFee;
     private List<OrderDetailsResponseDTO> orderDetails;
 
     public OrderResponseDTO(Order order) {
