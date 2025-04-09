@@ -34,21 +34,21 @@ VALUES
     (7, 10);
 
 
-INSERT INTO Orders (id, customer_id, order_date, order_status)
+INSERT INTO Orders (id, customer_id, order_date, order_status, shipping_method, shipping_fee)
 VALUES
-    (1, 4, 04042025, 'completed'),
-    (2, 4, 05042025, 'pending'),
-    (3, 5, 29032025, 'completed'),
-    (4, 5, 01042025, 'completed'),
-    (5, 5, 02042025, 'completed'),
-    (6, 5, 05042025, 'pending'),
-    (7, 6, 01042025, 'completed'),
-    (8, 7, 02042025, 'completed'),
-    (9, 8, 28032025, 'completed'),
-    (10, 9, 30032025, 'completed'),
-    (11, 10, 25032025, 'completed'),
-    (12, 4, 06042025, 'pending'),
-    (13, 4, 07042025, 'pending');
+    (1, 4, 04042025, 'completed', 'Free', 0.00),
+    (2, 4, 05042025, 'pending', 'Free', 0.00),
+    (3, 5, 29032025, 'completed', 'Free', 0.00),
+    (4, 5, 01042025, 'completed', 'Free', 0.00),
+    (5, 5, 02042025, 'completed', 'Free', 0.00),
+    (6, 5, 05042025, 'pending', 'Free', 0.00),
+    (7, 6, 01042025, 'completed', 'Free', 0.00),
+    (8, 7, 02042025, 'completed', 'Free', 0.00),
+    (9, 8, 28032025, 'completed', 'Free', 0.00),
+    (10, 9, 30032025, 'completed', 'Free', 0.00),
+    (11, 10, 25032025, 'completed', 'Free', 0.00),
+    (12, 4, 06042025, 'pending', 'Free', 0.00),
+    (13, 4, 07042025, 'pending', 'Free', 0.00);
 
 
 INSERT INTO Order_Details (order_item_id, order_id, product_id, price_at_purchase, product_qty)
