@@ -33,6 +33,25 @@ VALUES
     (6, 9),
     (7, 10);
 
+INSERT INTO Cart_Details (cart_item_id, cart_id, product_id, product_qty)
+VALUES
+    -- Cart with ID 1 has items
+    (1, 1, 2, 3),
+    (2, 1, 3, 1),
+
+    -- Cart with ID 2 is empty
+    -- Cart with ID 3 has items
+    (3, 3, 1, 2),
+    (4, 3, 5, 1),
+
+    -- Cart with ID 4 is empty
+    -- Cart with ID 5 has items
+    (5, 5, 4, 2),
+    (6, 5, 6, 1),
+
+    -- Cart with ID 6 is empty
+    -- Cart with ID 7 has items
+    (7, 7, 3, 4);
 
 INSERT INTO Orders (id, customer_id, order_date, order_status)
 VALUES

@@ -65,7 +65,7 @@ const AppNavbar = () => {
                                 <NavLink tag={Link} to="/orders">Account</NavLink>
                             </NavItem>
                             <NavItem>
-                                <NavLink href="#">Cart</NavLink>
+                                <NavLink tag={Link} to="/cart">Cart</NavLink>
                             </NavItem>
                             <NavItem>
                                 <NavLink href="#" onClick={handleLogout}>Logout</NavLink>
