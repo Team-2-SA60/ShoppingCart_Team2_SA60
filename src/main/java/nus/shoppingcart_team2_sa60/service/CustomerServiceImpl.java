@@ -15,12 +15,12 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public Customer findCustomerByEmail(String email) {
-        return cRepo.findByEmail( email);
-    };
+        return cRepo.findByEmail(email);
+    }
 
     @Override
     public boolean checkPassword(Customer existingCustomer, String password) {
         String correctPassword = existingCustomer.getPassword();
         return password.equals(correctPassword);
-    };
+    }
 }
