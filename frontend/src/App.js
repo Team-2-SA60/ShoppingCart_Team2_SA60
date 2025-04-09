@@ -5,17 +5,20 @@ import AppNavbar from "./components/AppNavbar";
 import ProductList from './pages/ProductList';
 import OrderList from './pages/OrderList';
 import Login from './pages/Login';
+import { AuthProvider } from './context/AuthContext';
 
 
 const App = () => {
   return (
-    <Router>
-      <Routes>
-        <Route path='/' exact={true} element={<ProductList />} />
-        <Route path='/login' exact={true} element={<Login />} />
-        <Route path='/orders' exact={true} element={<OrderList />} />
-      </Routes>
-    </Router>
+    <AuthProvider>
+      <Router>
+        <Routes>
+          <Route path='/' exact={true} element={<ProductList />} />
+          <Route path='/login' exact={true} element={<Login />} />
+          <Route path='/orders' exact={true} element={<OrderList />} />
+        </Routes>
+      </Router>
+    </AuthProvider>
   )
 }
 

@@ -1,25 +1,18 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Collapse, Nav, Navbar, NavbarBrand, NavbarToggler, NavItem, NavLink, Input, UncontrolledDropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
 import { Link, useNavigate } from 'react-router-dom';
 import {Modal, ModalBody, ModalFooter, Button} from 'reactstrap';
 import api from '../utilities/axios';
+import { AuthContext } from '../context/AuthContext';
 
 const AppNavbar = () => {
     const navigate = useNavigate();
     const [isOpen, setIsOpen] = useState(false);
-    const [customer, setCustomer] = useState(null);
+    const { customer, setCustomer, checkSession } = useContext(AuthContext)
     const [loggedOut, setLoggedOut] = useState(false);
 
     useEffect(() => {
-        api.get("/check-session")
-            .then(res => {
-                console.log(res.data);
-                setCustomer(res.data);
-            })
-            .catch(res => {
-                console.log("Invalid session:", res);
-                setCustomer(null);
-            })
+        checkSession();
     }, []);
 
     const handleLogout = () => {
@@ -81,7 +74,7 @@ const AppNavbar = () => {
                                     <DropdownItem className="hover:underline" tag={Link} to="/orders">
                                         My Orders
                                     </DropdownItem>
-                                    <DropdownItem className="hover:underline" tag={Link} to="/" onClick={handleLogout}>
+                                    <DropdownItem className="hover:underline" tag={Link} onClick={handleLogout}>
                                         Log Out
                                     </DropdownItem>
                                 </DropdownMenu>

@@ -1,14 +1,22 @@
-import React, {useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import AppNavbar from "../components/AppNavbar";
 import './Login.css'
 import { useNavigate } from 'react-router-dom';
 import api from '../utilities/axios';
+import { AuthContext } from '../context/AuthContext';
 
 const Login = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [message, setMessage] = useState('');
+    const { customer } = useContext(AuthContext); 
     const navigate = useNavigate();
+
+    useEffect(() => {
+        if (customer !== null) {
+            navigate("/");
+        }
+    })
 
     const handleLogin = async (event) => {
 
