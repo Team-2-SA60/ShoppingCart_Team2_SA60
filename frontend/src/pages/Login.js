@@ -1,15 +1,15 @@
-import React, {useContext, useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import AppNavbar from "../components/AppNavbar";
 import './Login.css'
 import { useNavigate } from 'react-router-dom';
 import api from '../utilities/axios';
-import { AuthContext } from '../context/AuthContext';
+import { useAuth } from '../context/AuthContext';
 
 const Login = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [message, setMessage] = useState('');
-    const { customer } = useContext(AuthContext); 
+    const { customer } = useAuth();
     const navigate = useNavigate();
 
     useEffect(() => {

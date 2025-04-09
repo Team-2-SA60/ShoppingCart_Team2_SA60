@@ -1,19 +1,19 @@
-import React, { useContext, useEffect, useState } from 'react';
-import { Collapse, Nav, Navbar, NavbarBrand, NavbarToggler, NavItem, NavLink, Input, UncontrolledDropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
+import React, { useEffect, useState } from 'react';
+import { Collapse, Nav, Navbar, NavbarBrand, NavbarToggler, NavItem, NavLink, UncontrolledDropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
 import { Link, useNavigate } from 'react-router-dom';
-import {Modal, ModalBody, ModalFooter, Button} from 'reactstrap';
+import {Modal, ModalBody, Button} from 'reactstrap';
 import api from '../utilities/axios';
-import { AuthContext } from '../context/AuthContext';
+import { useAuth } from '../context/AuthContext';
 
 const AppNavbar = () => {
     const navigate = useNavigate();
     const [isOpen, setIsOpen] = useState(false);
-    const { customer, setCustomer, checkSession } = useContext(AuthContext)
+    const { customer, setCustomer, checkSession } = useAuth();
     const [loggedOut, setLoggedOut] = useState(false);
 
     useEffect(() => {
         checkSession();
-    }, []);
+    }, [checkSession]);
 
     const handleLogout = () => {
         api.get("/logout")
