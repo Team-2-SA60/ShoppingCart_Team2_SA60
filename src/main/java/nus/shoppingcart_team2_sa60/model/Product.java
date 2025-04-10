@@ -10,12 +10,12 @@ import lombok.Setter;
 @Table(name = "Products")
 public class Product {
 
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String name;
     private String description;
+    private String category;
     private double price;
     private double discount;
     private String image;
@@ -23,9 +23,10 @@ public class Product {
     public Product() {
     }
 
-    public Product(String name, String description, double price, double discount, String image) {
+    public Product(String name, String description, String category, double price, double discount, String image) {
         this.name = name;
         this.description = description;
+        this.category = category;
         this.price = price;
         this.discount = discount;
         this.image = image;
@@ -37,6 +38,7 @@ public class Product {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", description='" + description + '\'' +
+                ", category='" + category + '\'' +
                 ", price=" + price +
                 ", discount=" + discount +
                 ", image='" + image + '\'' +

@@ -1,12 +1,25 @@
-INSERT INTO Products (id, name, description, price, discount, image)
+INSERT INTO Products (id, name, description, category, price, discount, image)
 VALUES
-    (1, 'Duck You', 'Cute Graphic Tee', 15.00, 0, 'duckyou.png'),
-    (2, 'Mewing', 'Cat Graphic Tee', 15.00, 5.00, 'mewing.png'),
-    (3, 'What The Sigma', 'Cat Graphic Tee', 15.00, 5.00, 'whatthesigma.png'),
-    (4, 'Chill Guy', 'Chill Graphic Tee', 15.00, 0.00, 'chillguy.png'),
-    (5, 'Me Monkey', 'Monkey Graphic Tee', 15.00, 5.00, 'memonkey.png'),
-    (6, 'Ohio Sigma Rizzler', 'Chill Graphic Tee', 15.00, 0.00, 'ohiosigmarizzler.png'),
-    (7, 'Professional Napper', 'Cat Graphic Tee', 15.00, 0.00, 'professionalnapper.png');
+    (1, 'Duck You', 'Duck Graphic Tee', 'Cute',15.00, 0.00, 'duckyou.png'),
+    (2, 'Mewing', 'Cat Graphic Tee', 'Cute', 15.00, 5.00, 'mewing.png'),
+    (3, 'What The Sigma', 'Cat Graphic Tee', 'Cringe',15.00, 5.00, 'whatthesigma.png'),
+    (4, 'Chill Guy', 'Chill Graphic Tee', 'Chill',15.00, 0.00, 'chillguy.png'),
+    (5, 'Me Monkey', 'Monkey Graphic Tee', 'Cringe', 15.00, 5.00, 'memonkey.png'),
+    (6, 'Ohio Sigma Rizzler', 'Chill Graphic Tee', 'Chill',15.00, 0.00, 'ohiosigmarizzler.png'),
+    (7, 'Professional Napper', 'Cat Graphic Tee', 'Cute', 15.00, 0.00, 'professionalnapper.png'),
+    (8, 'Wow Hi', 'Cat Graphic Tee', 'Cute', 20.00, 0.00, 'wowhi.png'),
+    (9, 'Tang Ping', 'Chill Graphic Tee', 'Chill', 15.00, 0.00, 'tangping.png'),
+    (10, 'Paused My Game', 'Game Graphic Tee', 'Cringe', 10.00, 5.00, 'pausedmygame.png'),
+    (11, 'My Perfect Day', 'Game Graphic Tee', 'Cringe', 15.00, 0.00, 'myperfectday.png'),
+    (12, 'Human By Day', 'Wolf Graphic Tee', 'Cringe', 10.00, 0.00, 'humanbydayalphabynight.png'),
+    (13, 'Huh', 'Cat Graphic Tee', 'Cute', 15.00, 5.00, 'huh.png'),
+    (14, 'Hamster Is Calling', 'Hamster Graphic Tee', 'Cute', 20.00, 0.00, 'hamsteriscalling.png'),
+    (15, 'I Never Argue', 'Cringe Graphic Tee', 'Cringe', 10.00, 0.00, 'ineverargue.png'),
+    (16, 'Let Me Cook Lil Bro', 'Cat Graphic Tee', 'Cute', 15.00, 5.00, 'letmecook.png'),
+    (17, 'Mentally Sick, Physically Thicc', 'Racoon Graphic Tee', 'Cringe', 10.00, 5.00, 'mentallysick.png'),
+    (18, 'Mona Lifta', 'Cringe Graphic Tee', 'Cringe', 20.00, 0.00, 'monalifta.png'),
+    (19, 'Plz Use It', 'Cringe Graphic Tee', 'Cringe', 15.00, 5.00, 'plzuseit.png'),
+    (20, 'Sleeping Sushi', 'Sushi Graphic Tee', 'Chill', 20.00, 0.00, 'sushi.png');
 
 
 INSERT INTO Customer (id, name, email, password)
