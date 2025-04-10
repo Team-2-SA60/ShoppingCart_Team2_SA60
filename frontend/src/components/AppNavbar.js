@@ -1,14 +1,17 @@
-import React, { useEffect, useState } from 'react';
-import { Collapse, Nav, Navbar, NavbarBrand, NavbarToggler, NavItem, NavLink, UncontrolledDropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
-import { Link, useNavigate } from 'react-router-dom';
+import React, { useState } from 'react';
+import { Collapse, Nav, Navbar, NavbarBrand, NavbarToggler, NavItem, NavLink } from 'reactstrap';
+import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import {Modal, ModalBody, Button} from 'reactstrap';
 import api from '../utilities/axios';
 import { useSession } from '../context/SessionContext';
+import TopRightButtons from './Navbar/TopRightButtons';
 
 const AppNavbar = () => {
     const [isOpen, setIsOpen] = useState(false);
-    const { customer, setCustomer } = useSession();
+    const { setCustomer } = useSession();
     const [loggedOut, setLoggedOut] = useState(false);
+    const [ search, setSearch ] = useState('');
+    const [searchParams, setSearchParams] = useSearchParams();
     const navigate = useNavigate();
 
     const handleLogout = () => {
@@ -27,13 +30,22 @@ const AppNavbar = () => {
         setLoggedOut(!loggedOut)
         navigate("/");
     };
-    
+
+    function handleSearch(e) {
+        e.preventDefault();
+        const searchTrimmed = search.trim();
+        navigate(`/?search=${searchTrimmed}`);
+    }
+
     return (
         <>
-        <Navbar color="light" light expand="md">
+        <Navbar color="light" light full="true" expand="md">
             <NavbarBrand tag={Link} to="/"><img src="./images/Delulu.png" alt="DeluluLogo" className="w-[200px] min-w-[200px] ml-8" /></NavbarBrand>
             <div className="hidden md:flex flex-auto justify-center items-center px-4">
-                <input type="text" placeholder="Search for keyword" className="border border-black rounded-sm p-1 outline-none w-full min-w-[150px] max-w-xs"/>
+                <form onSubmit={handleSearch}>
+                    <input type="text" onChange={(e) => setSearch(e.target.value)} placeholder="Search for products" 
+                        className="border border-black rounded-sm p-1 outline-none w-full min-w-[150px] max-w-xs"/>
+                </form>
             </div>
             <NavbarToggler onClick={() => { setIsOpen(!isOpen) }} />
             <Collapse isOpen={isOpen} navbar>
@@ -51,51 +63,7 @@ const AppNavbar = () => {
             </Collapse>
             <Collapse isOpen={isOpen} navbar>
                 <Nav className="flex flex-auto justify-end items-center mr-[15%] gap-16" navbar>
-                    {customer != null ? (
-                        <>
-                            <UncontrolledDropdown className="me-2 cursor-pointer" inNavbar="true" direction="left">
-                                <DropdownToggle className="nav-link" tag="a">
-                                        <div className='inline-flex text-[10px] gap-4 items-center text-center hover:bg-slate-100 rounded-lg py-0.5 px-3 shadow-md'>
-                                        <img src="./images/account-icon.png" alt='account-icon' style={{width: '30px', height: '30px'}}/>
-                                        <div className='text-[15px]'>
-                                            Hello! <br/>
-                                            {customer.name}
-                                        </div>
-                                    </div>
-                                </DropdownToggle>
-                                <DropdownMenu className="drop-shadow-md mt-4">
-                                    <DropdownItem className="hover:underline" tag={Link} to="/">
-                                        Account
-                                    </DropdownItem>
-                                    <DropdownItem className="hover:underline" tag={Link} to="/orders">
-                                        My Orders
-                                    </DropdownItem>
-                                    <DropdownItem className="hover:underline" tag={Link} onClick={handleLogout}>
-                                        Log Out
-                                    </DropdownItem>
-                                </DropdownMenu>
-                            </UncontrolledDropdown>
-                            <NavItem>
-                                <NavLink tag={Link} to="/cart">
-                                    <div className='relative'>
-                                        <img src="./images/shopping-cart.png" alt='cart-icon' style={{ width: '30px', height: '30px' }}/>
-                                        <span className='absolute -top-2 -right-2 bg-yellow-400 text-black text-xs rounded-full px-1.5 py-0.5 shadow-md'>
-                                            1
-                                        </span>
-                                    </div>
-                                </NavLink>
-                            </NavItem>
-                        </>
-                    ) : (
-                        <NavItem>
-                            <NavLink tag={Link} to="/login">
-                                <div className='flex gap-2 items-center'>
-                                    <img src="./images/login.png" alt='cart-icon' style={{ width: '30px', height: '30px' }} />
-                                    Login
-                                </div>
-                            </NavLink>
-                        </NavItem>
-                    )}
+                    <TopRightButtons handleLogout={handleLogout}/>
                 </Nav>
             </Collapse>
         </Navbar>

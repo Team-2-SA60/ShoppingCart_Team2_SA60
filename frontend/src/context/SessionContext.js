@@ -5,8 +5,10 @@ export const SessionContext = createContext();
 
 export function SessionProvider({children}) {
     const [ customer, setCustomer ] = useState(null);
+    const [ isLoading, setLoading ] = useState(true);
 
     async function checkSession() {
+        setLoading(true);
         await api.get("/check-session")
         .then(res => {
             setCustomer(res.data);
@@ -15,10 +17,13 @@ export function SessionProvider({children}) {
             console.log("Invalid session: " + res.data);
             setCustomer(null);
         })
+        .finally(
+            setLoading(false)
+        )
     }
 
     return (
-        <SessionContext.Provider value={{customer, setCustomer, checkSession}}>
+        <SessionContext.Provider value={{customer, setCustomer, checkSession, isLoading}}>
             {children}
         </SessionContext.Provider>
     )
