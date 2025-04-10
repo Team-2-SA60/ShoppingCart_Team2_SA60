@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Collapse, Nav, Navbar, NavbarBrand, NavbarToggler, NavItem, NavLink } from 'reactstrap';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import {Modal, ModalBody, Button} from 'reactstrap';
 import api from '../utilities/axios';
 import { useSession } from '../context/SessionContext';
@@ -8,8 +8,10 @@ import TopRightButtons from './Navbar/TopRightButtons';
 
 const AppNavbar = () => {
     const [isOpen, setIsOpen] = useState(false);
-    const { customer, setCustomer } = useSession();
+    const { setCustomer } = useSession();
     const [loggedOut, setLoggedOut] = useState(false);
+    const [ search, setSearch ] = useState('');
+    const [searchParams, setSearchParams] = useSearchParams();
     const navigate = useNavigate();
 
     const handleLogout = () => {
@@ -28,13 +30,22 @@ const AppNavbar = () => {
         setLoggedOut(!loggedOut)
         navigate("/");
     };
-    
+
+    function handleSearch(e) {
+        e.preventDefault();
+        const searchTrimmed = search.trim();
+        navigate(`/?search=${searchTrimmed}`);
+    }
+
     return (
         <>
         <Navbar color="light" light full="true" expand="md">
             <NavbarBrand tag={Link} to="/"><img src="./images/Delulu.png" alt="DeluluLogo" className="w-[200px] min-w-[200px] ml-8" /></NavbarBrand>
             <div className="hidden md:flex flex-auto justify-center items-center px-4">
-                <input type="text" placeholder="Search for keyword" className="border border-black rounded-sm p-1 outline-none w-full min-w-[150px] max-w-xs"/>
+                <form onSubmit={handleSearch}>
+                    <input type="text" onChange={(e) => setSearch(e.target.value)} placeholder="Search for products" 
+                        className="border border-black rounded-sm p-1 outline-none w-full min-w-[150px] max-w-xs"/>
+                </form>
             </div>
             <NavbarToggler onClick={() => { setIsOpen(!isOpen) }} />
             <Collapse isOpen={isOpen} navbar>

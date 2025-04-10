@@ -17,7 +17,15 @@ const ProductList = () => {
             console.log("Error fetching products: " + res.data)
         })
         // eslint-disable-next-line
+        getParams();
     },[]);
+
+    function getParams() {
+        const queryParams = new URLSearchParams(window.location.search)
+        const type = queryParams.get("name")
+        const name = queryParams.get("sort")
+        console.log(type + " " + name);
+    }
 
     const productsPerPage = 4;
 
@@ -39,7 +47,7 @@ const ProductList = () => {
 
     return (
         <div className="text-center">
-            <div className="grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 gap-14 items-center">
+            <div className="grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 gap-24 items-stretch">
                 {productList}
             </div>
             <ProductPagination currentPage={currentPage} totalPages={totalPages} handlePageChange={handlePageChange}/>
