@@ -1,12 +1,12 @@
-INSERT INTO Products (id, name, description, price, discount, image)
+INSERT INTO Products (id, name, description, category, price, discount, image)
 VALUES
-    (1, 'Duck You', 'Cute Graphic Tee', 15.00, 0, 'duckyou.png'),
-    (2, 'Mewing', 'Cat Graphic Tee', 15.00, 5.00, 'mewing.png'),
-    (3, 'What The Sigma', 'Cat Graphic Tee', 15.00, 5.00, 'whatthesigma.png'),
-    (4, 'Chill Guy', 'Chill Graphic Tee', 15.00, 0.00, 'chillguy.png'),
-    (5, 'Me Monkey', 'Monkey Graphic Tee', 15.00, 5.00, 'memonkey.png'),
-    (6, 'Ohio Sigma Rizzler', 'Chill Graphic Tee', 15.00, 0.00, 'ohiosigmarizzler.png'),
-    (7, 'Professional Napper', 'Cat Graphic Tee', 15.00, 0.00, 'professionalnapper.png');
+    (1, 'Duck You', 'Cute Graphic Tee', 'Cute',15.00, 0, 'duckyou.png'),
+    (2, 'Mewing', 'Cat Graphic Tee', 'Cute', 15.00, 5.00, 'mewing.png'),
+    (3, 'What The Sigma', 'Cat Graphic Tee', 'Cringe',15.00, 5.00, 'whatthesigma.png'),
+    (4, 'Chill Guy', 'Chill Graphic Tee', 'Chill',15.00, 0.00, 'chillguy.png'),
+    (5, 'Me Monkey', 'Monkey Graphic Tee', 'Cringe', 15.00, 5.00, 'memonkey.png'),
+    (6, 'Ohio Sigma Rizzler', 'Chill Graphic Tee', 'Chill',15.00, 0.00, 'ohiosigmarizzler.png'),
+    (7, 'Professional Napper', 'Cat Graphic Tee', 'Cute', 15.00, 0.00, 'professionalnapper.png');
 
 
 INSERT INTO Customer (id, name, email, password)
