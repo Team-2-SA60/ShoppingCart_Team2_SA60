@@ -16,7 +16,6 @@ public class ProductController {
 
     @GetMapping("/products")
     public List<Product> products(@RequestParam(required = false) String keyword) {
-        System.out.println(keyword);
         if (keyword != null) {
             return pService.findBySearch(keyword);
         }
