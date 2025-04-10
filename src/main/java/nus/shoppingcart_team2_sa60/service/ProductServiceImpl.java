@@ -13,7 +13,17 @@ public class ProductServiceImpl implements ProductService {
     private ProductRepository pRepo;
 
     @Override
-    public List<Product> findAll() {
+    public List<Product> findAllProducts() {
         return pRepo.findAll();
+    }
+
+    @Override
+    public List<Product> findBySearch(String keyword) {
+        return pRepo.findProductsBySearch(keyword);
+    }
+
+    @Override
+    public List<Product> findByCategory(String category) {
+        return pRepo.findProductsByCategory(category);
     }
 }
