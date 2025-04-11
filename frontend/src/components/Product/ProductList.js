@@ -18,14 +18,14 @@ const ProductList = () => {
         const search = getSearch();
         getProducts(search);
         setLoading(false);
-    },[searchParams]);
+    },[searchParams, category]);
 
     function getSearch() {
         const search = searchParams.get("search");
         if (search) {
-            setCurrentPage(1);
             return search;
         }
+        setCurrentPage(1);
     }
 
     async function getProducts(search) {
