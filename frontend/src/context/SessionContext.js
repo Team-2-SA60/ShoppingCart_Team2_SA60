@@ -11,11 +11,14 @@ export function SessionProvider({children}) {
         setLoading(true);
         await api.get("/check-session")
         .then(res => {
-            setCustomer(res.data);
+            if (res.data !== '') {
+                setCustomer(res.data);
+            } else {
+                setCustomer(null);
+            }
         })
         .catch(res => {
-            console.log("Invalid session: " + res.data);
-            setCustomer(null);
+            console.log("Unable to check session: " + res.data);
         })
         .finally(
             setLoading(false)

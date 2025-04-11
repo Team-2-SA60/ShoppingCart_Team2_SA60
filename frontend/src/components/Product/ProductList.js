@@ -1,18 +1,23 @@
 import { useEffect, useState } from "react";
-import { useSearchParams } from "react-router-dom";
+import { useParams, useSearchParams } from "react-router-dom";
 import api from "../../utilities/axios";
 import ProductCard from "./ProductCard"
 import ProductPagination from "./ProductPagination";
+import { Spinner } from "reactstrap";
 
 const ProductList = () => {
 
     const [products, setProducts] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [searchParams] = useSearchParams();
+    const { category } = useParams();
+    const [isLoading, setLoading] = useState(true);
 
     useEffect(() => {
+        setLoading(true);
         const search = getSearch();
         getProducts(search);
+        setLoading(false);
     },[searchParams]);
 
     function getSearch() {
@@ -23,16 +28,19 @@ const ProductList = () => {
         }
     }
 
-    function getProducts(search) {
-        let searchTerm = '/products';
-        if (search) searchTerm = `/products?keyword=${search}`
-        api.get(searchTerm)
-            .then(res => {
-                setProducts(res.data);
-            })
-            .catch(res => {
-                console.log("Error fetching products: " + res.data)
-            })
+    async function getProducts(search) {
+        let fetchURL = '/products';
+
+        if (search) fetchURL = `/products?keyword=${search}`;
+        if (category) fetchURL = `/products/${category}`;
+
+        await api.get(fetchURL)
+        .then(res => {
+            setProducts(res.data);
+        })
+        .catch(res => {
+            console.log("Error fetching products: " + res.data)
+        });
     }
 
     const productsPerPage = 4;
@@ -52,6 +60,22 @@ const ProductList = () => {
             <ProductCard key={product.id} product={product} />
         )
     });
+
+    if (isLoading) {
+        return (
+            <Spinner>
+                Loading...
+            </Spinner>
+        )
+    }
+
+    if (products.length === 0) {
+        return (
+            <div className="items-center h-full">
+                <h4>!! No items found !!</h4>
+            </div>
+        )
+    }
 
     return (
         <div className="text-center">

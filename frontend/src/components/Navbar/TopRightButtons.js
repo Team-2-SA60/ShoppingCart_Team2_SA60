@@ -17,33 +17,35 @@ const TopRightButtons = ({handleLogout}) => {
     if (customer) {
 
         return (
-            <>
-                <UncontrolledDropdown className="me-2 cursor-pointer" inNavbar="true" direction="left">
-                    <DropdownToggle className="nav-link" tag="a">
-                        <div className='inline-flex text-[10px] gap-4 items-center text-center hover:bg-slate-100 rounded-lg py-0.5 px-3 shadow-md'>
-                            <img src="./images/account-icon.png" alt='account-icon' style={{ width: '30px', height: '30px' }} />
-                            <div className='text-[15px]'>
-                                Hello! <br />
-                                {customer.name}
+            <> 
+                <NavItem>
+                    <UncontrolledDropdown className="me-2 cursor-pointer" inNavbar="true" direction="left">
+                        <DropdownToggle className="nav-link" tag="a">
+                            <div className='inline-flex text-[10px] gap-4 items-center text-center hover:bg-slate-100 rounded-lg py-0.5 px-3 shadow-md'>
+                                <img src="../images/account-icon.png" alt='account-icon' style={{ width: '30px', height: '30px' }} />
+                                <div className='text-[15px]'>
+                                    Hello! <br />
+                                    {customer.name}
+                                </div>
                             </div>
-                        </div>
-                    </DropdownToggle>
-                    <DropdownMenu className="drop-shadow-md mt-4">
-                        <DropdownItem className="hover:underline" tag={Link} to="/">
-                            Account
-                        </DropdownItem>
-                        <DropdownItem className="hover:underline" tag={Link} to="/orders">
-                            My Orders
-                        </DropdownItem>
-                        <DropdownItem className="hover:underline" tag={Link} onClick={handleLogout}>
-                            Log Out
-                        </DropdownItem>
-                    </DropdownMenu>
-                </UncontrolledDropdown>
+                        </DropdownToggle>
+                        <DropdownMenu className="drop-shadow-md mt-4">
+                            <DropdownItem className="hover:underline" tag={Link} to="/">
+                                Account
+                            </DropdownItem>
+                            <DropdownItem className="hover:underline" tag={Link} to="/orders">
+                                My Orders
+                            </DropdownItem>
+                            <DropdownItem className="hover:underline" tag={Link} onClick={handleLogout}>
+                                Log Out
+                            </DropdownItem>
+                        </DropdownMenu>
+                    </UncontrolledDropdown>
+                </NavItem>
                 <NavItem>
                     <NavLink tag={Link} to="/cart">
                         <div className='relative'>
-                            <img src="./images/shopping-cart.png" alt='cart-icon' style={{ width: '30px', height: '30px' }} />
+                            <img src="../images/shopping-cart.png" alt='cart-icon' style={{ width: '30px', height: '30px' }} />
                             <span className='absolute -top-2 -right-2 bg-yellow-400 text-black text-xs rounded-full px-1.5 py-0.5 shadow-md'>
                                 1
                             </span>
@@ -60,7 +62,7 @@ const TopRightButtons = ({handleLogout}) => {
                 <NavItem>
                     <NavLink tag={Link} to="/login">
                         <div className='flex gap-2 items-center'>
-                            <img src="./images/login.png" alt='cart-icon' style={{ width: '30px', height: '30px' }} />
+                            <img src="../images/login.png" alt='cart-icon' style={{ width: '30px', height: '30px' }} />
                             Login
                         </div>
                     </NavLink>
