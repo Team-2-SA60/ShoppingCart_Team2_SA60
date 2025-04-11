@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { Container, Button } from 'reactstrap';
-import './CartDetails.css'
-import AppNavbar from '../components/AppNavbar';
+import {Container, Button, Modal, ModalBody, ModalFooter} from 'reactstrap';
 import api from '../utilities/axios';
+import './CartDetails.css';
+import ListCartItem from "../components/ListCartItem";
+import ListCartPrice from '../components/ListCartPrice';
+import AppNavbar from '../components/AppNavbar';
 
-const CartDetails = () => {
+export default function CartDetails() {
     const [cartItems, setCartItems] = useState([]);
 
     useEffect(() => {
@@ -18,60 +20,68 @@ const CartDetails = () => {
             });
     }, []);
 
-        const calculateSubtotal = () => {
-            return cartItems.reduce((total, item) => total + (item.unitPrice * item.quantity), 0).toFixed(2);
-        };
+    function updateQuantity (id, updateFn) {
+        setCartItems(previous => previous.map(item => {
+            if (item.id === id) {
+                const newQuantity = updateFn(item.quantity);
+                return { ...item, quantity: Math.min(99, Math.max(1, newQuantity)) };
+            }
+            return item;
+        }));
+    };
 
+    function handleAddItemQty(id) {
+        updateQuantity(id, quantity => quantity + 1);
+        api.put(`cart/addQty/${id}`)
+            .then(response => console.log('+1 quantity to item'))
+            .catch(error => console.error('Error: ', error));
+    }
 
-        return (
-            <div>
-                <AppNavbar/>
-                <Container className="cart-container">
-                    <h1 className="text-3xl mt-5">My Cart ({cartItems.length})</h1>
-                    {cartItems.length === 0 ? (
-                        <div>
-                            <p>Cart is Empty</p>
-                            <Button tag="a" href="/" color="primary">Continue Browsing</Button>
-                        </div>
-                    ) : (
-                        <div className="cart-content">
-                            <div className="cart-items">
-                                {cartItems.map(item => (
-                                    <div key={item.id} className="cart-item">
-                                        <img src={`./images/${item.productImage}`} alt={item.productName}
-                                             className="cart-item-image"/>
-                                        <div className="cart-item-details">
-                                            <h2>{item.productName}</h2>
-                                            <p>{item.productDescription}</p>
-                                            <p>${item.unitPrice.toFixed(2)}</p>
-                                        </div>
-                                        <div className="cart-item-quantity">
-                                                <button
-                                                    className="border-black border w-6 rounded-l-md bg-red-200 text-black align-middle">
-                                                    <b>-</b>
-                                                </button>
-                                                <input type="text"
-                                                       className="border-black border-t border-b white w-10 focus:outline-none text-center"/>
-                                                <button
-                                                    className="border-black border w-6 rounded-r-md bg-green-200 text-black align-middle">
-                                                    <b>+</b>
-                                                </button>
-                                        </div>
-                                        <Button color="danger" className="remove-button">X</Button>
-                                    </div>
-                                ))}
-                                <Button tag="a" href="/" color="primary">Continue Browsing</Button>
-                            </div>
-                            <div className="summary">
-                                <h2>Summary</h2>
-                                <hr/>
-                                <p>Sub-total: ${calculateSubtotal()}</p>
-                                <Button color="primary" className="checkout-button">Check Out</Button>
-                            </div>
-                        </div>
-                    )}
-                </Container>
-            </div>
-        );
-}
-export default CartDetails;
+    function handleMinusItemQty(id) {
+        updateQuantity(id, quantity => quantity - 1);
+
+        api.put(`cart/minusQty/${id}`)
+            .then(response => console.log('-1 quantity from item'))
+            .catch(error => console.error('Error: ', error));
+    }
+
+    //function to handle form input to setQty
+    function handleSetItemQty(id, newQty) {
+        updateQuantity(id, () => newQty);
+        api.put(`cart/setQty/${id}`, {
+            qty : newQty
+        })
+            .then(response => console.log('Changed quantity of item'))
+            .catch(error => console.error('Error: ', error));
+    }
+
+    function handleDeleteItem(id) {
+        api.delete(`cart/delete/${id}`)
+            .then(response=>{
+                console.log('Item deleted');
+                setCartItems(cartItems.filter(item => item.id !== id));
+            })
+            .catch(error => console.error('Error: ', error));
+    }
+
+    return(
+        <div>
+            <AppNavbar/>
+            <Container className="cart-container">
+                <h1 className="text-3xl mt-5">My Cart ({cartItems.length})</h1>
+                {cartItems.length === 0 ? (
+                    <div>
+                        <p>Cart is Empty</p>
+                        <Button tag="a" href="/" color="primary">Continue Browsing</Button>
+                    </div>
+                ) : (
+                    <div className="cart-content">
+                        <ListCartItem cartItems={cartItems} handleAddItemQty={handleAddItemQty} handleMinusItemQty={handleMinusItemQty} handleSetItemQty={handleSetItemQty} handleDeleteItem={handleDeleteItem}/>
+                        <ListCartPrice cartItems={cartItems} />
+                    </div>
+                )}
+            </Container>
+        </div>
+    )
+
+};

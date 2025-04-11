@@ -1,11 +1,16 @@
 package nus.shoppingcart_team2_sa60.dto;
 
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
 import lombok.Getter;
 import nus.shoppingcart_team2_sa60.model.CartDetails;
 
 @Getter
 public class CartDetailsResponseDTO {
     private int id;
+
+    @Min(1)
+    @Max(99)
     private int quantity;
     private double unitPrice;
     private String productName;

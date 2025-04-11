@@ -1,6 +1,8 @@
 package nus.shoppingcart_team2_sa60.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -17,13 +19,11 @@ public class CartDetails {
     private int id;
 
     @ManyToOne
-    @JoinColumn(name = "cart_id")
-    private Cart cart;
-
-    @ManyToOne
     @JoinColumn(name = "product_id")
     private Product product;
 
+    @Min(1)
+    @Max(99)
     private int productQty;
 
     // constructors

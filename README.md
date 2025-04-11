@@ -75,18 +75,34 @@ Database (1 person):
 #### 11 Apr (Fri)
 
 #### 12 Apr (Sat)
-
+- Bofei: Finish checkout use case for sharing with team to integrate
+- 
 #### 13 Apr (Sun)
+- On your own time, for your use cases:
+- How do you implement your feature? (Shortlist the most complicated fature)
+- Validation
+- Test Cases (Shortlist the most complicated validation)
 
 #### 14 Apr (Mon)
+- 10am - 11.30am: Meeting @ Cove to discuss:
+  (1) Your use cases and the qns below:
+- How do you implement your feature? (Shortlist the most complicated fature)
+- Validation
+- Test Cases (Shortlist the most complicated validation)
+  (2) Should we deprioritise anything or help in anything?
+- (3) What are the additional features that we should build?
 
 #### 15 Apr (Tue)
 
 #### 16 Apr (Wed)
 
 #### 17 Apr (Thu) 
+- AM: Draft of User narrative (Adrian)
+  - Test Cases
 
 #### 18 Apr (Fri)
+- 8.30pm - 10pm: Teams meeting  - All to be present
+  - Film presentation / recording (Adrian)
 
 #### 19 Apr (Sat)
 - [ ] Final code walkthrough
