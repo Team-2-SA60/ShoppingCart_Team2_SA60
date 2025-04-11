@@ -63,6 +63,17 @@ public class AccountServiceImpl implements AccountService {
     @Override
     @Transactional
     public Customer editCreditCard(Customer loggedInCustomer, CreditCardRequestDTO creditCardRequestDTO) {
-        return null;
+        // Get up-to-date customer before proceeding to update
+        Optional<Customer> existingCustomer = aRepo.findById(loggedInCustomer.getId());
+        if (existingCustomer.isEmpty())
+            return null;
+
+        // Only allow to change credit card information, NOTHING else
+        Customer updatedCustomer = existingCustomer.get();
+        updatedCustomer.setCreditCardName(creditCardRequestDTO.getCreditCardName());
+        updatedCustomer.setCreditCardNumber(creditCardRequestDTO.getCreditCardNumber());
+        updatedCustomer.setCreditCardExpiryMonth(creditCardRequestDTO.getCreditCardExpiryMonth());
+        updatedCustomer.setCreditCardExpiryYear(creditCardRequestDTO.getCreditCardExpiryYear());
+        return aRepo.save(updatedCustomer);
     }
 }

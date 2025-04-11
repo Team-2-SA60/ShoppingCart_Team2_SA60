@@ -3,25 +3,26 @@ package nus.shoppingcart_team2_sa60.dto;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 
 @Getter
 public class CreditCardRequestDTO {
-    @NotBlank
+    @NotNull
     private int customer_id;
 
-    @NotBlank
+    @NotNull
     private String creditCardName;
 
-    @NotBlank
+    @NotNull
     private Integer creditCardNumber;
 
-    @NotBlank
+    @NotNull
     @Min(1)
     @Max(12)
     private Integer creditCardExpiryMonth;
 
-    @NotBlank
+    @NotNull
     private Integer creditCardExpiryYear;
 
     public CreditCardRequestDTO(String creditCardName, Integer creditCardNumber, Integer creditCardExpiryMonth, Integer creditCardExpiryYear) {

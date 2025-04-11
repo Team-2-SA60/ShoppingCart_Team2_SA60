@@ -2,6 +2,7 @@ package nus.shoppingcart_team2_sa60.controller;
 
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
+import nus.shoppingcart_team2_sa60.dto.CreditCardRequestDTO;
 import nus.shoppingcart_team2_sa60.dto.CustomerResponseDTO;
 import nus.shoppingcart_team2_sa60.model.Customer;
 import nus.shoppingcart_team2_sa60.service.AccountService;
@@ -55,7 +56,7 @@ public class AccountController {
     }
 
     @PutMapping("/edit/address")
-    public ResponseEntity<?> editAddress(String address, HttpSession session) {
+    public ResponseEntity<?> editAddress(@RequestBody String address, HttpSession session) {
         Customer loggedInCustomer = (Customer) session.getAttribute("customer");
         if (loggedInCustomer == null)
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Customer not logged in");
@@ -65,6 +66,20 @@ public class AccountController {
         if (updatedCustomer == null)
             return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body("Customer not updated");
 
-        return ResponseEntity.ok(new CustomerResponseDTO(updatedCustomer));
+        return ResponseEntity.ok("Saved address successfully");
+    }
+
+    @PutMapping("/edit/creditcard")
+    public ResponseEntity<?> editCreditCard(@Valid @RequestBody CreditCardRequestDTO creditCard, HttpSession session) {
+        Customer loggedInCustomer = (Customer) session.getAttribute("customer");
+        if (loggedInCustomer == null)
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Customer not logged in");
+
+        Customer updatedCustomer = aService.editCreditCard(loggedInCustomer, creditCard);
+
+        if (updatedCustomer == null)
+            return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body("Customer not updated");
+
+        return ResponseEntity.ok("Saved credit card successfully");
     }
 }
