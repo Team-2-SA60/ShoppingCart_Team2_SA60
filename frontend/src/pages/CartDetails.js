@@ -33,7 +33,9 @@ export default function CartDetails() {
     function handleAddItemQty(id) {
         updateQuantity(id, quantity => quantity + 1);
         api.put(`cart/addQty/${id}`)
-            .then(response => console.log('+1 quantity to item'))
+            .then(() => {
+                console.log('+1 quantity to item');
+            })
             .catch(error => console.error('Error: ', error));
     }
 
@@ -41,7 +43,9 @@ export default function CartDetails() {
         updateQuantity(id, quantity => quantity - 1);
 
         api.put(`cart/minusQty/${id}`)
-            .then(response => console.log('-1 quantity from item'))
+            .then(() => {
+            console.log('-1 quantity from item');
+            })
             .catch(error => console.error('Error: ', error));
     }
 
@@ -51,7 +55,9 @@ export default function CartDetails() {
         api.put(`cart/setQty/${id}`, {
             qty : newQty
         })
-            .then(response => console.log('Changed quantity of item'))
+            .then(() => {
+                console.log('Changed quantity of item');
+            })
             .catch(error => console.error('Error: ', error));
     }
 
