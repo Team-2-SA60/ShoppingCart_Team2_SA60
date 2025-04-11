@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import AppNavbar from "../components/AppNavbar";
 import './Login.css'
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import api from '../utilities/axios';
 import { useSession } from '../context/SessionContext';
 
@@ -77,7 +77,7 @@ const Login = () => {
                                     {message}
                                 </div>
                             )}
-                            <button type="submit" className="login-button">LOGIN</button>
+                            <button type="submit" className="login-button hover:bg-slate-800">LOGIN</button>
                         </form>
                     </div>
                     <div className="login-section signup-info">
@@ -88,7 +88,7 @@ const Login = () => {
                             <li>📍 Easily track orders</li>
                             <li>🛒 View order history</li>
                         </ul>
-                        <button className="signup-button">CREATE AN ACCOUNT</button>
+                        <a href="/account/create" className="no-underline"><button className="signup-button hover:bg-slate-800">CREATE AN ACCOUNT</button></a>
                     </div>
                 </div>
             </div>

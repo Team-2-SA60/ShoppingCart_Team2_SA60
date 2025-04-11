@@ -8,21 +8,18 @@ export function SessionProvider({children}) {
     const [ isLoading, setLoading ] = useState(true);
 
     async function checkSession() {
-        setLoading(true);
-        await api.get("/check-session")
-        .then(res => {
-            if (res.data !== '') {
-                setCustomer(res.data);
-            } else {
-                setCustomer(null);
-            }
-        })
-        .catch(res => {
-            console.log("Unable to check session: " + res.data);
-        })
-        .finally(
-            setLoading(false)
-        )
+        try {
+            const sessionResponse = await api.get("/check-session");
+            const customerData = sessionResponse.data || null;
+            setCustomer(customerData);
+            return customerData;
+        } catch (error) {
+            console.error("Session check failed:", error);
+            setCustomer(null);
+            return null;
+        } finally {
+            setLoading(false);
+        }
     }
 
     return (
