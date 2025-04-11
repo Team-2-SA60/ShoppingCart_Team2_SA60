@@ -1,7 +1,6 @@
 package nus.shoppingcart_team2_sa60.service;
 
 import nus.shoppingcart_team2_sa60.dto.CartDetailsResponseDTO;
-import nus.shoppingcart_team2_sa60.model.CartDetails;
 
 import java.util.List;
 
