@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import {Container, Button, Modal, ModalBody, ModalFooter} from 'reactstrap';
+import {Container, Button} from 'reactstrap';
 import api from '../utilities/axios';
 import './CartDetails.css';
 import ListCartItem from "../components/ListCartItem";
@@ -28,7 +28,7 @@ export default function CartDetails() {
             }
             return item;
         }));
-    };
+    }
 
     function handleAddItemQty(id) {
         updateQuantity(id, quantity => quantity + 1);
