@@ -8,9 +8,9 @@ import java.util.List;
 public interface CartService {
 
     List<CartDetailsResponseDTO> getCartDetailsByCustomerId(int customerId);
-    CartDetails addCartItemQty(int cartDetailsId);
-    CartDetails minusCartItemQty(int cartDetailsId);
-    CartDetails setCartItemQty(int cartDetailsId, int newQty);
-    CartDetails deleteItemFromCart(int cartDetailsId);
+    void  addCartItemQty(int cartDetailsId);
+    void  minusCartItemQty(int cartDetailsId);
+    void  setCartItemQty(int cartDetailsId, int newQty);
+    void  deleteItemFromCart(int cartDetailsId);
 
 }

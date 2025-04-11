@@ -32,7 +32,7 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
-    public CartDetails addCartItemQty(int cartDetailsId) {
+    public void addCartItemQty(int cartDetailsId) {
         Optional<CartDetails> cartDetails = cartDetailsRepo.findById(cartDetailsId);
         if (cartDetails.isPresent()) {
             CartDetails cartDetail = cartDetails.get();
@@ -40,14 +40,12 @@ public class CartServiceImpl implements CartService {
             if (newQty >= 1 && newQty <= 99) {
                 cartDetail.setProductQty(newQty);
                 cartDetailsRepo.save(cartDetail);
-                return cartDetail;
             }
         }
-        return null;
     }
 
     @Override
-    public CartDetails minusCartItemQty(int cartDetailsId) {
+    public void minusCartItemQty(int cartDetailsId) {
         Optional<CartDetails> cartDetails = cartDetailsRepo.findById(cartDetailsId);
         if (cartDetails.isPresent()) {
             CartDetails cartDetail = cartDetails.get();
@@ -55,14 +53,12 @@ public class CartServiceImpl implements CartService {
             if (newQty >= 1 && newQty <= 99) {
                 cartDetail.setProductQty(newQty);
                 cartDetailsRepo.save(cartDetail);
-                return cartDetail;
             }
         }
-        return null;
     }
 
     @Override
-    public CartDetails setCartItemQty(int cartDetailsId, int newQty) {
+    public void setCartItemQty(int cartDetailsId, int newQty) {
         Optional<CartDetails> cartDetails = cartDetailsRepo.findById(cartDetailsId);
         if (cartDetails.isPresent()) {
             CartDetails cartDetail = cartDetails.get();
@@ -70,21 +66,16 @@ public class CartServiceImpl implements CartService {
             if (newQty >= 1 && newQty <= 99) {
                 cartDetail.setProductQty(newQty);
                 cartDetailsRepo.save(cartDetail);
-                return cartDetail;
-
             }
         }
-        return null;
     }
 
     @Override
-    public CartDetails deleteItemFromCart(int cartDetailsId) {
+    public void deleteItemFromCart(int cartDetailsId) {
         Optional<CartDetails> cartDetails = cartDetailsRepo.findById(cartDetailsId);
         if (cartDetails.isPresent()) {
             CartDetails cartDetail = cartDetails.get();
             cartDetailsRepo.delete(cartDetail);
-            return cartDetail;
         }
-        return null;
     }
 }
