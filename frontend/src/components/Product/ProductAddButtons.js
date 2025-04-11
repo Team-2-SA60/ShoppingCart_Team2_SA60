@@ -1,8 +1,10 @@
 import { useState } from "react";
 import { Button, ButtonGroup } from "reactstrap";
+import { useSession } from "../../context/SessionContext";
 
 const ProductAddButtons = () => {
     const [quantity, setQuantity] = useState(1);
+    const { customer } = useSession();
 
     const handleIncrease = () => setQuantity(quantity > 99 ? 99 : quantity + 1);
     const handleDecrease = () => setQuantity(quantity > 1 ? quantity - 1 : 1);
@@ -17,6 +19,16 @@ const ProductAddButtons = () => {
             setQuantity(Number(99));
         }
     };
+
+    if (!customer) {
+        return (
+            <div className="w-full ml-[25%]">
+                <Button style={{ fontSize: 12 }}>
+                    Login to Add To Cart
+                </Button>
+            </div>
+        )
+    }
 
     return (
         <div>

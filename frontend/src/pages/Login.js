@@ -9,14 +9,15 @@ const Login = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [message, setMessage] = useState('');
-    const { customer } = useSession();
+    const { customer, checkSession} = useSession();
     const navigate = useNavigate();
 
     useEffect(() => {
+        checkSession();
         if (customer !== null) {
             navigate("/");
         }
-    })
+    },[customer])
 
     const handleLogin = async (event) => {
 
@@ -24,23 +25,23 @@ const Login = () => {
         api.post("/login", {
             email, password
         })
-            .then(res => {
-                console.log("Login success:", res.data);
-                navigate("/")
-            })
-            .catch(err => {
-                const statusCode = err.response?.status;
-                const responseMessage = err.response?.data.message;
+        .then(res => {
+            console.log("Login success:", res.data);
+            navigate("/")
+        })
+        .catch(err => {
+            const statusCode = err.response?.status;
+            const responseMessage = err.response?.data.message;
 
-                if (statusCode === 404) {
-                    setMessage("User not found");
-                } else if (statusCode === 401) {
-                    setMessage("Password is incorrect");
-                } else {
-                    setMessage(responseMessage || "Login failed");
-                }
-                console.error('Login failed:', responseMessage);
-            });
+            if (statusCode === 404) {
+                setMessage("User not found");
+            } else if (statusCode === 401) {
+                setMessage("Password is incorrect");
+            } else {
+                setMessage(responseMessage || "Login failed");
+            }
+            console.error('Login failed:', responseMessage);
+        });
     };
 
     return (

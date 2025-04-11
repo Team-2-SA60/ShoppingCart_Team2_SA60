@@ -41,7 +41,7 @@ public class CustomerController {
     public ResponseEntity<CustomerResponseDTO> checkSession(HttpSession session) {
         Customer customer = (Customer) session.getAttribute("customer");
         if (customer == null) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
+            return ResponseEntity.ok(null);
         }
         return ResponseEntity.ok(new CustomerResponseDTO(customer));
     }
