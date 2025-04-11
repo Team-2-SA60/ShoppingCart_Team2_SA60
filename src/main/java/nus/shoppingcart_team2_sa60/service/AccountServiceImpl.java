@@ -18,8 +18,9 @@ public class AccountServiceImpl implements AccountService {
     @Override
     @Transactional
     public Customer createAccount(Customer customer) {
-        Optional<Customer> existingCustomer = aRepo.findByEmail(customer.getEmail());
 
+        // Check if customer already exists (by email)
+        Optional<Customer> existingCustomer = aRepo.findByEmail(customer.getEmail());
         if (existingCustomer.isPresent()) {
             return null;
         }
@@ -30,14 +31,33 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     @Transactional
-    public Customer editAccount(Customer loggedInCustomer, Customer updatedCustomer) {
-        return null;
+    public Customer editAccount(Customer loggedInCustomer, Customer newCustomerDetails) {
+
+        // Get up-to-date customer before proceeding to update
+        Optional<Customer> existingCustomer = aRepo.findById(loggedInCustomer.getId());
+        if (existingCustomer.isEmpty())
+            return null;
+
+        // Only allow to change name and password, NOT email
+        Customer updatedCustomer = existingCustomer.get();
+        updatedCustomer.setName(newCustomerDetails.getName());
+        updatedCustomer.setPassword(newCustomerDetails.getPassword());
+        return aRepo.save(updatedCustomer);
     }
 
     @Override
     @Transactional
     public Customer editAddress(Customer loggedInCustomer, String address) {
-        return null;
+
+        // Get up-to-date customer before proceeding to update
+        Optional<Customer> existingCustomer = aRepo.findById(loggedInCustomer.getId());
+        if (existingCustomer.isEmpty())
+            return null;
+
+        // Only allow to change address, NOTHING else
+        Customer updatedCustomer = existingCustomer.get();
+        updatedCustomer.setAddress(address);
+        return aRepo.save(updatedCustomer);
     }
 
     @Override
