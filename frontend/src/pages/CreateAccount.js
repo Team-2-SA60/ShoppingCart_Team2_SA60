@@ -24,7 +24,7 @@ const CreateAccount = () => {
         // eslint-disable-next-line
     },[customer])
 
-    function handleCreateAccount(e) {
+    async function handleCreateAccount(e) {
         e.preventDefault();
         setMessage('');
         const [name, email, password, verifyPassword] = [nameField.current.value, 
@@ -35,7 +35,7 @@ const CreateAccount = () => {
         const fieldOK = fieldCheck(name, email, password, verifyPassword);
         const passwordOk = passwordCheck(password, verifyPassword);
         if (fieldOK && passwordOk) {
-            const createOK = createAccount(name, email, password);
+            const createOK = await createAccount(name, email, password);
             if (createOK) setSuccess(true);
         }
     }
