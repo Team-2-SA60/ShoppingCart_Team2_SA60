@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import AppNavbar from "../components/AppNavbar";
 import './Login.css'
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import api from '../utilities/axios';
 import { useSession } from '../context/SessionContext';
 
@@ -17,6 +17,7 @@ const Login = () => {
         if (customer !== null) {
             navigate("/");
         }
+        // eslint-disable-next-line
     },[customer])
 
     const handleLogin = async (event) => {

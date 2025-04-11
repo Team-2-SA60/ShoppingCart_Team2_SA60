@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import AppNavbar from "../components/AppNavbar";
-import { Alert } from "reactstrap";
+import { Alert, Spinner, Toast, ToastBody } from "reactstrap";
 import api from "../utilities/axios";
 import { useNavigate } from "react-router-dom";
 import { useSession } from "../context/SessionContext";
@@ -13,6 +13,7 @@ const CreateAccount = () => {
     const verifyPasswordField = useRef();
     const [ message, setMessage ] = useState("");
     const { customer, checkSession } = useSession();
+    const [ success, setSuccess ] = useState(false);
     const navigate = useNavigate();
     
     useEffect(() => {
@@ -20,6 +21,7 @@ const CreateAccount = () => {
         if (customer !== null) {
             navigate("/");
         }
+        // eslint-disable-next-line
     },[customer])
 
     function handleCreateAccount(e) {
@@ -34,7 +36,7 @@ const CreateAccount = () => {
         const passwordOk = passwordCheck(password, verifyPassword);
         if (fieldOK && passwordOk) {
             const createOK = createAccount(name, email, password);
-            if (createOK) navigate("/login");
+            if (createOK) setSuccess(true);
         }
     }
 
@@ -65,7 +67,7 @@ const CreateAccount = () => {
                                                                     email: email, 
                                                                     password: password
                                                                 });
-
+            console.log(createResponse.data);
         } catch (err) {
             const statusCode = err.response?.status;
             const responseMessage = err.response?.data.message;
@@ -76,10 +78,37 @@ const CreateAccount = () => {
                 setMessage(responseMessage || "Creating account failed");
             }
             console.error('Creating account failed:', responseMessage);
+            return false;
         }
         return true;
     }
     
+    if (success) {
+        setTimeout(function () {
+            navigate("/login");
+        }, 5000);
+        
+        return (
+            <div>
+                <AppNavbar />
+                <div className="flex items-center justify-center h-[80vh] w-full">
+                    <div className="p-3 my-2 rounded">
+                        <Toast>
+                            <ToastBody className="text-center">
+                                <h4>Account created!</h4>
+                                <Spinner>
+                                    Loading...
+                                </Spinner>
+                                <br/>
+                                <a href="/login">Redirecting you back to login...</a>
+                            </ToastBody>
+                        </Toast>
+                    </div>
+                </div>
+            </div>
+        )
+    }
+
     return (
         <div>
             <AppNavbar />
