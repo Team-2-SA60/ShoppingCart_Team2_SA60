@@ -17,6 +17,7 @@ const Login = () => {
         if (customer !== null) {
             navigate("/");
         }
+        // eslint-disable-next-line
     },[customer])
 
     const handleLogin = async (event) => {
@@ -77,7 +78,7 @@ const Login = () => {
                                     {message}
                                 </div>
                             )}
-                            <button type="submit" className="login-button">LOGIN</button>
+                            <button type="submit" className="login-button hover:bg-slate-800">LOGIN</button>
                         </form>
                     </div>
                     <div className="login-section signup-info">
@@ -88,7 +89,7 @@ const Login = () => {
                             <li>📍 Easily track orders</li>
                             <li>🛒 View order history</li>
                         </ul>
-                        <button className="signup-button">CREATE AN ACCOUNT</button>
+                        <a href="/account/create" className="no-underline"><button className="signup-button hover:bg-slate-800">CREATE AN ACCOUNT</button></a>
                     </div>
                 </div>
             </div>

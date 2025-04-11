@@ -29,9 +29,9 @@ export default function CartItem({item, handleMinusItemQty, handleSetItemQty, ha
         <div>
             <div className="cart-item">
                 <img
-                    src={`./images/${item.productImage}`}
+                    src={`../images/products/${item.productImage}`}
                     alt={item.productName}
-                    className="cart-item-image"
+                    className="cart-item-image rounded-md drop-shadow-md"
                 />
                 <div className="cart-item-details">
                     <h2>{item.productName}</h2>
