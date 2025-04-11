@@ -21,7 +21,8 @@ public class Cart {
     @JoinColumn(name = "customer_id")
     private Customer customer;
 
-    @OneToMany(mappedBy = "cart")
+    @OneToMany
+    @JoinColumn(name = "cart_id")
     private List<CartDetails> cartDetails;
 
     // constructors

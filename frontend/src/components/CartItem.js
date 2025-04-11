@@ -1,0 +1,63 @@
+import React, {useEffect, useState} from 'react';
+import {Button} from "reactstrap";
+
+export default function CartItem({item, handleMinusItemQty, handleSetItemQty, handleAddItemQty, handleDeleteItem}) {
+    const [itemQty, setItemQty] = useState(item.quantity || "");
+
+    useEffect(() => {
+        setItemQty(item.quantity);
+    }, [item]);
+
+    function handleQtyChange(event) {
+        const newQty = event.target.value;
+
+        if (newQty === "" || newQty >= 1 && newQty <= 99) {
+            setItemQty(newQty);
+            if (newQty !== "") {
+                handleSetItemQty(item.id, newQty);
+            }
+        }
+    }
+
+    function preventInvalidChars (event)  {
+        if (event.key === '.' || event.key === '-') {
+            event.preventDefault();
+        }
+    }
+
+    return(
+        <div>
+            <div className="cart-item">
+                <img
+                    src={`./images/${item.productImage}`}
+                    alt={item.productName}
+                    className="cart-item-image"
+                />
+                <div className="cart-item-details">
+                    <h2>{item.productName}</h2>
+                    <p>{item.productDescription}</p>
+                    <p>${item.unitPrice.toFixed(2)}</p>
+                </div>
+                <div className="cart-item-quantity">
+                    <button onClick={() => handleMinusItemQty(item.id)} className="border-black border w-6 rounded-l-md bg-red-200 text-black">
+                        <b>-</b>
+                    </button>
+                    <input
+                        value={itemQty}
+                        onChange={handleQtyChange}
+                        onKeyDown={preventInvalidChars}
+                        type="number"
+                        className="border-black border-t border-b w-10 focus:outline-none text-center [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                    />
+                    <button onClick={() => handleAddItemQty(item.id)} className="border-black border w-6 rounded-r-md bg-green-200 text-black">
+                        <b>+</b>
+                    </button>
+                </div>
+                <Button onClick={() => handleDeleteItem(item.id)} color="danger" className="remove-button">
+                    X
+                </Button>
+            </div>
+        </div>
+    )
+
+}
