@@ -63,7 +63,7 @@ export default function CartDetails() {
 
     function handleDeleteItem(id) {
         api.delete(`cart/delete/${id}`)
-            .then(response=>{
+            .then(()=>{
                 console.log('Item deleted');
                 setCartItems(cartItems.filter(item => item.id !== id));
             })
