@@ -95,12 +95,14 @@ public class AccountServiceImpl implements AccountService {
         if (existingCustomer.isEmpty())
             return null;
 
+        System.out.println(creditCardRequestDTO.getCreditCardExpiryMonth());
+        System.out.println(creditCardRequestDTO.getCreditCardExpiryYear());
         // Only allow to change credit card information, NOTHING else
         Customer updateCustomer = existingCustomer.get();
         updateCustomer.setCreditCardName(creditCardRequestDTO.getCreditCardName());
-        updateCustomer.setCreditCardNumber(creditCardRequestDTO.getCreditCardNumber());
-        updateCustomer.setCreditCardExpiryMonth(creditCardRequestDTO.getCreditCardExpiryMonth());
-        updateCustomer.setCreditCardExpiryYear(creditCardRequestDTO.getCreditCardExpiryYear());
+        //updateCustomer.setCreditCardNumber(creditCardRequestDTO.getCreditCardNumber());
+        //updateCustomer.setCreditCardExpiryMonth(creditCardRequestDTO.getCreditCardExpiryMonth());
+        //updateCustomer.setCreditCardExpiryYear(creditCardRequestDTO.getCreditCardExpiryYear());
         return aRepo.save(updateCustomer);
     }
 }

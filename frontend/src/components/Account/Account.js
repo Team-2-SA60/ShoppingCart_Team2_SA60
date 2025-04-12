@@ -5,6 +5,8 @@ import { useEffect } from "react";
 import { useSession } from "../../context/SessionContext";
 import { useNavigate } from "react-router-dom";
 import { Spinner } from "reactstrap";
+import AccountAddress from "./AccountAddress";
+import AccountCreditCard from "./AccountCreditCard";
 
 
 const Account = ({activeTab, setActiveTab}) => {
@@ -15,7 +17,7 @@ const Account = ({activeTab, setActiveTab}) => {
     useEffect(() => {
         getCustomer();
         // eslint-disable-next-line
-    }, [])
+    }, [navigate])
 
     async function getCustomer() {
         const getCustomer = await checkSession();
@@ -46,10 +48,10 @@ const Account = ({activeTab, setActiveTab}) => {
             
             {/*content after selecting tab*/}
             <div className="py-3 pr-4 h-[400px]">
-                {activeTab === 0 && <AccountName customer={customer}/>}
+                {activeTab === 0 && <AccountName customer={customer} />}
                 {activeTab === 1 && <AccountPassword />}
-                {activeTab === 2 && <div>Address Content</div>}
-                {activeTab === 3 && <div>Credit Card Content</div>}
+                {activeTab === 2 && <AccountAddress customer={customer} />}
+                {activeTab === 3 && <AccountCreditCard />}
             </div>
         </div>
     )

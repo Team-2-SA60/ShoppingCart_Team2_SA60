@@ -29,7 +29,9 @@ public class AccountController {
 
     @InitBinder
     public void initAccountBinder(WebDataBinder binder) {
-        binder.setValidator(aValidator);
+        if (binder.getTarget() instanceof AccountRequestDTO) {
+            binder.setValidator(aValidator);
+        }
     }
 
 
@@ -82,7 +84,7 @@ public class AccountController {
 
         // If cannot find customer in database
         if (updatedCustomer == null)
-            return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body("Customer not updated");
+            return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body("Customer name not updated");
 
         return ResponseEntity.ok(new CustomerResponseDTO(updatedCustomer));
     }
@@ -137,7 +139,7 @@ public class AccountController {
 
         // If cannot find customer in database
         if (updatedCustomer == null)
-            return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body("Customer not updated");
+            return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body("Address not updated");
 
         return ResponseEntity.ok("Saved address successfully");
     }
@@ -164,7 +166,7 @@ public class AccountController {
 
         // If cannot find customer in database
         if (updatedCustomer == null)
-            return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body("Customer not updated");
+            return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body("Card not saved");
 
         return ResponseEntity.ok("Saved credit card successfully");
     }

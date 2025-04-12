@@ -1,60 +1,63 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import api from "../../utilities/axios";
 import { Alert, Spinner } from "reactstrap";
 import { useNavigate } from "react-router-dom";
 
-const AccountPassword = () => {
+const AccountAddress = ({customer}) => {
 
-    const [currentPassword, setCurrentPassword] = useState('');
-    const [newPassword, setNewPassword] = useState('');
-    const [confirmNewPassword, setConfirmNewPassword] = useState('');
+    const [address, setAddress] = useState('');
+    const [floorUnit, setFloorUnit] = useState('');
+    const [postal, setPostal] = useState('');
     const [message, setMessage] = useState('');
     const [isLoading, setLoading] = useState(false);
     const [success, setSuccess] = useState(false);
     const navigate = useNavigate();
 
+    useEffect(() => {
+        if (customer.address !== null) {
+            const cusAddress = customer.address.split("\n");
+            setAddress(cusAddress[0]);
+            setFloorUnit(cusAddress[1]);
+            setPostal(cusAddress[2]);
+        }
+    },[customer])
 
-    async function handleChangePassword(e){
+    async function handleChangeAddress(e) {
         e.preventDefault();
         setLoading(true);
         setSuccess(false);
-        const passwordOK = passwordCheck();
-        if (passwordOK) {
-            const changePasswordOK = await changePassword();
-            if (changePasswordOK) {
-                setCurrentPassword('');
-                setNewPassword('');
-                setConfirmNewPassword('');
+        const fieldOK = fieldCheck();
+        if (fieldOK) {
+            const changeAddressOK = await changeAddress();
+            if (changeAddressOK) {
                 setSuccess(true);
-            }
-        }
+            };
+        };
         setLoading(false);
     }
 
-    function passwordCheck() {
-        if (currentPassword.includes(" ") || newPassword.includes(" ") || confirmNewPassword.includes(" ")) {
-            setMessage("Password cannot have space");
+    function fieldCheck() {
+        if (!address || !floorUnit || !postal) {
+            setMessage("All fields cannot be blank");
             return false;
         }
-        if (newPassword !== confirmNewPassword) {
-            setMessage("Passwords entered do not match");
+        if (postal.length !== 6) {
+            setMessage("Postal code must be 6-digits");
             return false;
-        }
-        if (currentPassword === newPassword) {
-            setMessage("New password same as current password")
         }
         setMessage('');
         return true;
     }
 
-    async function changePassword() {
+    async function changeAddress() {
         try {
-            let response = await api.put("/account/edit/password",
+            const response = await api.put("/account/edit/address",
                 {
-                    password: currentPassword,
-                    newPassword: newPassword
+                    address: address,
+                    floorUnitNumber: floorUnit,
+                    postalCode: postal
                 }
-            );
+            )
             console.log(response.data);
         } catch (err) {
             const statusCode = err.response?.status;
@@ -64,12 +67,8 @@ const AccountPassword = () => {
             if (statusCode === 403) {
                 console.log("Customer not logged in");
                 navigate("/login");
-            } else if (statusCode === 400) {
-                setMessage("Password requirements not met");
-            } else if (statusCode === 401) {
-                setMessage("Wrong password input")
             } else {
-                setMessage(error || "Change password failed")
+                setMessage(error || "Change address failed")
                 console.error(errorMessage);
             }
             return false;
@@ -80,51 +79,57 @@ const AccountPassword = () => {
     return (
         <div className="flex flex-col h-full relative">
             <div>
-                <h6>Change Password</h6>
+                <h6>Your Address</h6>
             </div>
-            <form onSubmit={handleChangePassword}>
-                <div className="mt-3">
-                    <label>Current Password *</label>
+            <form onSubmit={handleChangeAddress}
+                className="flex flex-wrap justify-around"
+            >
+                <div className="mt-4 w-[90%]">
+                    <label>Address line *</label>
                     <input
-                        type="password"
-                        onChange={(e) => setCurrentPassword(e.target.value)}
-                        value={currentPassword}
+                        type="text"
+                        value={address}
+                        placeholder="Input your Street Address"
+                        onChange={(e) => setAddress(e.target.value)}
                         className="p-1 mt-[5px] my-[3%] border-[1px] border-slate-300 rounded-md w-full"
                         required
                     />
                 </div>
-                <div>
-                    <label>New Password *</label>
+                <div className="w-[40%] mt-3.5">
+                    <label>Floor / Unit Number *</label>
                     <input
-                        type="password"
-                        onChange={(e) => setNewPassword(e.target.value)}
-                        value={newPassword}
+                        type="text"
+                        value={floorUnit}
+                        placeholder="Floor / Unit Number"
+                        onChange={(e) => setFloorUnit(e.target.value)}
                         className="p-1 mt-[5px] my-[3%] border-[1px] border-slate-300 rounded-md w-full"
                         required
                     />
                 </div>
-                <div>
-                    <label>Confirm New Password *</label>
+                <div className="w-[40%] mt-3.5">
+                    <label>Postal *</label>
                     <input
-                        type="password"
-                        value={confirmNewPassword}
-                        onChange={(e) => setConfirmNewPassword(e.target.value)}
+                        type="number"
+                        value={postal}
+                        placeholder="6-digits postal code"
+                        onChange={(e) => setPostal(e.target.value)}
                         className="p-1 mt-[5px] my-[3%] border-[1px] border-slate-300 rounded-md w-full"
+                        required
                     />
                 </div>
                 <Alert
                     color="danger"
                     isOpen={message !== ''}
-                    className="pl-1 py-0"
+                    className="p-2 mt-2 w-[90%]"
                 >
                     {message}
                 </Alert>
                 <Alert
                     color="success"
                     isOpen={success}
-                    className="pl-1 py-0"
+                    className="p-2 mt-2 w-[90%]"
                 >
-                    Password changed successfully
+                    Address saved successfully
                 </Alert>
                 <button
                     type="submit"
@@ -133,16 +138,16 @@ const AccountPassword = () => {
                                 absolute -bottom-3
                                 hover:!bg-slate-800 active:scale-[0.97] transition-all`}
                 >
-                    {isLoading ? 
+                    {isLoading ?
                         <Spinner size={'sm'}>Loading...</Spinner>
                         :
-                        "Change Password"
+                        "Save Address"
                     }
-                    
+
                 </button>
             </form>
         </div>
     )
 }
 
-export default AccountPassword;
+export default AccountAddress;
