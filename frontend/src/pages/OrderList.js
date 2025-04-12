@@ -10,7 +10,7 @@ import { useParams } from 'react-router-dom';
 
 const OrderList = () => {
 
-    const { customer, checkSession } = useSession();
+    const { checkSession } = useSession();
     const [orders, setOrders] = useState([]);
     const navigate = useNavigate();
     const { status } = useParams();
@@ -22,10 +22,14 @@ const OrderList = () => {
     };
 
     useEffect(() => {  
-        checkSession();
-        if (!customer) navigate("/login");
+        getCustomer();
         getOrders(status);
     }, [status]);
+
+    async function getCustomer() {
+        const customer = await checkSession();
+        if (!customer) navigate("/login");
+    }
 
     async function getOrders(status) {
         let fetchURL = '/orders';

@@ -9,16 +9,18 @@ const Login = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [message, setMessage] = useState('');
-    const { customer, checkSession} = useSession();
+    const { checkSession } = useSession();
     const navigate = useNavigate();
 
     useEffect(() => {
-        checkSession();
-        if (customer !== null) {
-            navigate("/");
-        }
+        getCustomer();
         // eslint-disable-next-line
-    },[customer])
+    },[])
+
+    async function getCustomer() {
+        const customer = await checkSession();
+        if (customer) navigate("/");
+    }
 
     const handleLogin = async (event) => {
 
