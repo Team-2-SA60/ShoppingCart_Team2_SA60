@@ -30,13 +30,13 @@ const TopRightButtons = ({handleLogout}) => {
                             </div>
                         </DropdownToggle>
                         <DropdownMenu className="drop-shadow-md mt-4">
-                            <DropdownItem className="hover:underline" tag={Link} to="/">
+                            <DropdownItem className="hover:underline" tag={Link} to="/account">
                                 Account
                             </DropdownItem>
                             <DropdownItem className="hover:underline" tag={Link} to="/orders">
                                 My Orders
                             </DropdownItem>
-                            <DropdownItem className="hover:underline" tag={Link} onClick={handleLogout}>
+                            <DropdownItem className="hover:underline" onClick={handleLogout}>
                                 Log Out
                             </DropdownItem>
                         </DropdownMenu>
