@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { Button, ButtonGroup, Container, Nav, NavItem, NavLink, Table } from 'reactstrap';
 import AppNavbar from '../components/AppNavbar';
 import { Link, useNavigate } from 'react-router-dom';
 import api from '../utilities/axios';
@@ -24,6 +23,7 @@ const OrderList = () => {
     useEffect(() => {  
         getCustomer();
         getOrders(status);
+        // eslint-disable-next-line
     }, [status]);
 
     async function getCustomer() {

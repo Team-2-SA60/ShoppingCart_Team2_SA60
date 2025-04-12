@@ -1,6 +1,6 @@
 import AccountTab from "./AccountTab";
 import AccountDefault from "./AccountDefault";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useSession } from "../../context/SessionContext";
 import { useNavigate } from "react-router-dom";
 import { Spinner } from "reactstrap";
@@ -8,23 +8,21 @@ import { Spinner } from "reactstrap";
 
 const Account = ({activeTab, setActiveTab}) => {
 
-    const [customer, setCustomer] = useState('');
-    const [isLoading, setLoading] = useState(true);
-    const { checkSession } = useSession();
+    const { customer, setCustomer, checkSession } = useSession();
     const navigate = useNavigate();
 
     useEffect(() => {
         getCustomer();
+        // eslint-disable-next-line
     }, [])
 
     async function getCustomer() {
         const getCustomer = await checkSession();
         setCustomer(getCustomer);
         if (!getCustomer) navigate("/login");
-        setLoading(false);
     }
 
-    if (isLoading) {
+    if (!customer) {
         return (
             <div className="place-content-center text-center w-full h-full">
                 <Spinner>
@@ -35,7 +33,7 @@ const Account = ({activeTab, setActiveTab}) => {
     }
 
     const tabs = [
-        { id: 1, label: "Edit Account" },
+        { id: 1, label: "Change Password" },
         { id: 2, label: "Address" },
         { id: 3, label: "Credit Card" }
     ];

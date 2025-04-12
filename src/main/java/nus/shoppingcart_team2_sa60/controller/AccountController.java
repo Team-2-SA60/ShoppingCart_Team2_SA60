@@ -41,28 +41,67 @@ public class AccountController {
         return ResponseEntity.ok(new CustomerResponseDTO(createdCustomer));
     }
 
-    @PutMapping("/edit")
-    public ResponseEntity<?> editAccount(@Valid @RequestBody Customer newCustomerDetails, HttpSession session) {
+    @PutMapping("/edit/name")
+    public ResponseEntity<?> editName(@RequestParam(value = "name") String name, HttpSession session) {
+
+        // Checks if session already has logged-in user.
         Customer loggedInCustomer = (Customer) session.getAttribute("customer");
         if (loggedInCustomer == null)
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Customer not logged in");
 
-        Customer updatedCustomer = aService.editAccount(loggedInCustomer, newCustomerDetails);
+        // Check RequestParam if empty
+        if (name == null || name.isEmpty())
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Name is empty");
 
+        // Update customer name
+        Customer updatedCustomer = aService.editName(loggedInCustomer, name);
+
+        // If cannot find customer in database
         if (updatedCustomer == null)
             return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body("Customer not updated");
 
         return ResponseEntity.ok(new CustomerResponseDTO(updatedCustomer));
     }
 
-    @PutMapping("/edit/address")
-    public ResponseEntity<?> editAddress(@RequestBody String address, HttpSession session) {
+    @PutMapping("/edit/password")
+    public ResponseEntity<?> editPassword(@RequestParam(name = "currentpassword") String currentPassword,
+                                          @RequestParam(name = "newpassword") String newPassword,
+                                          HttpSession session) {
+
+        // Checks if session already has logged-in user.
         Customer loggedInCustomer = (Customer) session.getAttribute("customer");
         if (loggedInCustomer == null)
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Customer not logged in");
 
+        // Check RequestParam for newPassword if empty
+        if (newPassword == null || newPassword.isEmpty())
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Password is empty");
+        // Check RequestParam for newPassword if contains space
+        if (newPassword.contains(" "))
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Password contains space");
+
+        // Check existing password with customer's input
+        Customer updateCustomer = aService.checkPassword(loggedInCustomer, currentPassword);
+        if (updateCustomer == null)
+            return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body("Password not updated, as customer does not exist");
+
+        // Update customer password
+        Customer updatedCustomer = aService.editPassword(loggedInCustomer, newPassword);
+        return ResponseEntity.ok(new CustomerResponseDTO(updatedCustomer));
+    }
+
+    @PutMapping("/edit/address")
+    public ResponseEntity<?> editAddress(@RequestBody String address, HttpSession session) {
+
+        // Checks if session already has logged-in user.
+        Customer loggedInCustomer = (Customer) session.getAttribute("customer");
+        if (loggedInCustomer == null)
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Customer not logged in");
+
+        // Update customer address
         Customer updatedCustomer = aService.editAddress(loggedInCustomer, address);
 
+        // If cannot find customer in database
         if (updatedCustomer == null)
             return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body("Customer not updated");
 
@@ -71,12 +110,16 @@ public class AccountController {
 
     @PutMapping("/edit/creditcard")
     public ResponseEntity<?> editCreditCard(@Valid @RequestBody CreditCardRequestDTO creditCard, HttpSession session) {
+
+        // Checks if session already has logged-in user.
         Customer loggedInCustomer = (Customer) session.getAttribute("customer");
         if (loggedInCustomer == null)
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Customer not logged in");
 
+        // Update customer credit card
         Customer updatedCustomer = aService.editCreditCard(loggedInCustomer, creditCard);
 
+        // If cannot find customer in database
         if (updatedCustomer == null)
             return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body("Customer not updated");
 

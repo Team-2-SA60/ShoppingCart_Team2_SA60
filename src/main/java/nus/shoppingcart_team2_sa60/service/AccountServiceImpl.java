@@ -31,18 +31,44 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     @Transactional
-    public Customer editAccount(Customer loggedInCustomer, Customer newCustomerDetails) {
+    public Customer editName(Customer loggedInCustomer, String newName) {
 
         // Get up-to-date customer before proceeding to update
         Optional<Customer> existingCustomer = aRepo.findById(loggedInCustomer.getId());
         if (existingCustomer.isEmpty())
             return null;
 
-        // Only allow to change name and password, NOT email
-        Customer updatedCustomer = existingCustomer.get();
-        updatedCustomer.setName(newCustomerDetails.getName());
-        updatedCustomer.setPassword(newCustomerDetails.getPassword());
-        return aRepo.save(updatedCustomer);
+        // Set updated name then save;
+        Customer updateCustomer = existingCustomer.get();
+        updateCustomer.setName(newName);
+
+        return aRepo.save(updateCustomer);
+    }
+
+    @Override
+    @Transactional
+    public Customer editPassword(Customer updateCustomer, String newPassword) {
+
+        // Saves password
+        updateCustomer.setPassword(newPassword);
+        return aRepo.save(updateCustomer);
+    }
+
+    @Override
+    public Customer checkPassword(Customer loggedInCustomer, String currentPassword) {
+
+        // Get up-to-date customer to check password
+        Optional<Customer> existingCustomer = aRepo.findById(loggedInCustomer.getId());
+        if (existingCustomer.isEmpty())
+            return null;
+
+        // Checks password
+        Customer updateCustomer = existingCustomer.get();
+        String correctPassword = updateCustomer.getPassword();
+        if (!correctPassword.equals(currentPassword))
+            return null;
+
+        return updateCustomer;
     }
 
     @Override
@@ -55,9 +81,9 @@ public class AccountServiceImpl implements AccountService {
             return null;
 
         // Only allow to change address, NOTHING else
-        Customer updatedCustomer = existingCustomer.get();
-        updatedCustomer.setAddress(address);
-        return aRepo.save(updatedCustomer);
+        Customer updateCustomer = existingCustomer.get();
+        updateCustomer.setAddress(address);
+        return aRepo.save(updateCustomer);
     }
 
     @Override
@@ -69,11 +95,11 @@ public class AccountServiceImpl implements AccountService {
             return null;
 
         // Only allow to change credit card information, NOTHING else
-        Customer updatedCustomer = existingCustomer.get();
-        updatedCustomer.setCreditCardName(creditCardRequestDTO.getCreditCardName());
-        updatedCustomer.setCreditCardNumber(creditCardRequestDTO.getCreditCardNumber());
-        updatedCustomer.setCreditCardExpiryMonth(creditCardRequestDTO.getCreditCardExpiryMonth());
-        updatedCustomer.setCreditCardExpiryYear(creditCardRequestDTO.getCreditCardExpiryYear());
-        return aRepo.save(updatedCustomer);
+        Customer updateCustomer = existingCustomer.get();
+        updateCustomer.setCreditCardName(creditCardRequestDTO.getCreditCardName());
+        updateCustomer.setCreditCardNumber(creditCardRequestDTO.getCreditCardNumber());
+        updateCustomer.setCreditCardExpiryMonth(creditCardRequestDTO.getCreditCardExpiryMonth());
+        updateCustomer.setCreditCardExpiryYear(creditCardRequestDTO.getCreditCardExpiryYear());
+        return aRepo.save(updateCustomer);
     }
 }
