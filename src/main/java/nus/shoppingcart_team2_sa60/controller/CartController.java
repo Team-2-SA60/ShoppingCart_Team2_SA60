@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @CrossOrigin
 @RestController
@@ -37,8 +38,27 @@ public class CartController {
         }
 
         return ResponseEntity.ok(cartDetails);
-
     }
 
+    @PutMapping("cart/addQty/{id}")
+    public void addCartItemQty(@PathVariable("id") int cartItemId){
+        cartService.addCartItemQty(cartItemId);
+    }
+
+    @PutMapping("cart/minusQty/{id}")
+    public void minusCartItemQty(@PathVariable("id") int cartItemId){
+        cartService.minusCartItemQty(cartItemId);
+    }
+
+    @PutMapping("cart/setQty/{id}")
+    public void setCartItemQty(@PathVariable("id") int cartItemId, @RequestBody Map<String, Integer> payLoad){
+        int qty = payLoad.get("qty");
+        cartService.setCartItemQty(cartItemId, qty);
+    }
+
+    @DeleteMapping("cart/delete/{id}")
+    public void deleteCartItem(@PathVariable("id") int cartItemId){
+        cartService.deleteItemFromCart(cartItemId);
+    }
 
 }
