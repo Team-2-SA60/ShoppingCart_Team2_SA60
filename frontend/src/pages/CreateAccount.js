@@ -91,7 +91,7 @@ const CreateAccount = () => {
         return (
             <div>
                 <AppNavbar />
-                <div className="flex items-center justify-center h-[80vh] w-full">
+                <div className="flex items-center justify-center min-h-[80vh] w-full box-border">
                     <div className="p-3 my-2 rounded">
                         <Toast>
                             <ToastBody className="text-center">
@@ -112,31 +112,61 @@ const CreateAccount = () => {
     return (
         <div>
             <AppNavbar />
-            <div className="flex items-center justify-center h-[80vh] w-full">
+            <div className="flex items-center justify-center min-h-[80vh] w-full">
                 <div className="bg-slate-100 w-[600px] p-4 rounded-xl border drop-shadow-md ">
                     <div className="grid grid-cols-1">
                         <h3 className="text-center">Create An Account</h3>
                         <form onSubmit={handleCreateAccount}>
-                            <div className="form-group">
+                            <div className="mb-3.5">
                                 <label>Name *</label>
-                                <input type="text" className="form-input" ref={nameField} required/>
+                                <input 
+                                    type="text" 
+                                    className="w-[100%] p-2 mt-[5px] border-[1px] border-slate-300 rounded-md" 
+                                    ref={nameField} 
+                                    required
+                                />
                             </div>
-                            <div className="form-group">
+                            <div className="mb-3.5">
                                 <label>Email Address *</label>
-                                <input type="email" className="form-input" ref={emailField} required/>
+                                <input 
+                                    type="email" 
+                                    className="w-[100%] p-2 mt-[5px] border-[1px] border-slate-300 rounded-md" 
+                                    ref={emailField} 
+                                    required
+                                />
                             </div>
-                            <div className="form-group">
+                            <div className="mb-3.5">
                                 <label>Password *</label>
-                                <input type="password" className="form-input" ref={passwordField} required/>
+                                <input 
+                                    type="password" 
+                                    className="w-[100%] p-2 mt-[5px] border-[1px] border-slate-300 rounded-md" 
+                                    ref={passwordField} 
+                                    required
+                                />
                             </div>
-                            <div className="form-group">
+                            <div className="mb-3.5">
                                 <label>Verify Password *</label>
-                                <input type="password" className="form-input" ref={verifyPasswordField} required/>
+                                <input 
+                                    type="password" 
+                                    className="w-[100%] p-2 mt-[5px] border-[1px] border-slate-300 rounded-md" 
+                                    ref={verifyPasswordField} 
+                                    required
+                                />
                             </div>
-                            <Alert color="danger" isOpen={message !== ""} className="p-1">
+                            <Alert 
+                                color="danger" 
+                                isOpen={message !== ""} 
+                                className="p-1"
+                            >
                                 {message}
                             </Alert>
-                            <button type="submit" className="login-button hover:bg-slate-800">Create Account</button>
+                            <button 
+                                type="submit" 
+                                className="bg-black text-white font-bold 
+                                    w-full px-3.5 py-2.5 mt-2.5 rounded-md cursor-pointer 
+                                    hover:!bg-slate-800 active:scale-[0.97] transition-all">
+                                Create Account
+                            </button>
                         </form>
                     </div>
                 </div>

@@ -1,9 +1,9 @@
 import React, {useEffect, useState} from 'react';
 import AppNavbar from "../components/AppNavbar";
-import './Login.css'
 import { useNavigate } from 'react-router-dom';
 import api from '../utilities/axios';
 import { useSession } from '../context/SessionContext';
+import { Alert } from 'reactstrap';
 
 const Login = () => {
     const [email, setEmail] = useState('');
@@ -48,48 +48,63 @@ const Login = () => {
     return (
         <div>
             <AppNavbar />
-            <div className="login-container">
-                <div className="login-box">
-                    <div className="login-section">
+            <div className="flex items-center justify-center min-h-[80vh] w-full box-border">
+                <div className="grid grid-cols-1 md:grid-cols-2 bg-slate-100 p-4 rounded-xl drop-shadow-md">
+                    <div className="m-2.5">
                         <h2>Log In to your account</h2>
                         <form onSubmit={handleLogin}>
-                            <div className="form-group">
+                            <div className="mb-3.5">
                                 <label>Email Address *</label>
                                 <input
                                     type="email"
-                                    className="form-input"
+                                    className="w-[100%] p-2 mt-[5px] border-[1px] border-slate-300 rounded-md"
                                     value={email}
                                     onChange={e => setEmail(e.target.value)}
                                     required
                                 />
                             </div>
-                            <div className="form-group">
+                            <div className="mb-3.5">
                                 <label>Password *</label>
                                 <input
                                     type="password"
-                                    className="form-input"
+                                    className="w-[100%] p-2 mt-[5px] border-[1px] border-slate-300 rounded-md"
                                     value={password}
                                     onChange={e => setPassword(e.target.value)}
                                     required
                                 />
                             </div>
-                            {message && (
-                                <div className="alert alert-info">
-                                    {message}
-                                </div>
-                            )}
-                            <button type="submit" className="login-button hover:bg-slate-800">LOGIN</button>
+                            <Alert
+                                color="danger"
+                                isOpen={message !== ""}
+                                className="p-1"
+                            >
+                                {message}
+                            </Alert>
+                            <button type="submit" 
+                                className="bg-black text-white font-bold 
+                                    w-full px-3.5 py-2.5 mt-2.5 rounded-md cursor-pointer 
+                                    hover:!bg-slate-800 active:scale-[0.97] transition-all"
+                            >
+                                LOGIN
+                            </button>
                         </form>
                     </div>
-                    <div className="login-section signup-info">
+                    <div className="m-2.5 border-t-[1px] pt-2 md:border-l-[1px] md:pl-5 md:border-t-0 md:mt-[1px]">
                         <h2>Don't have an account?</h2>
                         <p>Create one now to:</p>
-                        <ul>
-                            <li>❤️ Add items to wishlist</li>
-                            <li>📍 Easily track orders</li>
-                            <li>🛒 View order history</li>
+                        <ul className="mb-10">
+                            <li className="m-2.5">❤️ Add items to wishlist</li>
+                            <li className="m-2.5">📍 Easily track orders</li>
+                            <li className="m-2.5">🛒 View order history</li>
                         </ul>
-                        <a href="/account/create" className="no-underline"><button className="signup-button hover:bg-slate-800">CREATE AN ACCOUNT</button></a>
+                        <a href="/account/create" className="no-underline">
+                            <button className="bg-black text-white font-bold 
+                                        w-full px-3.5 py-2.5 rounded-md cursor-pointer 
+                                        hover:!bg-slate-800 active:scale-[0.97] md:mt-2.5 transition-all"
+                            >
+                                CREATE AN ACCOUNT
+                            </button>
+                        </a>
                     </div>
                 </div>
             </div>
