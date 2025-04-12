@@ -1,5 +1,6 @@
 import AccountTab from "./AccountTab";
-import AccountDefault from "./AccountDefault";
+import AccountName from "./AccountName";
+import AccountPassword from "./AccountPassword";
 import { useEffect } from "react";
 import { useSession } from "../../context/SessionContext";
 import { useNavigate } from "react-router-dom";
@@ -44,9 +45,9 @@ const Account = ({activeTab, setActiveTab}) => {
             <AccountTab tabs={tabs} activeTab={activeTab} setActiveTab={setActiveTab}/>
             
             {/*content after selecting tab*/}
-            <div className="py-4 pr-5 h-[400px]">
-                {activeTab === 0 && <AccountDefault customer={customer}/>}
-                {activeTab === 1 && <div>Edit Account Content</div>}
+            <div className="py-3 pr-4 h-[400px]">
+                {activeTab === 0 && <AccountName customer={customer}/>}
+                {activeTab === 1 && <AccountPassword />}
                 {activeTab === 2 && <div>Address Content</div>}
                 {activeTab === 3 && <div>Credit Card Content</div>}
             </div>
