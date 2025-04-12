@@ -1,6 +1,5 @@
 package nus.shoppingcart_team2_sa60.dto;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import nus.shoppingcart_team2_sa60.model.Customer;
 

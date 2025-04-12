@@ -1,5 +1,6 @@
 package nus.shoppingcart_team2_sa60.service;
 
+import nus.shoppingcart_team2_sa60.dto.AccountRequestDTO;
 import nus.shoppingcart_team2_sa60.dto.CreditCardRequestDTO;
 import nus.shoppingcart_team2_sa60.model.Customer;
 import nus.shoppingcart_team2_sa60.repository.AccountRepository;
@@ -17,15 +18,15 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     @Transactional
-    public Customer createAccount(Customer customer) {
+    public Customer createAccount(AccountRequestDTO customerAccount) {
 
         // Check if customer already exists (by email)
-        Optional<Customer> existingCustomer = aRepo.findByEmail(customer.getEmail());
+        Optional<Customer> existingCustomer = aRepo.findByEmail(customerAccount.getEmail());
         if (existingCustomer.isPresent()) {
             return null;
         }
 
-        Customer newCustomer = new Customer(customer.getName(), customer.getEmail(), customer.getPassword());
+        Customer newCustomer = new Customer(customerAccount.getName(), customerAccount.getEmail(), customerAccount.getPassword());
         return aRepo.save(newCustomer);
     }
 

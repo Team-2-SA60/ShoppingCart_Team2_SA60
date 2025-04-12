@@ -70,7 +70,8 @@ const CreateAccount = () => {
             console.log(createResponse.data);
         } catch (err) {
             const statusCode = err.response?.status;
-            const responseMessage = err.response?.data;
+            const error = err.response?.data?.error;
+            const errorMessage = err.response?.data?.message;
 
             if (statusCode === 401) {
                 setMessage("Email already registered");
@@ -78,9 +79,9 @@ const CreateAccount = () => {
                 navigate("/");
                 return false;
             } else {
-                setMessage(responseMessage || "Creating account failed");
+                setMessage(error || "Creating account failed");
+                console.log(errorMessage);
             }
-            console.error('Creating account failed:', responseMessage);
             return false;
         }
         return true;

@@ -2,7 +2,6 @@ package nus.shoppingcart_team2_sa60.dto;
 
 import lombok.Getter;
 import nus.shoppingcart_team2_sa60.model.Order;
-import nus.shoppingcart_team2_sa60.model.OrderDetails;
 
 import java.util.List;
 

@@ -21,18 +21,19 @@ const AccountName = ({customer}) => {
 
     async function updateName() {
         try {
-            const response = await api.put("/account/edit/name", null, { params: { "name": name } })
+            const response = await api.put("/account/edit/name", {name})
             console.log("Updated name: " + response.data.name);
         } catch(err) {
             const statusCode = err.response?.status;
-            const responseMessage = err.response?.data;
+            const error = err.response?.data?.error;
+            const errorMessage = err.response?.data?.message;
 
             if (statusCode === 403) {
                 navigate("/login")
                 return false;
             } else {
-                setMessage(responseMessage || "Saving name failed");
-                console.error('Saving name failed:', responseMessage);
+                setMessage(error || "Saving name failed");
+                console.error('Saving name failed:', errorMessage);
                 return false;
             }
         }

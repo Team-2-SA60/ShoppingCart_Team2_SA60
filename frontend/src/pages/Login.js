@@ -34,16 +34,17 @@ const Login = () => {
         })
         .catch(err => {
             const statusCode = err.response?.status;
-            const responseMessage = err.response?.data.message;
+            const error = err.response?.data?.error;
+            const errorMessage = err.response?.data?.message;
 
             if (statusCode === 404) {
                 setMessage("User not found");
             } else if (statusCode === 401) {
                 setMessage("Password is incorrect");
             } else {
-                setMessage(responseMessage || "Login failed");
+                setMessage(error || "Login failed");
             }
-            console.error('Login failed:', responseMessage);
+            console.error(errorMessage);
         });
     };
 

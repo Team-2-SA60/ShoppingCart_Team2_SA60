@@ -17,6 +17,7 @@ const AccountPassword = () => {
     async function handleChangePassword(e){
         e.preventDefault();
         setLoading(true);
+        setSuccess(false);
         const passwordOK = passwordCheck();
         if (passwordOK) {
             const changePasswordOK = await changePassword();
@@ -48,15 +49,17 @@ const AccountPassword = () => {
 
     async function changePassword() {
         try {
-            let response = await api.put("/account/edit/password", null, 
-                {params: 
-                    {   currentpassword: currentPassword,
-                        newpassword: newPassword
-                    }});
+            let response = await api.put("/account/edit/password",
+                {
+                    password: currentPassword,
+                    newPassword: newPassword
+                }
+            );
             console.log(response.data);
         } catch (err) {
             const statusCode = err.response?.status;
-            const responseMessage = err.response?.data;
+            const error = err.response?.data?.error;
+            const errorMessage = err.response?.data?.message;
 
             if (statusCode === 403) {
                 console.log("Customer not logged in");
@@ -65,8 +68,10 @@ const AccountPassword = () => {
                 setMessage("Password requirements not met");
             } else if (statusCode === 401) {
                 setMessage("Wrong password input")
+            } else {
+                setMessage(error || "Change password failed")
+                console.error(errorMessage);
             }
-            console.error('Changing password failed:', responseMessage);
             return false;
         }
         return true;
@@ -78,7 +83,7 @@ const AccountPassword = () => {
                 <h6>Change Password</h6>
             </div>
             <form onSubmit={handleChangePassword}>
-                <div>
+                <div className="mt-2.5">
                     <label>Current Password</label>
                     <input
                         type="password"
