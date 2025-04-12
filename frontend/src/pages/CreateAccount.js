@@ -42,7 +42,7 @@ const CreateAccount = () => {
 
     function fieldCheck(name, email, password, verifyPassword) {
         if (!name || !email || !password || !verifyPassword) {
-            return false
+            return false;
         }
         return true;
     }
@@ -70,10 +70,13 @@ const CreateAccount = () => {
             console.log(createResponse.data);
         } catch (err) {
             const statusCode = err.response?.status;
-            const responseMessage = err.response?.data.message;
+            const responseMessage = err.response?.data;
 
-            if (statusCode === 417) {
+            if (statusCode === 401) {
                 setMessage("Email already registered");
+            } else if (statusCode === 403) {
+                navigate("/");
+                return false;
             } else {
                 setMessage(responseMessage || "Creating account failed");
             }

@@ -25,11 +25,11 @@ const AccountName = ({customer}) => {
             console.log("Updated name: " + response.data.name);
         } catch(err) {
             const statusCode = err.response?.status;
-            const responseMessage = err.response?.data.message;
+            const responseMessage = err.response?.data;
 
-            if (statusCode === 401) {
-                setMessage("Not logged in");
+            if (statusCode === 403) {
                 navigate("/login")
+                return false;
             } else {
                 setMessage(responseMessage || "Saving name failed");
                 console.error('Saving name failed:', responseMessage);

@@ -56,7 +56,7 @@ const AccountPassword = () => {
             console.log(response.data);
         } catch (err) {
             const statusCode = err.response?.status;
-            const responseMessage = err.response?.data?.message;
+            const responseMessage = err.response?.data;
 
             if (statusCode === 403) {
                 console.log("Customer not logged in");
@@ -66,7 +66,7 @@ const AccountPassword = () => {
             } else if (statusCode === 401) {
                 setMessage("Wrong password input")
             }
-            console.error('Creating account failed:', responseMessage);
+            console.error('Changing password failed:', responseMessage);
             return false;
         }
         return true;

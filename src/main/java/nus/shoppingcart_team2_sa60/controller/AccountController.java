@@ -29,14 +29,14 @@ public class AccountController {
         // Checks if session already has logged-in user.
         Customer loggedInCustomer = (Customer) session.getAttribute("customer");
         if (loggedInCustomer != null)
-            return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body("Customer logged in already");
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Customer logged in already");
 
         // Saves new customer (proceed to AccountServiceImpl)
         Customer createdCustomer = aService.createAccount(customer);
 
         // If customer exists already, does not create new customer and returns null;
         if (createdCustomer == null)
-            return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body("Customer exists already");
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Customer exists already");
 
         return ResponseEntity.ok(new CustomerResponseDTO(createdCustomer));
     }
