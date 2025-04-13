@@ -27,4 +27,8 @@ public class ProductController {
         return pService.findByCategory(category);
     }
 
+    @GetMapping("/products/nameDesc")
+    public List<Product> sortByName() {
+        return pService.sortByName();
+    }
 }
