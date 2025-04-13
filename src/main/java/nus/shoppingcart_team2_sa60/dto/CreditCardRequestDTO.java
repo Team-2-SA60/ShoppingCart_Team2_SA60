@@ -19,12 +19,14 @@ public class CreditCardRequestDTO {
     @Pattern(regexp = "^\\d{2}/\\d{2}$")
     private String creditCardExpiry;
 
-    public String getCreditCardExpiryMonth() {
-        return creditCardExpiry.split("/")[0];
+    public int getCreditCardExpiryMonth() {
+        String month = creditCardExpiry.split("/")[0];
+        return Integer.parseInt(month);
     }
 
-    public String getCreditCardExpiryYear() {
-        return creditCardExpiry.split("/")[1];
+    public int getCreditCardExpiryYear() {
+        String year = creditCardExpiry.split("/")[1];
+        return Integer.parseInt(year);
     }
 
 }

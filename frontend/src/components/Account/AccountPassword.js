@@ -16,6 +16,7 @@ const AccountPassword = () => {
 
     async function handleChangePassword(e){
         e.preventDefault();
+        setMessage('');
         setLoading(true);
         setSuccess(false);
         const passwordOK = passwordCheck();
@@ -32,10 +33,6 @@ const AccountPassword = () => {
     }
 
     function passwordCheck() {
-        if (currentPassword.includes(" ") || newPassword.includes(" ") || confirmNewPassword.includes(" ")) {
-            setMessage("Password cannot have space");
-            return false;
-        }
         if (newPassword !== confirmNewPassword) {
             setMessage("Passwords entered do not match");
             return false;
@@ -43,33 +40,37 @@ const AccountPassword = () => {
         if (currentPassword === newPassword) {
             setMessage("New password same as current password")
         }
-        setMessage('');
+        if (currentPassword.includes(" ") || newPassword.includes(" ") || confirmNewPassword.includes(" ")) {
+            setMessage("Password cannot have space");
+            return false;
+        }
         return true;
     }
 
     async function changePassword() {
         try {
-            let response = await api.put("/account/edit/password",
+
+            const response = await api.put("/account/edit/password",
                 {
                     password: currentPassword,
                     newPassword: newPassword
                 }
             );
             console.log(response.data);
-        } catch (err) {
-            const statusCode = err.response?.status;
-            const error = err.response?.data?.error;
-            const errorMessage = err.response?.data?.message;
 
-            if (statusCode === 403) {
-                console.log("Customer not logged in");
-                navigate("/login");
-            } else if (statusCode === 400) {
-                setMessage("Password requirements not met");
-            } else if (statusCode === 401) {
+        } catch (err) {
+
+            const statusCode = err.response?.status;
+            const errorMessage = err.response?.data?.message; // Message will be in Array
+
+            if (statusCode === 401) {
+                // 401 error (backend checks if current password input is correct, cannot change password if input wrong)
                 setMessage("Wrong password input")
+            } else if (statusCode === 403) {
+                // 403 error if user session is NOT logged in
+                navigate("/login");
             } else {
-                setMessage(error || "Change password failed")
+                setMessage(errorMessage[0] || "Change password failed")
                 console.error(errorMessage);
             }
             return false;

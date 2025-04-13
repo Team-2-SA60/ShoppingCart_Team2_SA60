@@ -14,10 +14,11 @@ const Account = ({activeTab, setActiveTab}) => {
     const { customer, setCustomer, checkSession } = useSession();
     const navigate = useNavigate();
 
+    // Refreshes customer on every tab
     useEffect(() => {
         getCustomer();
         // eslint-disable-next-line
-    }, [navigate])
+    }, [activeTab])
 
     async function getCustomer() {
         const getCustomer = await checkSession();

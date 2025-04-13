@@ -11,31 +11,44 @@ const AccountName = ({customer}) => {
 
     async function handleChangeName(e) {
         e.preventDefault();
-        if (name === "" || name === customer.name) {
-            return
-        }
+        setMessage('');
 
-        const updateOK = await updateName();
-        if (updateOK) navigate(0);
+        const fieldOK = checkField();
+        if (fieldOK) {
+            const updateOK = await updateName();
+            if (updateOK) navigate(0);
+        }
+    }
+
+    function checkField() {
+        if (name === "") {
+            setMessage("Name cannot be blank");
+        }
+        if (name === customer.name) {
+            return false;
+        }
+        return true;
     }
 
     async function updateName() {
         try {
-            const response = await api.put("/account/edit/name", {name})
+
+            const response = await api.put("/account/edit/name", {name: name})
             console.log("Updated name: " + response.data.name);
+
         } catch(err) {
+            
             const statusCode = err.response?.status;
-            const error = err.response?.data?.error;
-            const errorMessage = err.response?.data?.message;
+            const errorMessage = err.response?.data?.message; // Message will be in Array
 
             if (statusCode === 403) {
-                navigate("/login")
-                return false;
+                // 403 error if user session is NOT logged in
+                navigate("/login");
             } else {
-                setMessage(error || "Saving name failed");
+                setMessage(errorMessage[0] || "Saving name failed");
                 console.error('Saving name failed:', errorMessage);
-                return false;
             }
+            return false;
         }
         return true;
     }

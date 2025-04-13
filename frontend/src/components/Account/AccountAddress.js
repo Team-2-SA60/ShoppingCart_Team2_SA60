@@ -24,8 +24,10 @@ const AccountAddress = ({customer}) => {
 
     async function handleChangeAddress(e) {
         e.preventDefault();
+        setMessage('');
         setLoading(true);
         setSuccess(false);
+        
         const fieldOK = fieldCheck();
         if (fieldOK) {
             const changeAddressOK = await changeAddress();
@@ -45,12 +47,12 @@ const AccountAddress = ({customer}) => {
             setMessage("Postal code must be 6-digits");
             return false;
         }
-        setMessage('');
         return true;
     }
 
     async function changeAddress() {
         try {
+            
             const response = await api.put("/account/edit/address",
                 {
                     address: address,
@@ -59,16 +61,17 @@ const AccountAddress = ({customer}) => {
                 }
             )
             console.log(response.data);
+
         } catch (err) {
+
             const statusCode = err.response?.status;
-            const error = err.response?.data?.error;
-            const errorMessage = err.response?.data?.message;
+            const errorMessage = err.response?.data?.message; // Message will be in Array
 
             if (statusCode === 403) {
-                console.log("Customer not logged in");
+                // 403 error if user session is NOT logged in
                 navigate("/login");
             } else {
-                setMessage(error || "Change address failed")
+                setMessage(errorMessage[0] || "Change address failed")
                 console.error(errorMessage);
             }
             return false;

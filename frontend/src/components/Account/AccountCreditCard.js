@@ -14,6 +14,7 @@ const AccountCreditCard = () => {
 
     async function handleChangeCreditCard(e) {
         e.preventDefault();
+        setMessage('');
         setLoading(true);
         setSuccess(false);
         const fieldOK = fieldCheck();
@@ -33,12 +34,12 @@ const AccountCreditCard = () => {
             setMessage("Unexpected Expiration date");
             return false;
         }
-        setMessage('');
         return true;
     }
 
     async function saveCreditCard() {
         try {
+
             const response = await api.put("/account/edit/creditcard",
                 {
                     creditCardName: ccName,
@@ -47,16 +48,17 @@ const AccountCreditCard = () => {
                 }
             )
             console.log(response.data);
+
         } catch (err) {
+            
             const statusCode = err.response?.status;
-            const error = err.response?.data?.error;
-            const errorMessage = err.response?.data?.message;
+            const errorMessage = err.response?.data?.message; // Message will be in Array
 
             if (statusCode === 403) {
-                console.log("Customer not logged in");
+                // 403 error if user session is NOT logged in
                 navigate("/login");
             } else {
-                setMessage(error || "Change address failed")
+                setMessage(errorMessage[0] || "Change address failed")
                 console.error(errorMessage);
             }
             return false;

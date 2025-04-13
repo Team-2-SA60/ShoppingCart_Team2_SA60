@@ -60,27 +60,29 @@ const CreateAccount = () => {
     }
 
     async function createAccount(name, email, password) {
-        let createResponse;
         try {
-            createResponse = await api.post("/account/create",  {
+            
+            const response = await api.post("/account/create",  {
                                                                     name: name,
                                                                     email: email, 
                                                                     password: password
                                                                 });
-            console.log(createResponse.data);
+            console.log(response.data);
+
         } catch (err) {
+
             const statusCode = err.response?.status;
-            const error = err.response?.data?.error;
-            const errorMessage = err.response?.data?.message;
+            const errorMessage = err.response?.data?.message; // Message will be in Array
 
             if (statusCode === 401) {
+                // 401 error (backend checks if email was already registered)
                 setMessage("Email already registered");
             } else if (statusCode === 403) {
+                // 403 error (backend checks if user session is already logged in, shouldn't be able to create account if logged in)
                 navigate("/");
-                return false;
             } else {
-                setMessage(error || "Creating account failed");
-                console.log(errorMessage);
+                setMessage(errorMessage[0] || "Creating account failed");
+                console.log("Creating account failed: " + errorMessage);
             }
             return false;
         }
