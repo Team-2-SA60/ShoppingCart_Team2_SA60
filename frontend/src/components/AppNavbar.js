@@ -8,7 +8,7 @@ import TopRightButtons from './Navbar/TopRightButtons';
 import Categories from './Navbar/Categories';
 import SearchBar from './Navbar/SearchBar';
 
-const AppNavbar = () => {
+const AppNavbar = ({logout}) => {
     const [isOpen, setIsOpen] = useState(false);
     const { setCustomer } = useSession();
     const [loggedOut, setLoggedOut] = useState(false);
@@ -26,6 +26,10 @@ const AppNavbar = () => {
                 console.log("Logout failed:", err);
             })
     };
+
+    if (logout) {
+        handleLogout();
+    }
 
     const toggleModal = () => {
         setLoggedOut(!loggedOut)
