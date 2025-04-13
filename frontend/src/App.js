@@ -7,6 +7,7 @@ import CartDetails from './pages/CartDetails';
 import { SessionProvider } from './context/SessionContext';
 import HomePage from './pages/HomePage';
 import CreateAccount from './pages/CreateAccount';
+import ManageAccount from './pages/ManageAccount';
 
 
 const App = () => {
@@ -21,6 +22,7 @@ const App = () => {
           <Route path='/orders/:status' exact={true} Component={OrderList} />
           <Route path='/cart' exact={true} element={<CartDetails />} />
           <Route path='/account/create' exact={true} element={<CreateAccount />} />
+          <Route path='/account' exact={true} element={<ManageAccount />} />
           <Route path="*" element={<HomePage />} />
         </Routes>
       </Router>

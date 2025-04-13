@@ -1,12 +1,10 @@
 package nus.shoppingcart_team2_sa60.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.Setter;
-
-import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -24,13 +22,14 @@ public class Customer {
     private String name;
 
     @NotBlank
+    @Email
     private String email;
 
     @NotBlank
     private String password;
     private String address;
     private String creditCardName;
-    private Integer creditCardNumber;
+    private String creditCardNumber;
     private Integer creditCardExpiryMonth;
     private Integer creditCardExpiryYear;
 

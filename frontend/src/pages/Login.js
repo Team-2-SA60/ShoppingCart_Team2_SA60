@@ -9,16 +9,18 @@ const Login = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [message, setMessage] = useState('');
-    const { customer, checkSession} = useSession();
+    const { checkSession } = useSession();
     const navigate = useNavigate();
 
     useEffect(() => {
-        checkSession();
-        if (customer !== null) {
-            navigate("/");
-        }
+        getCustomer();
         // eslint-disable-next-line
-    },[customer])
+    },[])
+
+    async function getCustomer() {
+        const customer = await checkSession();
+        if (customer) navigate("/");
+    }
 
     const handleLogin = async (event) => {
 
@@ -32,16 +34,17 @@ const Login = () => {
         })
         .catch(err => {
             const statusCode = err.response?.status;
-            const responseMessage = err.response?.data.message;
+            const error = err.response?.data?.error;
+            const errorMessage = err.response?.data?.message;
 
             if (statusCode === 404) {
                 setMessage("User not found");
             } else if (statusCode === 401) {
                 setMessage("Password is incorrect");
             } else {
-                setMessage(responseMessage || "Login failed");
+                setMessage(error || "Login failed");
             }
-            console.error('Login failed:', responseMessage);
+            console.error(errorMessage);
         });
     };
 

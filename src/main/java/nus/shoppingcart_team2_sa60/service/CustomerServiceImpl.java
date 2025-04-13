@@ -14,6 +14,11 @@ public class CustomerServiceImpl implements CustomerService {
     private CustomerRepository cRepo;
 
     @Override
+    public Customer findCustomerById(int id){
+        return cRepo.findById(id).get();
+    }
+
+    @Override
     public Customer findCustomerByEmail(String email) {
         return cRepo.findByEmail(email);
     }

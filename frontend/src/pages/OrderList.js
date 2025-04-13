@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { Button, ButtonGroup, Container, Nav, NavItem, NavLink, Table } from 'reactstrap';
 import AppNavbar from '../components/AppNavbar';
 import { Link, useNavigate } from 'react-router-dom';
 import api from '../utilities/axios';
@@ -10,7 +9,7 @@ import { useParams } from 'react-router-dom';
 
 const OrderList = () => {
 
-    const { customer, checkSession } = useSession();
+    const { checkSession } = useSession();
     const [orders, setOrders] = useState([]);
     const navigate = useNavigate();
     const { status } = useParams();
@@ -22,10 +21,15 @@ const OrderList = () => {
     };
 
     useEffect(() => {  
-        checkSession();
-        if (!customer) navigate("/login");
+        getCustomer();
         getOrders(status);
+        // eslint-disable-next-line
     }, [status]);
+
+    async function getCustomer() {
+        const customer = await checkSession();
+        if (!customer) navigate("/login");
+    }
 
     async function getOrders(status) {
         let fetchURL = '/orders';
