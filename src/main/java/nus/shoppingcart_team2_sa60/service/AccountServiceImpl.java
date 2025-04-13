@@ -1,7 +1,7 @@
 package nus.shoppingcart_team2_sa60.service;
 
 import nus.shoppingcart_team2_sa60.dto.AccountRequestDTO;
-import nus.shoppingcart_team2_sa60.dto.CreditCardRequestDTO;
+import nus.shoppingcart_team2_sa60.dto.CreditCardDTO;
 import nus.shoppingcart_team2_sa60.model.Customer;
 import nus.shoppingcart_team2_sa60.repository.AccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -88,21 +88,32 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
+    public CreditCardDTO getCreditCard(Customer loggedInCustomer) {
+
+        // Get up-to-date customer
+        Optional<Customer> existingCustomer = aRepo.findById(loggedInCustomer.getId());
+        if (existingCustomer.isEmpty())
+            return null;
+
+        Customer updateCustomer = existingCustomer.get();
+        return new CreditCardDTO(updateCustomer);
+    }
+
+    @Override
     @Transactional
-    public Customer editCreditCard(Customer loggedInCustomer, CreditCardRequestDTO creditCardRequestDTO) {
+    public Customer editCreditCard(Customer loggedInCustomer, CreditCardDTO creditCardDTO) {
+
         // Get up-to-date customer before proceeding to update
         Optional<Customer> existingCustomer = aRepo.findById(loggedInCustomer.getId());
         if (existingCustomer.isEmpty())
             return null;
 
-        System.out.println(creditCardRequestDTO.getCreditCardExpiryMonth());
-        System.out.println(creditCardRequestDTO.getCreditCardExpiryYear());
         // Only allow to change credit card information, NOTHING else
         Customer updateCustomer = existingCustomer.get();
-        //updateCustomer.setCreditCardName(creditCardRequestDTO.getCreditCardName());
-        //updateCustomer.setCreditCardNumber(creditCardRequestDTO.getCreditCardNumber());
-        //updateCustomer.setCreditCardExpiryMonth(creditCardRequestDTO.getCreditCardExpiryMonth());
-        //updateCustomer.setCreditCardExpiryYear(creditCardRequestDTO.getCreditCardExpiryYear());
+        updateCustomer.setCreditCardName(creditCardDTO.getCreditCardName());
+        updateCustomer.setCreditCardNumber(creditCardDTO.getCreditCardNumber());
+        updateCustomer.setCreditCardExpiryMonth(creditCardDTO.getCreditCardExpiryMonth());
+        updateCustomer.setCreditCardExpiryYear(creditCardDTO.getCreditCardExpiryYear());
         return aRepo.save(updateCustomer);
     }
 }

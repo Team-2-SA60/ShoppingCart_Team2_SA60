@@ -4,6 +4,7 @@ import { Alert, Spinner } from "reactstrap";
 import api from "../../utilities/axios";
 
 const AccountCreditCard = () => {
+    const [existingCc, setExistingCc] = useState('');
     const [ccName, setCCName] = useState('');
     const [ccNumber, setCCNumber] = useState('');
     const [ccExpiry, setCCExpiry] = useState('');
@@ -12,15 +13,49 @@ const AccountCreditCard = () => {
     const [success, setSuccess] = useState(false);
     const navigate = useNavigate();
 
+    useState(() => {
+        getCreditCardInfo();
+    }, [])
+
+    async function getCreditCardInfo() {
+        try {
+            const response = await api.get("/account/creditcard");
+            if (response.data.creditCardName !== null) {
+                maskCcNumber(response.data);
+            }
+        } catch (err) {
+            console.log(err)
+        }
+    }
+
+    function maskCcNumber(data) {
+        const convertedData = {
+            creditCardName: data.creditCardName,
+            creditCardNumber: '************-' + data.creditCardNumber.substr(-4),
+            creditCardExpiry: data.creditCardExpiry
+        }
+        setExistingCc(convertedData);
+    }
+
+    function handleCreditCardNumberField(e) {
+        let input = e.target.value.replace(/\D/g, '').substring(0, 16);
+        let formatted = input.replace(/(\d{4})(?=\d)/g, '$1-');
+        setCCNumber(formatted);
+    }
+
     async function handleChangeCreditCard(e) {
         e.preventDefault();
         setMessage('');
         setLoading(true);
         setSuccess(false);
+
         const fieldOK = fieldCheck();
         if (fieldOK) {
             const saveCreditCardOK = await saveCreditCard();
-            setSuccess(true);
+            if (saveCreditCardOK) {
+                getCreditCardInfo(); // Refresh current card, pls work ):
+                setSuccess(true);
+            }
         }
         setLoading(false);
     }
@@ -43,14 +78,14 @@ const AccountCreditCard = () => {
             const response = await api.put("/account/edit/creditcard",
                 {
                     creditCardName: ccName,
-                    creditCardNumber: ccNumber,
+                    creditCardNumber: ccNumber.replace(/\D/g, '').substring(0, 16),
                     creditCardExpiry: ccExpiry
                 }
             )
             console.log(response.data);
 
         } catch (err) {
-            
+
             const statusCode = err.response?.status;
             const errorMessage = err.response?.data?.message; // Message will be in Array
 
@@ -65,12 +100,31 @@ const AccountCreditCard = () => {
         }
         return true;
     }
-   
+    
+    const ShowExistingCc = () => {
+        return (
+            <div className="bg-white text-[10px] grid grid-cols-1 h-12 rounded-md drop-shadow-md border px-1 min-w-32 max-w-40 mr-4">
+                <span className="absolute right-1 -top-4">Current Card</span>
+                <div>
+                    <span className="line-clamp-1 text-right">{existingCc.creditCardName}</span>
+                </div>
+                <div>
+                    <span className="line-clamp-1 text-right">{existingCc.creditCardNumber}</span>
+                </div>
+                <div>
+                    <span className="text-red-500 font-bold">{existingCc.isExpired ? "Expired" : ""}</span>
+                    <span className="line-clamp-1 text-right">{existingCc.creditCardExpiry}</span>
+                </div>
+            </div>
+        )
+    }
+
     return (
         <div className="flex flex-col h-full relative">
             <div className="flex justify-between">
                 <h6>Save Credit Card</h6>
                 <div className="flex">
+                    {existingCc === '' || existingCc.creditCardName === null ? "" : <ShowExistingCc />}
                     <img src="../images/mastercard.png" alt="mastercard" />
                     <img src="../images/visa.png" alt="visa" />
                 </div>
@@ -83,8 +137,10 @@ const AccountCreditCard = () => {
                     <label>Card Number *</label>
                     <input
                         type="text"
-                        onChange={(e) => setCCNumber(e.target.value)}
+                        onChange={(e) => handleCreditCardNumberField(e)}
+                        value={ccNumber}
                         placeholder="Card Number"
+                        maxLength={19}
                         className="p-1 mt-[5px] my-[2%] border-[1px] border-slate-300 rounded-md w-full"
                         required
                     />

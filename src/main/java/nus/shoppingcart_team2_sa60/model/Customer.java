@@ -29,7 +29,7 @@ public class Customer {
     private String password;
     private String address;
     private String creditCardName;
-    private Integer creditCardNumber;
+    private String creditCardNumber;
     private Integer creditCardExpiryMonth;
     private Integer creditCardExpiryYear;
 

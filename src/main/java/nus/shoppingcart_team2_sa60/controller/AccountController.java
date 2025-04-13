@@ -4,11 +4,13 @@ import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import nus.shoppingcart_team2_sa60.dto.AccountRequestDTO;
 import nus.shoppingcart_team2_sa60.dto.AddressRequestDTO;
-import nus.shoppingcart_team2_sa60.dto.CreditCardRequestDTO;
+import nus.shoppingcart_team2_sa60.dto.CreditCardDTO;
 import nus.shoppingcart_team2_sa60.dto.CustomerResponseDTO;
 import nus.shoppingcart_team2_sa60.model.Customer;
 import nus.shoppingcart_team2_sa60.service.AccountService;
+import nus.shoppingcart_team2_sa60.utils.ErrorHandlingUtil;
 import nus.shoppingcart_team2_sa60.validator.AccountValidator;
+import nus.shoppingcart_team2_sa60.validator.CreditCardValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +18,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
+
 
 @CrossOrigin
 @RestController
@@ -28,10 +31,20 @@ public class AccountController {
     @Autowired
     private AccountValidator aValidator;
 
+    @Autowired
+    private CreditCardValidator ccValidator;
+
     @InitBinder
     public void initAccountBinder(WebDataBinder binder) {
-        if (binder.getTarget() instanceof AccountRequestDTO) {
-            binder.setValidator(aValidator);
+        Object target = binder.getTarget();
+        if (target == null) {
+            return;
+        }
+        if (target instanceof AccountRequestDTO) {
+            binder.addValidators(aValidator);
+        }
+        if (target instanceof CreditCardDTO) {
+            binder.addValidators(ccValidator);
         }
     }
 
@@ -42,7 +55,9 @@ public class AccountController {
 
         // Checks if AccountRequestDTO RequestBody is valid (name + email + password)
         // Custom validator if got email, MUST have name + password as well
-        // Exception handled globally
+        if (bindingResult.hasErrors()) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ErrorHandlingUtil.handleBindingErrors(bindingResult));
+        }
 
         // Checks if session already has logged-in user.
         Customer loggedInCustomer = (Customer) session.getAttribute("customer");
@@ -66,7 +81,9 @@ public class AccountController {
                                       HttpSession session) {
 
         // Checks if AccountRequestDTO RequestBody is valid (name only)
-        // Exception handled globally
+        if (bindingResult.hasErrors()) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ErrorHandlingUtil.handleBindingErrors(bindingResult));
+        }
 
         // Checks if session already has logged-in user.
         Customer loggedInCustomer = (Customer) session.getAttribute("customer");
@@ -91,7 +108,9 @@ public class AccountController {
 
         // Checks if AccountRequestDTO RequestBody is valid (password + newPassword)
         // Custom validator if got new Password, MUST have current password as well
-        // Exception handled globally
+        if (bindingResult.hasErrors()) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ErrorHandlingUtil.handleBindingErrors(bindingResult));
+        }
 
         // Checks if session already has logged-in user.
         Customer loggedInCustomer = (Customer) session.getAttribute("customer");
@@ -115,7 +134,9 @@ public class AccountController {
                                          HttpSession session) {
 
         // Checks if AddressRequestDTO RequestBody is valid (address)
-        // Exception handled globally
+        if (bindingResult.hasErrors()) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ErrorHandlingUtil.handleBindingErrors(bindingResult));
+        }
 
         // Checks if session already has logged-in user.
         Customer loggedInCustomer = (Customer) session.getAttribute("customer");
@@ -133,13 +154,27 @@ public class AccountController {
     }
 
 
+    @GetMapping("/creditcard")
+    public ResponseEntity<?> getCreditCard(HttpSession session) {
+
+        // Checks if session already has logged-in user.
+        Customer loggedInCustomer = (Customer) session.getAttribute("customer");
+        if (loggedInCustomer == null)
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Customer not logged in");
+
+        CreditCardDTO creditCardDTO = aService.getCreditCard(loggedInCustomer);
+        return ResponseEntity.ok(creditCardDTO);
+    }
+
     @PutMapping("/edit/creditcard")
-    public ResponseEntity<?> editCreditCard(@Valid @RequestBody CreditCardRequestDTO creditCard,
+    public ResponseEntity<?> editCreditCard(@Valid @RequestBody CreditCardDTO creditCard,
                                             BindingResult bindingResult,
                                             HttpSession session) {
 
-        // Checks if CreditCardRequestDTO RequestBody is valid (all credit card info)
-        // Exception handled globally
+        // Checks if CreditCardDTO RequestBody is valid (all credit card info)
+        if (bindingResult.hasErrors()) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ErrorHandlingUtil.handleBindingErrors(bindingResult));
+        }
 
         // Checks if session already has logged-in user.
         Customer loggedInCustomer = (Customer) session.getAttribute("customer");
