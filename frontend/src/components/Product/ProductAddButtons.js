@@ -1,10 +1,16 @@
 import { useState } from "react";
 import { Button, ButtonGroup } from "reactstrap";
 import { useSession } from "../../context/SessionContext";
+import { useNavigate } from "react-router-dom";
 
 const ProductAddButtons = () => {
     const [quantity, setQuantity] = useState(1);
     const { customer } = useSession();
+    const navigate = useNavigate();
+
+    const handleNavigation = () => {
+        navigate('/login');
+    };
 
     const handleIncrease = () => setQuantity(quantity > 99 ? 99 : quantity + 1);
     const handleDecrease = () => setQuantity(quantity > 1 ? quantity - 1 : 1);
@@ -23,7 +29,7 @@ const ProductAddButtons = () => {
     if (!customer) {
         return (
             <div className="w-full ml-[25%]">
-                <Button style={{ fontSize: 12 }}>
+                <Button onClick={handleNavigation} style={{ fontSize: 12 }}>
                     Login to Add To Cart
                 </Button>
             </div>
