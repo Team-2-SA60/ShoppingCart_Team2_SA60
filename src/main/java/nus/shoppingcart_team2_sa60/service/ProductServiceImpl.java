@@ -26,4 +26,9 @@ public class ProductServiceImpl implements ProductService {
     public List<Product> findByCategory(String category) {
         return pRepo.findProductsByCategory(category);
     }
+
+    @Override
+    public List<Product> sortByName() {
+        return pRepo.sortProductByName();
+    }
 }
