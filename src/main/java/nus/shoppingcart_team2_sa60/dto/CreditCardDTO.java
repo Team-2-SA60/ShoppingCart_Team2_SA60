@@ -40,20 +40,18 @@ public class CreditCardDTO {
         }
     }
 
-    public Integer getCreditCardExpiryMonth() {
+    public String getCreditCardExpiryMonth() {
         if (creditCardExpiry == null) {
             return null;
         }
-        String month = creditCardExpiry.split("/")[0];
-        return Integer.parseInt(month);
+        return creditCardExpiry.split("/")[0];
     }
 
-    public Integer getCreditCardExpiryYear() {
+    public String getCreditCardExpiryYear() {
         if (creditCardExpiry == null) {
             return null;
         }
-        String year = creditCardExpiry.split("/")[1];
-        return Integer.parseInt(year);
+        return creditCardExpiry.split("/")[1];
     }
 
     public boolean isExpired() {

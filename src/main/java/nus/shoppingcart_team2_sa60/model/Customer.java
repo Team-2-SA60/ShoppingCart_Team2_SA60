@@ -30,8 +30,8 @@ public class Customer {
     private String address;
     private String creditCardName;
     private String creditCardNumber;
-    private Integer creditCardExpiryMonth;
-    private Integer creditCardExpiryYear;
+    private String creditCardExpiryMonth;
+    private String creditCardExpiryYear;
 
     @OneToOne(mappedBy = "customer")
     private Cart cart;

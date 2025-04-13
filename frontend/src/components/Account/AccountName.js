@@ -94,10 +94,10 @@ const AccountName = ({customer}) => {
                 </Alert>
                 <button
                     type="submit"
-                    className={`bg-black text-white font-bold opacity-0
+                    className={`bg-black text-white font-bold
                                 w-full px-3.5 py-2.5 mt-2.5 rounded-md 
                                 hover:!bg-slate-800 active:scale-[0.97] transition-all
-                                ${name.length !== 0 && name !== customer.name ? "opacity-100" : "disabled"}`}
+                                ${name.length !== 0 && name !== customer.name ? "" : "hidden"}`}
                 >
                     Change name
                 </button>

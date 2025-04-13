@@ -28,6 +28,7 @@ const AccountCreditCard = () => {
         }
     }
 
+    // Converts current credit card info to mask number to last 4 digits
     function maskCcNumber(data) {
         const convertedData = {
             creditCardName: data.creditCardName,
@@ -37,11 +38,22 @@ const AccountCreditCard = () => {
         setExistingCc(convertedData);
     }
 
+    // Automatically input a "-" after every 4 numbers
     function handleCreditCardNumberField(e) {
+        e.preventDefault();
         let input = e.target.value.replace(/\D/g, '').substring(0, 16);
         let formatted = input.replace(/(\d{4})(?=\d)/g, '$1-');
         setCCNumber(formatted);
     }
+
+    // Automatically input a "/" after every 2 numbers
+    function handleExpiryField(e) {
+        e.preventDefault();
+        let input = e.target.value.replace(/\D/g, '').substring(0, 16);
+        let formatted = input.replace(/(\d{2})(?=\d)/g, '$1/');
+        setCCExpiry(formatted);
+    }
+
 
     async function handleChangeCreditCard(e) {
         e.preventDefault();
@@ -101,6 +113,7 @@ const AccountCreditCard = () => {
         return true;
     }
     
+
     const ShowExistingCc = () => {
         return (
             <div className="bg-white text-[10px] grid grid-cols-1 h-12 rounded-md drop-shadow-md border px-1 min-w-32 max-w-40 mr-4">
@@ -119,6 +132,7 @@ const AccountCreditCard = () => {
         )
     }
 
+    
     return (
         <div className="flex flex-col h-full relative">
             <div className="flex justify-between">
@@ -159,8 +173,10 @@ const AccountCreditCard = () => {
                     <label className="w-full">Expiration (MM/YY) *</label>
                     <input
                         type="text"
-                        onChange={(e) => setCCExpiry(e.target.value)}
+                        onChange={(e) => handleExpiryField(e)}
+                        value={ccExpiry}
                         placeholder="MM/YY"
+                        maxLength={5}
                         className="w-[35%] p-1 mt-[5px] my-[3%] border-[1px] border-slate-300 rounded-md"
                         required
                     />
