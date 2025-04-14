@@ -11,6 +11,10 @@ const ProductAddButtons = ({productId}) => {
     const { customer } = useSession();
     const navigate = useNavigate();
 
+    const handleNavigation = () => {
+        navigate('/login');
+    };
+
     const handleIncrease = () => setQuantity(quantity > 99 ? 99 : quantity + 1);
     const handleDecrease = () => setQuantity(quantity > 1 ? quantity - 1 : 1);
 
@@ -28,7 +32,7 @@ const ProductAddButtons = ({productId}) => {
     if (!customer) {
         return (
             <div className="w-full ml-[25%]">
-                <Button style={{ fontSize: 12 }}>
+                <Button onClick={handleNavigation} style={{ fontSize: 12 }}>
                     Login to Add To Cart
                 </Button>
             </div>

@@ -19,6 +19,10 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
             "WHERE LOWER(p.category) = LOWER(:category)")
     List<Product> findProductsByCategory(@Param("category") String category);
 
+    @Query("SELECT p FROM Product p " +
+            "ORDER BY p.name")
+    List<Product> sortProductByName();
+
     /*
     @Query("SELECT p " +
             "FROM Product p " +

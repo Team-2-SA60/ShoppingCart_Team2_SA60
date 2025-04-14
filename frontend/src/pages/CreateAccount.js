@@ -42,7 +42,7 @@ const CreateAccount = () => {
 
     function fieldCheck(name, email, password, verifyPassword) {
         if (!name || !email || !password || !verifyPassword) {
-            return false
+            return false;
         }
         return true;
     }
@@ -60,24 +60,30 @@ const CreateAccount = () => {
     }
 
     async function createAccount(name, email, password) {
-        let createResponse;
         try {
-            createResponse = await api.post("/account/create",  {
+            
+            const response = await api.post("/account/create",  {
                                                                     name: name,
                                                                     email: email, 
                                                                     password: password
                                                                 });
-            console.log(createResponse.data);
-        } catch (err) {
-            const statusCode = err.response?.status;
-            const responseMessage = err.response?.data.message;
+            console.log(response.data);
 
-            if (statusCode === 417) {
+        } catch (err) {
+
+            const statusCode = err.response?.status;
+            const errorMessage = err.response?.data?.message; // Message will be in Array
+
+            if (statusCode === 401) {
+                // 401 error (backend checks if email was already registered)
                 setMessage("Email already registered");
+            } else if (statusCode === 403) {
+                // 403 error (backend checks if user session is already logged in, shouldn't be able to create account if logged in)
+                navigate("/");
             } else {
-                setMessage(responseMessage || "Creating account failed");
+                setMessage(errorMessage[0] || "Creating account failed");
+                console.log("Creating account failed: " + errorMessage);
             }
-            console.error('Creating account failed:', responseMessage);
             return false;
         }
         return true;

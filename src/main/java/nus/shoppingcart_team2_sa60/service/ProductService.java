@@ -8,4 +8,5 @@ public interface ProductService {
     List<Product> findAllProducts();
     List<Product> findBySearch(String keyword);
     List<Product> findByCategory(String category);
+    List<Product> sortByName();
 }

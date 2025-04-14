@@ -43,7 +43,8 @@ public class CustomerController {
         if (customer == null) {
             return ResponseEntity.ok(null);
         }
-        return ResponseEntity.ok(new CustomerResponseDTO(customer));
+        Customer updatedCustomer = cService.findCustomerById(customer.getId());
+        return ResponseEntity.ok(new CustomerResponseDTO(updatedCustomer));
     }
 
     // GetMapping for logout
