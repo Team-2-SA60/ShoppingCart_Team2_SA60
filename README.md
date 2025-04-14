@@ -96,14 +96,7 @@ Database (1 person):
 #### 17 Apr (Thu) 
 - AM: Draft of User narrative (Adrian)
   - Test Cases
-
-#### 18 Apr (Fri)
-- 8.30pm - 10pm: Teams meeting  - All to be present
-  - Film presentation / recording (Adrian)
-
-#### 19 Apr (Sat)
-- [ ] Final code walkthrough
-- [ ] Complete 15-min video walkthough
+c- [ ] Complete 15-min video walkthough
       
 #### 20 Apr (Sun)
 - [ ] By 11pm: Upload CA Assignment as .zip

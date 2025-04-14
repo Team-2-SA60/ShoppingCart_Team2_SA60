@@ -12,7 +12,8 @@ public class CartDetailsResponseDTO {
     @Min(1)
     @Max(99)
     private final int quantity;
-    private final double unitPrice;
+    private final double price;
+    private final double discount;
     private final String productName;
     private final String productImage;
     private final String productDescription;
@@ -21,7 +22,8 @@ public class CartDetailsResponseDTO {
         // Map only necessary fields
         this.id = cartDetails.getId();
         this.quantity = cartDetails.getProductQty();
-        this.unitPrice = cartDetails.getProduct().getPrice();
+        this.price = cartDetails.getProduct().getPrice();
+        this.discount = cartDetails.getProduct().getDiscount();
         this.productName = cartDetails.getProduct().getName();
         this.productImage = cartDetails.getProduct().getImage();
         this.productDescription = cartDetails.getProduct().getDescription();

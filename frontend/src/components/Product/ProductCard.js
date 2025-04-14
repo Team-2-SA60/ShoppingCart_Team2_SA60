@@ -18,7 +18,7 @@ const ProductCard = ({product}) => {
             </div>
             <br/>
             <div className="fixed bottom-3 ml-3">
-                <ProductAddButtons />
+                <ProductAddButtons productId={product.id}/>
             </div>
         </div>
     )

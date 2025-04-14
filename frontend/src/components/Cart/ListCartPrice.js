@@ -4,7 +4,7 @@ import { Button } from 'reactstrap';
 export default function PriceSummary({ cartItems }) {
     const calculateSubtotal = () => {
         return cartItems
-            .reduce((total, item) => total + item.unitPrice * item.quantity, 0)
+            .reduce((total, item) => total + (item.price - item.discount) * item.quantity, 0)
             .toFixed(2);
     };
 
