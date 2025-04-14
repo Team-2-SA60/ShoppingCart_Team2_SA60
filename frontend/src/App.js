@@ -8,6 +8,7 @@ import { SessionProvider } from './context/SessionContext';
 import HomePage from './pages/HomePage';
 import CreateAccount from './pages/CreateAccount';
 import ManageAccount from './pages/ManageAccount';
+import Checkout from "./pages/Checkout";
 
 
 const App = () => {
@@ -23,6 +24,7 @@ const App = () => {
           <Route path='/cart' exact={true} element={<CartDetails />} />
           <Route path='/account/create' exact={true} element={<CreateAccount />} />
           <Route path='/account' exact={true} element={<ManageAccount />} />
+          <Route path='/checkout' exact={true} element={<Checkout />} />
           <Route path="*" element={<HomePage />} />
         </Routes>
       </Router>

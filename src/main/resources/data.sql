@@ -68,19 +68,19 @@ VALUES
 
 INSERT INTO Orders (customer_id, order_date, order_status, shipping_method, shipping_fee, shipping_address)
 VALUES
-    (4, 04042025, 'completed', 'Free', 0.00, 'Blk 123'),
-    (4, 05042025, 'pending', 'Free', 0.00, 'Blk 321'),
-    (5, 29032025, 'completed', 'Free', 0.00, 'Blk ABC'),
-    (5, 01042025, 'completed', 'Free', 0.00, 'Blk CBA'),
-    (5, 02042025, 'completed', 'Free', 0.00, 'Street 123'),
-    (5, 05042025, 'pending', 'Free', 0.00, 'Street 321'),
-    (6, 01042025, 'completed', 'Free', 0.00, 'Street ABC'),
-    (7, 02042025, 'completed', 'Free', 0.00, 'Street CBA'),
-    (8, 28032025, 'completed', 'Free', 0.00, 'Road 123'),
-    (9, 30032025, 'completed', 'Free', 0.00, 'Road 321'),
-    (10, 25032025, 'completed', 'Free', 0.00, 'Road ABC'),
-    (4, 06042025, 'pending', 'Free', 0.00, 'Road CBA'),
-    (4, 07042025, 'pending', 'Free', 0.00, 'NUS-ISS');
+    (4, '2025-04-04', 'completed', 'Free', 0.00, 'Blk 123'),
+    (4, '2025-04-06', 'pending', 'Free', 0.00, 'Blk 321'),
+    (5, '2025-04-07', 'completed', 'Free', 0.00, 'Blk ABC'),
+    (5, '2025-04-09', 'completed', 'Free', 0.00, 'Blk CBA'),
+    (5, '2025-04-13', 'completed', 'Free', 0.00, 'Street 123'),
+    (5, '2025-04-16', 'pending', 'Free', 0.00, 'Street 321'),
+    (6, '2025-04-20', 'completed', 'Free', 0.00, 'Street ABC'),
+    (7, '2025-04-26', 'completed', 'Free', 0.00, 'Street CBA'),
+    (8, '2025-05-01', 'completed', 'Free', 0.00, 'Road 123'),
+    (9, '2025-05-12', 'completed', 'Free', 0.00, 'Road 321'),
+    (10, '2025-05-14', 'completed', 'Free', 0.00, 'Road ABC'),
+    (4, '2025-05-15', 'pending', 'Free', 0.00, 'Road CBA'),
+    (4, '2025-05-20', 'pending', 'Free', 0.00, 'NUS-ISS');
 
 
 INSERT INTO Order_Details (order_id, product_id, price_at_purchase, product_qty)

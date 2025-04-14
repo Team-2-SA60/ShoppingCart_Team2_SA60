@@ -76,14 +76,6 @@ const OrderList = () => {
                 </AccordionItem>
             </Accordion>
         </div>
-
-
-            // <tr>
-            //     <td>{order.id}</td>
-            //     <td>{order.orderDate}</td>
-            //     <td>S${calculateTotal().toFixed(2)}</td>
-            //     <td>{order.orderStatus}</td>
-            // </tr>
         )
     })
 
@@ -120,21 +112,6 @@ const OrderList = () => {
                         {orderList}
                     </div>
                 </div>
-
-
-                {/* <Table hover className='md:table-fixed bg-white'>
-                    <tr>
-                        <div className='flex width-full justify-between'>
-                            <div>Order Number</div>
-                            <div>Order Date</div>
-                            <div>Total Price</div>
-                            <div>Status</div>
-                        </div>
-                    </tr>
-                    <tr>
-                        {orderList}
-                    </tr>
-                </Table> */}
             </div>
         </div>
     );

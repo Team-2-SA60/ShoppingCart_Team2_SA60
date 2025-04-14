@@ -3,12 +3,13 @@ package nus.shoppingcart_team2_sa60.dto;
 import lombok.Getter;
 import nus.shoppingcart_team2_sa60.model.Order;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Getter
 public class OrderResponseDTO {
     private int id;
-    private int orderDate;
+    private LocalDate orderDate;
     private String orderStatus;
     private String shippingMethod;
     private Double shippingFee;

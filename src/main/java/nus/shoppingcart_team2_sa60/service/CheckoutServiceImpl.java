@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,19 +34,18 @@ public class CheckoutServiceImpl implements CheckoutService {
         orderToBeSaved.setCustomer(cRepo.findById(customerId).get());
 
         // save order date and order status to order
-        orderToBeSaved.setOrderDate(20251404);
+        orderToBeSaved.setOrderDate(LocalDate.now());
         orderToBeSaved.setOrderStatus("pending");
 
         // save shipping method, shipping fee, and shipping address to order
         orderToBeSaved.setShippingMethod(shippingMethod);
-        orderToBeSaved.setShippingFee(shippingMethod.equals("Free") ? 0.00 : 10.00);
+        orderToBeSaved.setShippingFee(shippingMethod.equals("standard") ? 0.00 : 10.00);
         orderToBeSaved.setShippingAddress(shippingAddress);
 
         // save order details from cart details
         cartDetails.forEach(cartDetail -> {
             Product product = cartDetail.getProduct();
             OrderDetails orderDetails = new OrderDetails(product, cartDetail.getProductQty(), product.getPrice());
-//            odRepo.save(orderDetails);
             orderDetailsToBeSaved.add(orderDetails);
         });
         orderToBeSaved.setOrderDetails(orderDetailsToBeSaved);

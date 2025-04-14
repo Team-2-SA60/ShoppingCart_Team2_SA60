@@ -6,8 +6,6 @@ function OrderDetails({order}) {
 
     const orderDetails = order.orderDetails.map((orderDetail) => {
 
-        const discountedPrice = orderDetail.product.price - (orderDetail.product.price * orderDetail.product.discount / 100);
-
         return (
             <div className={gridClass} key={orderDetail.id}>
                 <div className="grid grid-rows-[0.5fr_3fr] grid-cols-4 gap-3">
@@ -17,7 +15,7 @@ function OrderDetails({order}) {
                     <div className="row-span-1 row-start-1 row-end-1 col-start-3 col-end-3 text-center">Quantity</div>
                     <div className="row-span-1 row-start-2 row-end-2 col-start-3 col-end-3 text-center">x {orderDetail.quantity}</div>
                     <div className="row-span-1 row-start-1 row-end-1 col-start-4 col-end-4 text-center">Price per piece</div>
-                    <div className="row-span-1 row-start-2 row-end-2 col-start-4 col-end-4 text-center">S${discountedPrice} <br/> <del className="text-red-500">S${orderDetail.product.price}</del> </div>
+                    <div className="row-span-1 row-start-2 row-end-2 col-start-4 col-end-4 text-center">S${orderDetail.priceAtPurchase}.toFixed(2)</div>
                 </div>
                 <hr/>
             </div>
