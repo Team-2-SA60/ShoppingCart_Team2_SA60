@@ -23,6 +23,18 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
             "ORDER BY p.name")
     List<Product> sortProductByName();
 
+    @Query("SELECT p FROM Product p " +
+            "ORDER BY p.name DESC ")   
+    List<Product> sortProductByNameDesc();
+
+    @Query("SELECT p FROM Product p " +
+            "ORDER BY (p.price - p.discount)")
+    List<Product> sortProductByPrice();
+
+    @Query("SELECT p FROM Product p " +
+            "ORDER BY (p.price-p.discount) DESC ")   
+    List<Product> sortProductByPriceDesc();
+
     /*
     @Query("SELECT p " +
             "FROM Product p " +
