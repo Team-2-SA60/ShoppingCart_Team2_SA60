@@ -11,8 +11,9 @@ import java.util.List;
 public interface ProductRepository extends JpaRepository<Product, Integer> {
 
     @Query("SELECT p FROM Product p " +
-            "WHERE LOWER(p.name) LIKE CONCAT('%', :keyword, '%') " +
-                "OR LOWER(p.description) LIKE CONCAT('%', :keyword, '%')")
+            "WHERE LOWER(p.name) LIKE LOWER(CONCAT('%', :keyword, '%')) " +
+                "OR LOWER(p.description) LIKE LOWER(CONCAT('%', :keyword, '%')) " +
+                "OR LOWER(p.category) LIKE LOWER(CONCAT('%', :keyword, '%'))")
     List<Product> findProductsBySearch(@Param("keyword") String keyword);
 
     @Query("SELECT p FROM Product p " +
@@ -34,39 +35,4 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
     @Query("SELECT p FROM Product p " +
             "ORDER BY (p.price-p.discount) DESC ")   
     List<Product> sortProductByPriceDesc();
-
-    /*
-    @Query("SELECT p " +
-            "FROM Product p " +
-            "ORDER BY name ")
-    public List<Product> findProductByName(); //sorting by Alphabetical, from A
-
-    @Query("SELECT p " +
-            "FROM Product p " +
-            "ORDER BY name DESC")
-    public List<Product> findProductByNameDesc(); //sorting by Alphabetical, from Z
-
-
-    @Query("SELECT p " +
-            "FROM Products p " +
-            "WHERE p.description LIKE '%n'" +
-            "ORDER BY name")
-    public List<Product> findProductByDescriptionN();
-
-    @Query("SELECT p " +
-            "FROM Products p " +
-            "WHERE p.description LIKE '%n'" +
-            "ORDER BY name DESC")
-    public List<Product> findProductByDescriptionNDESC();
-
-    @Query("Select p " +
-            "FROM Products p " +
-            "ORDER BY p.price")
-    public List<Product> findProductByPrice();
-
-    @Query("Select p " +
-            "FROM Products p " +
-            "ORDER BY p.price DESC")
-    public List<Product> findProductByPriceDESC();
-    */
 }
