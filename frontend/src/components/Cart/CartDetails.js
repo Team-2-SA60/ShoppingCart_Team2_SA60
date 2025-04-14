@@ -10,23 +10,27 @@ import AppNavbar from '../AppNavbar';
 
 export default function CartDetails() {
     const [cartItems, setCartItems] = useState([]);
-    const { customer } = useSession();
+    const { checkSession } = useSession();
     const navigate = useNavigate();
 
     useEffect(() => {
-        if (!customer) {
-            navigate("/login");
-        } else {
-            api.get("/cart")
-                .then(res => {
-                    console.log("Fetched cart items:", res.data);
-                    setCartItems(res.data);
-                })
-                .catch(err => {
-                    console.error("Failed to fetch cart items", err);
-                });
+        getCustomer();
+        fetchCart();
+    }, []);
+
+    async function getCustomer() {
+        const getCustomer = await checkSession();
+        if (!getCustomer) navigate("/login");
+    }
+
+    async function fetchCart() {
+        try {
+            const response = await api.get("/cart")
+            setCartItems(response.data);
+        } catch (err) {
+            console.error("Failed to fetch cart items", err);
         }
-    }, [customer, navigate]);
+    }
 
     function updateQuantity (id, updateFn) {
         setCartItems(previous => previous.map(item => {
