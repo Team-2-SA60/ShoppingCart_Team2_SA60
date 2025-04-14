@@ -33,8 +33,8 @@ public class Customer {
     private String creditCardExpiryMonth;
     private String creditCardExpiryYear;
 
-    @OneToOne(mappedBy = "customer")
-    private Cart cart;
+    @OneToOne(mappedBy = "customer", cascade = CascadeType.ALL)
+    private Cart cart = new Cart(this);
 
     @OneToMany(mappedBy = "customer")
     private List<Order> orders;

@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Getter
@@ -22,7 +23,7 @@ public class Order {
     @JoinColumn(name = "customer_id")
     private Customer customer;
 
-    private int orderDate;
+    private LocalDate orderDate;
     private String orderStatus;
     private String shippingMethod;
     private Double shippingFee;
@@ -33,7 +34,7 @@ public class Order {
     // constructors
 
     public Order () {}
-    public Order (Customer customer, int orderDate, String orderStatus) {
+    public Order (Customer customer, LocalDate orderDate, String orderStatus) {
         this.customer = customer;
         this.orderDate = orderDate;
         this.orderStatus = orderStatus;

@@ -46,41 +46,22 @@ VALUES
     (9),
     (10);
 
--- INSERT INTO Cart_Details (cart_item_id, cart_id, product_id, product_qty)
--- VALUES
---     -- Cart with ID 1 has items
---     (1, 1, 2, 3),
---     (2, 1, 3, 1),
---
---     -- Cart with ID 2 is empty
---     -- Cart with ID 3 has items
---     (3, 3, 1, 2),
---     (4, 3, 5, 1),
---
---     -- Cart with ID 4 is empty
---     -- Cart with ID 5 has items
---     (5, 5, 4, 2),
---     (6, 5, 6, 1),
---
---     -- Cart with ID 6 is empty
---     -- Cart with ID 7 has items
---     (7, 7, 3, 4);
 
 INSERT INTO Orders (customer_id, order_date, order_status, shipping_method, shipping_fee)
 VALUES
-    (4, 04042025, 'completed', 'Free', 0.00),
-    (4, 05042025, 'pending', 'Free', 0.00),
-    (5, 29032025, 'completed', 'Free', 0.00),
-    (5, 01042025, 'completed', 'Free', 0.00),
-    (5, 02042025, 'completed', 'Free', 0.00),
-    (5, 05042025, 'pending', 'Free', 0.00),
-    (6, 01042025, 'completed', 'Free', 0.00),
-    (7, 02042025, 'completed', 'Free', 0.00),
-    (8, 28032025, 'completed', 'Free', 0.00),
-    (9, 30032025, 'completed', 'Free', 0.00),
-    (10, 25032025, 'completed', 'Free', 0.00),
-    (4, 06042025, 'pending', 'Free', 0.00),
-    (4, 07042025, 'pending', 'Free', 0.00);
+    (4, '2025-04-04', 'completed', 'Free', 0.00),
+    (4, '2025-05-04', 'pending', 'Free', 0.00),
+    (5, '2025-03-29', 'completed', 'Free', 0.00),
+    (5, '2025-04-01', 'completed', 'Free', 0.00),
+    (5, '2025-04-02', 'completed', 'Free', 0.00),
+    (5, '2025-05-04', 'pending', 'Free', 0.00),
+    (6, '2025-04-01', 'completed', 'Free', 0.00),
+    (7, '2025-04-02', 'completed', 'Free', 0.00),
+    (8, '2025-03-28', 'completed', 'Free', 0.00),
+    (9, '2025-03-30', 'completed', 'Free', 0.00),
+    (10, '2025-03-25', 'completed', 'Free', 0.00),
+    (4, '2025-06-04', 'pending', 'Free', 0.00),
+    (4, '2025-07-04', 'pending', 'Free', 0.00);
 
 
 INSERT INTO Order_Details (order_item_id, order_id, product_id, price_at_purchase, product_qty)
