@@ -27,8 +27,24 @@ public class ProductController {
         return pService.findByCategory(category);
     }
 
-    @GetMapping("/products/nameDesc")
+    @GetMapping("/products/name")
     public List<Product> sortByName() {
         return pService.sortByName();
     }
+
+    @GetMapping("/products/namedesc")
+    public List<Product> sortByNameDesc() {
+        return pService.sortByNameDesc();
+    }
+
+    @GetMapping("/products/price")
+    public List<Product> sortByPrice() {
+        return pService.sortByPrice();
+    }
+
+    @GetMapping("/products/priceDesc")
+    public List<Product> sortByPriceDesc() {
+        return pService.sortByPriceDesc();
+    }
+
 }
