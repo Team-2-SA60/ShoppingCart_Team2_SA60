@@ -5,7 +5,6 @@ import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
-@org.springframework.core.annotation.Order(1)
 public class WebConfig implements WebMvcConfigurer {
 
     @Override
