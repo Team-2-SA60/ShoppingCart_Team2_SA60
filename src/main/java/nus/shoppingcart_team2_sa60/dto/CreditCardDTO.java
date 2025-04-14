@@ -16,6 +16,7 @@ import java.time.LocalDate;
 public class CreditCardDTO {
     @NotBlank(message = "Credit Card Name is required")
     @Size(min = 1, max = 50, message = "Name must be between 1 to 50 characters")
+    @Pattern(regexp = "^\\S.*", message = "Name cannot start with space")
     private String creditCardName;
 
     @NotBlank(message = "Credit Card Number is required")

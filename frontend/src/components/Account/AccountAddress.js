@@ -33,8 +33,8 @@ const AccountAddress = ({customer}) => {
             const changeAddressOK = await changeAddress();
             if (changeAddressOK) {
                 setSuccess(true);
-            };
-        };
+            }
+        }
         setLoading(false);
     }
 
@@ -70,9 +70,11 @@ const AccountAddress = ({customer}) => {
             if (statusCode === 403) {
                 // 403 error if user session is NOT logged in
                 navigate("/login");
+            } else if (statusCode === 400) {
+                setMessage(errorMessage[0] || "Chane address failed");
             } else {
-                setMessage(errorMessage[0] || "Change address failed")
-                console.error(errorMessage);
+                setMessage("Change address failed")
+                console.error("Changing address failed: ", err);
             }
             return false;
         }

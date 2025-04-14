@@ -15,14 +15,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
 
 @CrossOrigin
 @RestController
-@Validated
 @RequestMapping("/api/account")
 public class AccountController {
     @Autowired
@@ -118,12 +116,12 @@ public class AccountController {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Customer not logged in");
 
         // Check existing password with customer's input
-        Customer updateCustomer = aService.checkPassword(loggedInCustomer, customerAccount.getPassword());
-        if (updateCustomer == null)
+        Customer toUpdateCustomer = aService.checkPassword(loggedInCustomer, customerAccount.getPassword());
+        if (toUpdateCustomer == null)
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Incorrect password entered");
 
         // Update customer password with new password
-        Customer updatedCustomer = aService.editPassword(loggedInCustomer, customerAccount.getNewPassword());
+        Customer updatedCustomer = aService.editPassword(toUpdateCustomer, customerAccount.getNewPassword());
         return ResponseEntity.ok(new CustomerResponseDTO(updatedCustomer));
     }
 

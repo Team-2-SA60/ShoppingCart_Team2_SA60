@@ -34,7 +34,6 @@ const Login = () => {
         })
         .catch(err => {
             const statusCode = err.response?.status;
-            const error = err.response?.data?.error;
             const errorMessage = err.response?.data?.message;
 
             if (statusCode === 404) {
@@ -42,9 +41,9 @@ const Login = () => {
             } else if (statusCode === 401) {
                 setMessage("Password is incorrect");
             } else {
-                setMessage(error || "Login failed");
+                setMessage("Login failed");
+                console.error(errorMessage);
             }
-            console.error(errorMessage);
         });
     };
 

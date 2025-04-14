@@ -24,7 +24,13 @@ const AccountCreditCard = () => {
                 maskCcNumber(response.data);
             }
         } catch (err) {
-            console.log(err)
+            const statusCode = err.response?.status;
+            if (statusCode === 403) {
+                // 403 error if user session is NOT logged in
+                navigate("/login");
+            } else {
+                console.error("Failed to get credit card info", err)
+            }
         }
     }
 
@@ -49,7 +55,7 @@ const AccountCreditCard = () => {
     // Automatically input a "/" after every 2 numbers
     function handleExpiryField(e) {
         e.preventDefault();
-        let input = e.target.value.replace(/\D/g, '').substring(0, 16);
+        let input = e.target.value.replace(/[^0-9/]/g, '').substring(0, 5);
         let formatted = input.replace(/(\d{2})(?=\d)/g, '$1/');
         setCCExpiry(formatted);
     }
@@ -104,9 +110,11 @@ const AccountCreditCard = () => {
             if (statusCode === 403) {
                 // 403 error if user session is NOT logged in
                 navigate("/login");
-            } else {
+            } else if (statusCode === 400) {
                 setMessage(errorMessage[0] || "Change address failed")
-                console.error(errorMessage);
+            } else {
+                setMessage("Change address failed")
+                console.error("Change address failed", err);
             }
             return false;
         }

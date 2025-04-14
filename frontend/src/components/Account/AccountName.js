@@ -44,9 +44,11 @@ const AccountName = ({customer}) => {
             if (statusCode === 403) {
                 // 403 error if user session is NOT logged in
                 navigate("/login");
-            } else {
+            } else if (statusCode === 400) {
                 setMessage(errorMessage[0] || "Saving name failed");
-                console.error('Saving name failed:', errorMessage);
+            } else {
+                setMessage("Saving name failed");
+                console.error('Saving name failed:', err);
             }
             return false;
         }
