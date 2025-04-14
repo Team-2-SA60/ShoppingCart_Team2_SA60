@@ -76,6 +76,6 @@ const AppNavbar = () => {
             </Modal>
         </>
     );
-};
+}
 
 export default AppNavbar;

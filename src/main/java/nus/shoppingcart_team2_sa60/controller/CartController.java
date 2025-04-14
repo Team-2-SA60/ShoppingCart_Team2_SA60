@@ -3,11 +3,13 @@ package nus.shoppingcart_team2_sa60.controller;
 import jakarta.servlet.http.HttpSession;
 import nus.shoppingcart_team2_sa60.dto.CartDetailsResponseDTO;
 import nus.shoppingcart_team2_sa60.model.Customer;
+import nus.shoppingcart_team2_sa60.model.Cart;
 import nus.shoppingcart_team2_sa60.service.CartService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -59,6 +61,23 @@ public class CartController {
     @DeleteMapping("cart/delete/{id}")
     public void deleteCartItem(@PathVariable("id") int cartItemId){
         cartService.deleteItemFromCart(cartItemId);
+    }
+
+    @PostMapping("addToCart/{id}")
+    public ResponseEntity<?> addToCart(@PathVariable("id") int productId, @RequestBody Map<String, Integer> payLoad, HttpSession session){
+        int qty = payLoad.get("qty");
+
+        Customer customer = (Customer)session.getAttribute("customer");
+        Cart cart = cartService.findCartByCustomerId(customer.getId());
+
+        boolean maxQtyReached = cartService.addProductToCart(cart, productId, qty);
+        if(maxQtyReached){
+            return ResponseEntity.status(HttpStatus.OK)
+                    .body(Map.of("message", "Item added to cart. Adjusted to max allowed quantity of 99."));
+        } else {
+            return ResponseEntity.status(HttpStatus.OK)
+                    .body(Map.of("message", "Item added to cart."));
+        }
     }
 
 }
