@@ -80,9 +80,11 @@ const CreateAccount = () => {
             } else if (statusCode === 403) {
                 // 403 error (backend checks if user session is already logged in, shouldn't be able to create account if logged in)
                 navigate("/");
-            } else {
+            } else if (statusCode === 400) {
                 setMessage(errorMessage[0] || "Creating account failed");
-                console.log("Creating account failed: " + errorMessage);
+            } else {
+                setMessage("Creating account failed");
+                console.error("Creating account failed: " + err);
             }
             return false;
         }
