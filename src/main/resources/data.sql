@@ -35,7 +35,7 @@ VALUES
     ('DR', 'dr@a.com', 'dr'),
     ('RX', 'rx@a.com', 'rx');
 
-/*
+
 INSERT INTO Cart (customer_id)
 VALUES
     (4),
@@ -45,7 +45,7 @@ VALUES
     (8),
     (9),
     (10);
-*/
+
 
 INSERT INTO Orders (customer_id, order_date, order_status, shipping_method, shipping_fee)
 VALUES
