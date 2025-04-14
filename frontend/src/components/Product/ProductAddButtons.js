@@ -8,7 +8,7 @@ const ProductAddButtons = ({productId}) => {
     const [quantity, setQuantity] = useState(1);
     const [modalOpen, setModalOpen] = useState(false);
     const [modalMessage, setModalMessage] = useState("");
-    const { customer } = useSession();
+    const { customer, checkSession } = useSession();
     const navigate = useNavigate();
 
     const handleNavigation = () => {
@@ -46,6 +46,7 @@ const ProductAddButtons = ({productId}) => {
             .then(response => {
                 setModalMessage(response.data.message);
                 toggleModal();
+                checkSession();
             })
             .catch(error => console.error('Error: ', error));
     }

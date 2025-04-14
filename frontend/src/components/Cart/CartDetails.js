@@ -78,6 +78,7 @@ export default function CartDetails() {
             .then(()=>{
                 console.log('Item deleted');
                 setCartItems(cartItems.filter(item => item.id !== id));
+                checkSession();
             })
             .catch(error => console.error('Error: ', error));
     }

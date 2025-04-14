@@ -9,11 +9,14 @@ public class CustomerResponseDTO {
     private String name;
     private String email;
     private String address;
+    private int cartSize;
 
     public CustomerResponseDTO(Customer customer) {
         this.id = customer.getId();
         this.name = customer.getName();
         this.email = customer.getEmail();
         this.address = customer.getAddress();
+        this.cartSize = customer.getCart().getCartDetails().size();
+
     }
 }
