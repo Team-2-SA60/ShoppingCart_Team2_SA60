@@ -80,6 +80,6 @@ const AppNavbar = ({logout}) => {
             </Modal>
         </>
     );
-};
+}
 
 export default AppNavbar;

@@ -1,10 +1,13 @@
 import { useState } from "react";
-import { Button, ButtonGroup } from "reactstrap";
-import { useSession } from "../../context/SessionContext";
+import { Button, ButtonGroup, Modal, ModalBody, ModalFooter } from "reactstrap";
 import { useNavigate } from "react-router-dom";
+import { useSession } from "../../context/SessionContext";
+import api from "../../utilities/axios";
 
-const ProductAddButtons = () => {
+const ProductAddButtons = ({productId}) => {
     const [quantity, setQuantity] = useState(1);
+    const [modalOpen, setModalOpen] = useState(false);
+    const [modalMessage, setModalMessage] = useState("");
     const { customer } = useSession();
     const navigate = useNavigate();
 
@@ -36,6 +39,22 @@ const ProductAddButtons = () => {
         )
     }
 
+    const toggleModal = () => setModalOpen(!modalOpen);
+
+    function handleAddItemQty() {
+        api.post(`/addToCart/${productId}`, {qty: quantity})
+            .then(response => {
+                setModalMessage(response.data.message);
+                toggleModal();
+            })
+            .catch(error => console.error('Error: ', error));
+    }
+
+    function goToCart() {
+            toggleModal();
+            navigate('/cart');
+    }
+
     return (
         <div>
             <ButtonGroup className='h-8'>
@@ -47,11 +66,21 @@ const ProductAddButtons = () => {
                     <b>+</b>
                 </button>
                 <div className='ml-4'>
-                    <Button color="primary" className='w-24' style={{ fontSize: 12 }}>
+                    <Button onClick={handleAddItemQty} color="primary" className='w-24' style={{ fontSize: 12 }}>
                         Add to cart
                     </Button>
                 </div>
             </ButtonGroup>
+
+            <Modal className="text-center" size="sm" isOpen={modalOpen} toggle={toggleModal}>
+                <ModalBody>
+                    {modalMessage}
+                </ModalBody>
+                <ModalFooter>
+                    <Button color="primary" onClick={toggleModal}>OK</Button>
+                    <Button color="secondary" onClick={goToCart}>View Cart</Button>
+                </ModalFooter>
+            </Modal>
         </div>
     )
 }

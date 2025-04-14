@@ -1,24 +1,32 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react'
+import { useNavigate } from "react-router-dom";
+import { useSession } from "../../context/SessionContext";
 import {Container, Button} from 'reactstrap';
-import api from '../utilities/axios';
+import api from '../../utilities/axios';
 import './CartDetails.css';
-import ListCartItem from "../components/ListCartItem";
-import ListCartPrice from '../components/ListCartPrice';
-import AppNavbar from '../components/AppNavbar';
+import ListCartItem from "./ListCartItem";
+import ListCartPrice from './ListCartPrice';
+import AppNavbar from '../AppNavbar';
 
 export default function CartDetails() {
     const [cartItems, setCartItems] = useState([]);
+    const { customer } = useSession();
+    const navigate = useNavigate();
 
     useEffect(() => {
-        api.get("/cart")
-            .then(res => {
-                console.log("Fetched cart items:", res.data);
-                setCartItems(res.data);
-            })
-            .catch(err => {
-                console.error("Failed to fetch cart items", err);
-            });
-    }, []);
+        if (!customer) {
+            navigate("/login");
+        } else {
+            api.get("/cart")
+                .then(res => {
+                    console.log("Fetched cart items:", res.data);
+                    setCartItems(res.data);
+                })
+                .catch(err => {
+                    console.error("Failed to fetch cart items", err);
+                });
+        }
+    }, [customer, navigate]);
 
     function updateQuantity (id, updateFn) {
         setCartItems(previous => previous.map(item => {

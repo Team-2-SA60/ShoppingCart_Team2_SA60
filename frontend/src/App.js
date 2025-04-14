@@ -3,7 +3,7 @@ import './App.css';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import OrderList from './pages/OrderList';
 import Login from './pages/Login';
-import CartDetails from './pages/CartDetails';
+import CartDetails from './components/Cart/CartDetails';
 import { SessionProvider } from './context/SessionContext';
 import HomePage from './pages/HomePage';
 import CreateAccount from './pages/CreateAccount';
