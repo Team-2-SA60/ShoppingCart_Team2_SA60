@@ -1,59 +1,30 @@
 import { useEffect, useState } from "react";
-import { useParams, useSearchParams } from "react-router-dom";
 import api from "../../utilities/axios";
-import ProductCard from "./ProductCard"
-import ProductPagination from "./ProductPagination";
+import ProductCard from "../Product/ProductCard"
+import ProductPagination from "../Product/ProductPagination";
 import { Spinner } from "reactstrap";
 import { useSession } from "../../context/SessionContext";
 
-const ProductList = () => {
+const WishList = () => {
 
     const [products, setProducts] = useState([]);
     const [wishListProducts, setWishList] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
     const { customer } = useSession();
-    const [searchParams] = useSearchParams();
-    const { category } = useParams();
     const [isLoading, setLoading] = useState(true);
 
     useEffect(() => {
         setLoading(true);
-        const search = getSearch();
-        if (customer !== null) {
-            getWishListProducts();
-        }
-        getProducts(search);
+        getWishListProducts();
         // eslint-disable-next-line
-    },[searchParams, category, customer]);
-
-    function getSearch() {
-        const search = searchParams.get("search");
-        if (search) {
-            return search;
-        }
-        setCurrentPage(1);
-    }
-
-    async function getProducts(search) {
-        let fetchURL = '/products';
-
-        if (search) fetchURL = `/products?keyword=${search}`;
-        if (category) fetchURL = `/products/${category}`;
-
-        try {
-            const response = await api.get(fetchURL);
-            setProducts(response.data);
-            setLoading(false);
-        } catch (err) {
-            console.log("Error fetching products: " + err)
-        }
-        return true;
-    }
+    }, [customer]);
 
     async function getWishListProducts() {
         try {
             const response = await api.get("/wishlist/list")
-            setWishList(response.data)
+            setWishList(response.data);
+            setProducts(response.data);
+            setLoading(false);
         } catch (err) {
             console.log("Error fetching wishlist: " + err)
         }
@@ -86,10 +57,10 @@ const ProductList = () => {
         )
     }
 
-    if (products.length === 0 && !isLoading) {
+    if (products.length === 0) {
         return (
             <div className="items-center h-full">
-                <h4>!! No items found !!</h4>
+                <h4 className="text-red-700">!! No items on your wishlist !!</h4>
             </div>
         )
     }
@@ -99,9 +70,9 @@ const ProductList = () => {
             <div className="grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 gap-24 items-stretch">
                 {productList}
             </div>
-            <ProductPagination currentPage={currentPage} totalPages={totalPages} handlePageChange={handlePageChange}/>
+            <ProductPagination currentPage={currentPage} totalPages={totalPages} handlePageChange={handlePageChange} />
         </div>
     );
 }
 
-export default ProductList;
+export default WishList;

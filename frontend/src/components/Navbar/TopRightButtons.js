@@ -33,6 +33,9 @@ const TopRightButtons = ({handleLogout}) => {
                             <DropdownItem className="hover:underline" tag={Link} to="/account">
                                 Account
                             </DropdownItem>
+                            <DropdownItem className="hover:underline" tag={Link} to="/wishlist">
+                                My WishList
+                            </DropdownItem>
                             <DropdownItem className="hover:underline" tag={Link} to="/orders">
                                 My Orders
                             </DropdownItem>
