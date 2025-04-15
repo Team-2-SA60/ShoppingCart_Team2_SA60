@@ -15,7 +15,6 @@ const TopRightButtons = ({handleLogout}) => {
     }
 
     if (customer) {
-        console.log("Customer data:", customer);
 
         return (
             <> 
@@ -33,6 +32,9 @@ const TopRightButtons = ({handleLogout}) => {
                         <DropdownMenu className="drop-shadow-md mt-4">
                             <DropdownItem className="hover:underline" tag={Link} to="/account">
                                 Account
+                            </DropdownItem>
+                            <DropdownItem className="hover:underline" tag={Link} to="/wishlist">
+                                My WishList
                             </DropdownItem>
                             <DropdownItem className="hover:underline" tag={Link} to="/orders">
                                 My Orders

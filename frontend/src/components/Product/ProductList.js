@@ -4,21 +4,33 @@ import api from "../../utilities/axios";
 import ProductCard from "./ProductCard"
 import ProductPagination from "./ProductPagination";
 import { Spinner } from "reactstrap";
+import { useSession } from "../../context/SessionContext";
 
 const ProductList = () => {
 
     const [products, setProducts] = useState([]);
+    const [wishListProducts, setWishList] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
+    const { checkSession } = useSession();
     const [searchParams] = useSearchParams();
     const { category } = useParams();
     const [isLoading, setLoading] = useState(true);
 
     useEffect(() => {
         setLoading(true);
+        const customer = getCustomer();
         const search = getSearch();
+        if (customer !== null) {
+            getWishListProducts();
+        }
         getProducts(search);
-        setLoading(false);
+        // eslint-disable-next-line
     },[searchParams, category]);
+
+    async function getCustomer() {
+        const getCustomer = await checkSession();
+        return getCustomer
+    }
 
     function getSearch() {
         const search = searchParams.get("search");
@@ -34,13 +46,24 @@ const ProductList = () => {
         if (search) fetchURL = `/products?keyword=${search}`;
         if (category) fetchURL = `/products/${category}`;
 
-        await api.get(fetchURL)
-        .then(res => {
-            setProducts(res.data);
-        })
-        .catch(res => {
-            console.log("Error fetching products: " + res.data)
-        });
+        try {
+            const response = await api.get(fetchURL);
+            setProducts(response.data);
+            setLoading(false);
+        } catch (err) {
+            console.log("Error fetching products: " + err)
+        }
+        return true;
+    }
+
+    async function getWishListProducts() {
+        try {
+            const response = await api.get("/wishlist/list")
+            setWishList(response.data)
+        } catch (err) {
+            console.log("Error fetching wishlist: " + err)
+        }
+        return true;
     }
 
     const productsPerPage = 4;
@@ -57,9 +80,22 @@ const ProductList = () => {
 
     const productList = productsOnPage.map(product => {
         return (
-            <ProductCard key={product.id} product={product} />
+            <ProductCard key={product.id} product={product} wishListProducts={wishListProducts} getWishListProducts={getWishListProducts} />
         )
     });
+
+    const header = () => {
+        const search = searchParams.get("search");
+        const endingStr = " T-Shirts"
+
+        if (search) {
+            return "'" + search + "'" + endingStr;
+        } else if (category) {
+            return category + endingStr;
+        } else {
+            return "All" + endingStr;
+        }
+    }
 
     if (isLoading) {
         return (
@@ -69,16 +105,18 @@ const ProductList = () => {
         )
     }
 
-    if (products.length === 0) {
+    if (products.length === 0 && !isLoading) {
         return (
-            <div className="items-center h-full">
-                <h4>!! No items found !!</h4>
+            <div className="items-center h-full text-center">
+                <h1 className="text-3xl my-5 capitalize">{header()}</h1>
+                <h4 className="text-red-700">!! No items found !!</h4>
             </div>
         )
     }
 
     return (
         <div className="text-center">
+            <h1 className="text-3xl my-5">{header()}</h1>
             <div className="grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 gap-24 items-stretch">
                 {productList}
             </div>

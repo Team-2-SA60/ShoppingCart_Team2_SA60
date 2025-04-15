@@ -1,17 +1,17 @@
-import ProductList from "../components/Product/ProductList";
 import AppNavbar from "../components/AppNavbar";
+import WishList from "../components/WishList/WishList";
 
 
-const HomePage = () => {
-
+const WishListPage = () => {
+    
     return (
         <div>
             <AppNavbar />
             <div className='place-items-center'>
-                <ProductList/>
+                <WishList />
             </div>
         </div>
     );
 }
 
-export default HomePage;
+export default WishListPage;
