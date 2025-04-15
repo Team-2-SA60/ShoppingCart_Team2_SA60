@@ -152,6 +152,25 @@ public class AccountController {
     }
 
 
+    @PutMapping("/delete/address")
+    public ResponseEntity<?> deleteAddress(HttpSession session) {
+
+        // Checks if session already has logged-in user.
+        Customer loggedInCustomer = (Customer) session.getAttribute("customer");
+        if (loggedInCustomer == null)
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Customer not logged in");
+
+        // Delete address for logged in customer
+        Customer deletedAddressCustomer = aService.deleteAddress(loggedInCustomer);
+
+        // If cannot find customer in database
+        if (deletedAddressCustomer == null)
+            return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body("Address not deleted");
+
+        return ResponseEntity.ok("Deleted address successfully");
+    }
+
+
     @GetMapping("/creditcard")
     public ResponseEntity<?> getCreditCard(HttpSession session) {
 
@@ -184,8 +203,26 @@ public class AccountController {
 
         // If cannot find customer in database
         if (updatedCustomer == null)
-            return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body("Card not saved");
+            return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body("Credit Card not saved");
 
-        return ResponseEntity.ok("Saved credit card successfully");
+        return ResponseEntity.ok("Saved Credit Card successfully");
+    }
+
+    @PutMapping("/delete/creditcard")
+    public ResponseEntity<?> deleteCreditCard(HttpSession session) {
+
+        // Checks if session already has logged-in user.
+        Customer loggedInCustomer = (Customer) session.getAttribute("customer");
+        if (loggedInCustomer == null)
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Customer not logged in");
+
+        // Delete credit card information for logged in customer
+        Customer deletedCreditCardCustomer = aService.deleteCreditCard(loggedInCustomer);
+
+        // If cannot find customer in database
+        if (deletedCreditCardCustomer == null)
+            return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body("Credit Card not deleted");
+
+        return ResponseEntity.ok("Deleted Credit Card successfully");
     }
 }
