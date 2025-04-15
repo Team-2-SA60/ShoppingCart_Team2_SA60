@@ -83,10 +83,7 @@ public class AccountController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ErrorHandlingUtil.handleBindingErrors(bindingResult));
         }
 
-        // Checks if session already has logged-in user.
         Customer loggedInCustomer = (Customer) session.getAttribute("customer");
-        if (loggedInCustomer == null)
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Customer not logged in");
 
         // Update customer name
         Customer updatedCustomer = aService.editName(loggedInCustomer, customerAccount.getName());
@@ -110,10 +107,7 @@ public class AccountController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ErrorHandlingUtil.handleBindingErrors(bindingResult));
         }
 
-        // Checks if session already has logged-in user.
         Customer loggedInCustomer = (Customer) session.getAttribute("customer");
-        if (loggedInCustomer == null)
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Customer not logged in");
 
         // Check existing password with customer's input
         Customer toUpdateCustomer = aService.checkPassword(loggedInCustomer, customerAccount.getPassword());
@@ -136,10 +130,7 @@ public class AccountController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ErrorHandlingUtil.handleBindingErrors(bindingResult));
         }
 
-        // Checks if session already has logged-in user.
         Customer loggedInCustomer = (Customer) session.getAttribute("customer");
-        if (loggedInCustomer == null)
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Customer not logged in");
 
         // Update customer address
         Customer updatedCustomer = aService.editAddress(loggedInCustomer, addressDTO.toString());
@@ -155,10 +146,7 @@ public class AccountController {
     @PutMapping("/delete/address")
     public ResponseEntity<?> deleteAddress(HttpSession session) {
 
-        // Checks if session already has logged-in user.
         Customer loggedInCustomer = (Customer) session.getAttribute("customer");
-        if (loggedInCustomer == null)
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Customer not logged in");
 
         // Delete address for logged in customer
         Customer deletedAddressCustomer = aService.deleteAddress(loggedInCustomer);
@@ -174,10 +162,7 @@ public class AccountController {
     @GetMapping("/creditcard")
     public ResponseEntity<?> getCreditCard(HttpSession session) {
 
-        // Checks if session already has logged-in user.
         Customer loggedInCustomer = (Customer) session.getAttribute("customer");
-        if (loggedInCustomer == null)
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Customer not logged in");
 
         CreditCardDTO creditCardDTO = aService.getCreditCard(loggedInCustomer);
         return ResponseEntity.ok(creditCardDTO);
@@ -193,10 +178,7 @@ public class AccountController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ErrorHandlingUtil.handleBindingErrors(bindingResult));
         }
 
-        // Checks if session already has logged-in user.
         Customer loggedInCustomer = (Customer) session.getAttribute("customer");
-        if (loggedInCustomer == null)
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Customer not logged in");
 
         // Update customer credit card
         Customer updatedCustomer = aService.editCreditCard(loggedInCustomer, creditCard);
@@ -211,10 +193,7 @@ public class AccountController {
     @PutMapping("/delete/creditcard")
     public ResponseEntity<?> deleteCreditCard(HttpSession session) {
 
-        // Checks if session already has logged-in user.
         Customer loggedInCustomer = (Customer) session.getAttribute("customer");
-        if (loggedInCustomer == null)
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Customer not logged in");
 
         // Delete credit card information for logged in customer
         Customer deletedCreditCardCustomer = aService.deleteCreditCard(loggedInCustomer);
