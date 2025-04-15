@@ -4,20 +4,28 @@ import ProductCard from "../Product/ProductCard"
 import ProductPagination from "../Product/ProductPagination";
 import { Spinner } from "reactstrap";
 import { useSession } from "../../context/SessionContext";
+import { useNavigate } from "react-router-dom";
 
 const WishList = () => {
 
     const [products, setProducts] = useState([]);
     const [wishListProducts, setWishList] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
-    const { customer } = useSession();
+    const { checkSession } = useSession();
     const [isLoading, setLoading] = useState(true);
+    const navigate = useNavigate();
 
     useEffect(() => {
         setLoading(true);
+        getCustomer();
         getWishListProducts();
         // eslint-disable-next-line
-    }, [customer]);
+    }, []);
+
+    async function getCustomer() {
+        const getCustomer = await checkSession();
+        if (!getCustomer) navigate("/login");
+    }
 
     async function getWishListProducts() {
         try {
@@ -67,6 +75,7 @@ const WishList = () => {
 
     return (
         <div className="text-center">
+            <h1 className="text-3xl my-5">Your Wishlist</h1>
             <div className="grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 gap-24 items-stretch">
                 {productList}
             </div>

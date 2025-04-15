@@ -11,20 +11,26 @@ const ProductList = () => {
     const [products, setProducts] = useState([]);
     const [wishListProducts, setWishList] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
-    const { customer } = useSession();
+    const { checkSession } = useSession();
     const [searchParams] = useSearchParams();
     const { category } = useParams();
     const [isLoading, setLoading] = useState(true);
 
     useEffect(() => {
         setLoading(true);
+        const customer = getCustomer();
         const search = getSearch();
         if (customer !== null) {
             getWishListProducts();
         }
         getProducts(search);
         // eslint-disable-next-line
-    },[searchParams, category, customer]);
+    },[searchParams, category]);
+
+    async function getCustomer() {
+        const getCustomer = await checkSession();
+        return getCustomer
+    }
 
     function getSearch() {
         const search = searchParams.get("search");
@@ -78,6 +84,19 @@ const ProductList = () => {
         )
     });
 
+    const header = () => {
+        const search = searchParams.get("search");
+        const endingStr = " T-Shirts"
+
+        if (search) {
+            return "'" + search + "'" + endingStr;
+        } else if (category) {
+            return category + endingStr;
+        } else {
+            return "All" + endingStr;
+        }
+    }
+
     if (isLoading) {
         return (
             <Spinner>
@@ -88,14 +107,16 @@ const ProductList = () => {
 
     if (products.length === 0 && !isLoading) {
         return (
-            <div className="items-center h-full">
-                <h4>!! No items found !!</h4>
+            <div className="items-center h-full text-center">
+                <h1 className="text-3xl my-5 capitalize">{header()}</h1>
+                <h4 className="text-red-700">!! No items found !!</h4>
             </div>
         )
     }
 
     return (
         <div className="text-center">
+            <h1 className="text-3xl my-5">{header()}</h1>
             <div className="grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 gap-24 items-stretch">
                 {productList}
             </div>
