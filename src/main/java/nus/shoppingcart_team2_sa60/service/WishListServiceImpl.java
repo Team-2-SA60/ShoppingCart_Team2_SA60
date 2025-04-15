@@ -3,6 +3,7 @@ package nus.shoppingcart_team2_sa60.service;
 import nus.shoppingcart_team2_sa60.model.Customer;
 import nus.shoppingcart_team2_sa60.model.Product;
 import nus.shoppingcart_team2_sa60.model.WishList;
+import nus.shoppingcart_team2_sa60.repository.ProductRepository;
 import nus.shoppingcart_team2_sa60.repository.WishListRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,6 +19,9 @@ public class WishListServiceImpl implements WishListService {
     @Autowired
     private WishListRepository wlRepo;
 
+    @Autowired
+    private ProductRepository pRepo;
+
     @Override
     public List<Product> getCustomerWishList(Customer loggedInCustomer) {
         return wlRepo.findByCustomerId(loggedInCustomer.getId());
@@ -25,30 +29,37 @@ public class WishListServiceImpl implements WishListService {
 
     @Override
     @Transactional
-    public WishList addToWishList(Customer loggedInCustomer, Product product) {
+    public WishList addToWishList(Customer loggedInCustomer, int productId) {
 
         // Checks Customer's WishList if product had been added before
         // If added before, do NOT add again and return null
         // Otherwise, add product to wishlist
-        Optional<WishList> productAlreadyOnWishlist = wlRepo.findByProductAndCustomerId(loggedInCustomer.getId(), product.getId());
+        Optional<WishList> productAlreadyOnWishlist = wlRepo.findByProductAndCustomerId(loggedInCustomer.getId(), productId);
 
         // If exists
         if (productAlreadyOnWishlist.isPresent()) {
             return null;
         }
 
+        // Get Product using productId
+        Optional<Product> product = pRepo.findById(productId);
+        if (product.isEmpty()) {
+            return null;
+        }
+        Product productToAdd = product.get();
+
         // Add
         WishList wishList = new WishList();
-        wishList.setProduct(product);
+        wishList.setProduct(productToAdd);
         wishList.setCustomer(loggedInCustomer);
         return wlRepo.save(wishList);
     }
 
     @Override
-    public boolean removeFromWishList(Customer loggedInCustomer, Product product) {
+    public boolean removeFromWishList(Customer loggedInCustomer, int productId) {
 
         // Get Customer's WishList for the specific product
-        Optional<WishList> productAlreadyOnWishlist = wlRepo.findByProductAndCustomerId(loggedInCustomer.getId(), product.getId());
+        Optional<WishList> productAlreadyOnWishlist = wlRepo.findByProductAndCustomerId(loggedInCustomer.getId(), productId);
 
         // If not found, return false
         if (productAlreadyOnWishlist.isEmpty()) {

@@ -15,7 +15,6 @@ const TopRightButtons = ({handleLogout}) => {
     }
 
     if (customer) {
-        console.log("Customer data:", customer);
 
         return (
             <> 

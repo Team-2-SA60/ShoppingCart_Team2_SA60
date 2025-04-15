@@ -31,8 +31,8 @@ public class WishListController {
         return ResponseEntity.ok(customerWishList);
     }
 
-    @PostMapping("/add")
-    public ResponseEntity<?> addWishList(HttpSession session, @RequestBody Product product) {
+    @PostMapping("/add/{productId}")
+    public ResponseEntity<?> addWishList(HttpSession session, @PathVariable int productId) {
 
         // Checks if session already has logged-in user.
         Customer loggedInCustomer = (Customer) session.getAttribute("customer");
@@ -40,7 +40,7 @@ public class WishListController {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Customer not logged in");
 
         // Add to wishlist
-        WishList addedProduct = wlService.addToWishList(loggedInCustomer, product);
+        WishList addedProduct = wlService.addToWishList(loggedInCustomer, productId);
 
         // If Product was already in customer's wishlist, product will return as null
         if (addedProduct == null) {
@@ -50,16 +50,18 @@ public class WishListController {
         return ResponseEntity.ok("Product added to wishlist");
     }
 
-    @DeleteMapping("/remove")
-    public ResponseEntity<?> removeWishList(HttpSession session, @RequestBody Product product) {
+    @DeleteMapping("/remove/{productId}")
+    public ResponseEntity<?> removeWishList(HttpSession session, @PathVariable int productId) {
 
         // Checks if session already has logged-in user.
         Customer loggedInCustomer = (Customer) session.getAttribute("customer");
         if (loggedInCustomer == null)
             return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Customer not logged in");
 
-        boolean deleteSuccess = wlService.removeFromWishList(loggedInCustomer, product);
+        // Delete product from wishlist
+        boolean deleteSuccess = wlService.removeFromWishList(loggedInCustomer, productId);
 
+        // Return 417 error if product was not in wishlist
         if (!deleteSuccess) {
             return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body("Product not removed from wishlist");
         }

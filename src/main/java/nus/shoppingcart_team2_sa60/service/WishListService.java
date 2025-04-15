@@ -8,6 +8,6 @@ import java.util.List;
 
 public interface WishListService {
     List<Product> getCustomerWishList(Customer loggedInCustomer);
-    WishList addToWishList(Customer loggedInCustomer, Product product);
-    boolean removeFromWishList(Customer loggedInCustomer, Product product);
+    WishList addToWishList(Customer loggedInCustomer, int productId);
+    boolean removeFromWishList(Customer loggedInCustomer, int productId);
 }

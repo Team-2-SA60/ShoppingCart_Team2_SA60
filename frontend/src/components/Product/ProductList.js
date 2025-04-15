@@ -4,11 +4,14 @@ import api from "../../utilities/axios";
 import ProductCard from "./ProductCard"
 import ProductPagination from "./ProductPagination";
 import { Spinner } from "reactstrap";
+import { useSession } from "../../context/SessionContext";
 
 const ProductList = () => {
 
     const [products, setProducts] = useState([]);
+    const [wishListProducts, setWishList] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
+    const { customer } = useSession();
     const [searchParams] = useSearchParams();
     const { category } = useParams();
     const [isLoading, setLoading] = useState(true);
@@ -16,9 +19,12 @@ const ProductList = () => {
     useEffect(() => {
         setLoading(true);
         const search = getSearch();
+        if (customer !== null) {
+            getWishListProducts();
+        }
         getProducts(search);
         setLoading(false);
-    },[searchParams, category]);
+    },[searchParams, category, customer]);
 
     function getSearch() {
         const search = searchParams.get("search");
@@ -34,13 +40,23 @@ const ProductList = () => {
         if (search) fetchURL = `/products?keyword=${search}`;
         if (category) fetchURL = `/products/${category}`;
 
-        await api.get(fetchURL)
-        .then(res => {
-            setProducts(res.data);
-        })
-        .catch(res => {
-            console.log("Error fetching products: " + res.data)
-        });
+        try {
+            const response = await api.get(fetchURL);
+            setProducts(response.data);
+        } catch (err) {
+            console.log("Error fetching products: " + err)
+        }
+        return true;
+    }
+
+    async function getWishListProducts() {
+        try {
+            const response = await api.get("/wishlist/list")
+            setWishList(response.data)
+        } catch (err) {
+            console.log("Error fetching wishlist: " + err)
+        }
+        return true;
     }
 
     const productsPerPage = 4;
@@ -57,7 +73,7 @@ const ProductList = () => {
 
     const productList = productsOnPage.map(product => {
         return (
-            <ProductCard key={product.id} product={product} />
+            <ProductCard key={product.id} product={product} wishListProducts={wishListProducts} getWishListProducts={getWishListProducts} />
         )
     });
 
