@@ -28,6 +28,14 @@ public class WebConfig implements WebMvcConfigurer {
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(loggingInterceptor);
         registry.addInterceptor(customerInterceptor)
-                .addPathPatterns("/api/account/edit/*", "/api/account/creditcard", "/api/account/delete/*");
+                .addPathPatterns("/api/account/edit/*",
+                        "/api/account/creditcard",
+                        "/api/account/delete/*",
+                        "/api/wishlist/*",
+                        "/api/orders",
+                        "/api/orders/*",
+                        "/api/cart",
+                        "/api/cart/*",
+                        "/api/addToCart/*");
     }
 }

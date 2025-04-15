@@ -7,9 +7,16 @@ const ProductWishList = ({ product, wishListProducts, getWishListProducts }) => 
 
     async function handleWishList(e) {
         e.preventDefault();
-        const addOk = await addToWishList();
-        if (addOk) {
-            getWishListProducts();
+        let addOrDeleteOk;
+
+        if (isInWishlist) {
+            addOrDeleteOk = await removeFromWishList();
+        } else {
+            addOrDeleteOk = await addToWishList();
+        }
+
+        if (addOrDeleteOk) {
+            getWishListProducts(); // refreshes wishlist
         }
     }
 
@@ -24,8 +31,7 @@ const ProductWishList = ({ product, wishListProducts, getWishListProducts }) => 
                 window.location.reload();
             } else if (statusCode === 417) {
                 // Product already in wishlist
-                console.log("Product already in wishlist, deleting instead");
-                return await removeFromWishList();
+                console.log("Product already in wishlist");
             }
             return false;
         }

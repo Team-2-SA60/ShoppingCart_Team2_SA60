@@ -22,10 +22,7 @@ public class WishListController {
     @GetMapping("/list")
     public ResponseEntity<?> getWishList(HttpSession session) {
 
-        // Checks if session already has logged-in user.
         Customer loggedInCustomer = (Customer) session.getAttribute("customer");
-        if (loggedInCustomer == null)
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Customer not logged in");
 
         List<Product> customerWishList = wlService.getCustomerWishList(loggedInCustomer);
         return ResponseEntity.ok(customerWishList);
@@ -34,10 +31,7 @@ public class WishListController {
     @PostMapping("/add/{productId}")
     public ResponseEntity<?> addWishList(HttpSession session, @PathVariable int productId) {
 
-        // Checks if session already has logged-in user.
         Customer loggedInCustomer = (Customer) session.getAttribute("customer");
-        if (loggedInCustomer == null)
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Customer not logged in");
 
         // Add to wishlist
         WishList addedProduct = wlService.addToWishList(loggedInCustomer, productId);
@@ -53,10 +47,7 @@ public class WishListController {
     @DeleteMapping("/remove/{productId}")
     public ResponseEntity<?> removeWishList(HttpSession session, @PathVariable int productId) {
 
-        // Checks if session already has logged-in user.
         Customer loggedInCustomer = (Customer) session.getAttribute("customer");
-        if (loggedInCustomer == null)
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Customer not logged in");
 
         // Delete product from wishlist
         boolean deleteSuccess = wlService.removeFromWishList(loggedInCustomer, productId);
