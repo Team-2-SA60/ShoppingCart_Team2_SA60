@@ -4,9 +4,7 @@ import nus.shoppingcart_team2_sa60.model.CartDetails;
 import nus.shoppingcart_team2_sa60.model.Order;
 import nus.shoppingcart_team2_sa60.model.OrderDetails;
 import nus.shoppingcart_team2_sa60.model.Product;
-import nus.shoppingcart_team2_sa60.repository.CustomerRepository;
-import nus.shoppingcart_team2_sa60.repository.OrderDetailsRepository;
-import nus.shoppingcart_team2_sa60.repository.OrderRepository;
+import nus.shoppingcart_team2_sa60.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,6 +22,9 @@ public class CheckoutServiceImpl implements CheckoutService {
 
     @Autowired
     private CustomerRepository cRepo;
+
+    @Autowired
+    private CartDetailsRepository cdRepo;
 
     @Override
     public Order saveOrder(int customerId, List<CartDetails> cartDetails, String shippingMethod, String shippingAddress) {
@@ -49,6 +50,9 @@ public class CheckoutServiceImpl implements CheckoutService {
             orderDetailsToBeSaved.add(orderDetails);
         });
         orderToBeSaved.setOrderDetails(orderDetailsToBeSaved);
+
+        // clear cart items from cart after order confirmation
+        cdRepo.deleteAll(cartDetails);
 
         return oRepo.save(orderToBeSaved);
     }

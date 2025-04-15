@@ -1,12 +1,12 @@
 package nus.shoppingcart_team2_sa60.dto;
 
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 
 @Getter
 public class CheckoutResponseDTO {
-    @NotNull
+    @NotBlank(message = "Shipping method must not be blank")
     private final String shippingMethod;
     @Valid
     private final AddressRequestDTO shippingAddress;

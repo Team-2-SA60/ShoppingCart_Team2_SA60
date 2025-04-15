@@ -15,7 +15,7 @@ function OrderDetails({order}) {
                     <div className="row-span-1 row-start-1 row-end-1 col-start-3 col-end-3 text-center">Quantity</div>
                     <div className="row-span-1 row-start-2 row-end-2 col-start-3 col-end-3 text-center">x {orderDetail.quantity}</div>
                     <div className="row-span-1 row-start-1 row-end-1 col-start-4 col-end-4 text-center">Price per piece</div>
-                    <div className="row-span-1 row-start-2 row-end-2 col-start-4 col-end-4 text-center">S${orderDetail.priceAtPurchase}.toFixed(2)</div>
+                    <div className="row-span-1 row-start-2 row-end-2 col-start-4 col-end-4 text-center">S${orderDetail.unitPrice.toFixed(2)}</div>
                 </div>
                 <hr/>
             </div>

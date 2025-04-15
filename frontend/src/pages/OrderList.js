@@ -56,7 +56,7 @@ const OrderList = () => {
         };
 
         return (
-        <div className='flex width-full justify-between content-fill'>
+        <div className='flex width-full justify-between content-fill' key={order.id}>
             <Accordion open={open} toggle={toggle} className='w-full'>
                 <AccordionItem>
                     <AccordionHeader targetId={order.id} toggle={toggle}>
