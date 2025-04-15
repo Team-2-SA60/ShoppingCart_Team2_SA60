@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import api from "../../utilities/axios";
 import ProductCard from "../Product/ProductCard"
 import ProductPagination from "../Product/ProductPagination";
-import { Spinner } from "reactstrap";
+import { Button, Spinner } from "reactstrap";
 import { useSession } from "../../context/SessionContext";
 import { useNavigate } from "react-router-dom";
 
@@ -59,16 +59,20 @@ const WishList = () => {
 
     if (isLoading) {
         return (
-            <Spinner>
-                Loading...
-            </Spinner>
+            <div className="items-center">
+                <Spinner>
+                    Loading...
+                </Spinner>
+            </div>
         )
     }
 
     if (products.length === 0) {
         return (
-            <div className="items-center h-full">
+            <div className="items-center h-full text-center">
+                <h1 className="text-3xl my-5">Your Wishlist</h1>
                 <h4 className="text-red-700">!! No items on your wishlist !!</h4>
+                <Button className="mt-4" tag="a" href="/" color="primary">Browse for products</Button>
             </div>
         )
     }

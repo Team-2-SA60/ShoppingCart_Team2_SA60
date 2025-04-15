@@ -99,9 +99,11 @@ const ProductList = () => {
 
     if (isLoading) {
         return (
-            <Spinner>
-                Loading...
-            </Spinner>
+            <div className="items-center">
+                <Spinner>
+                    Loading...
+                </Spinner>
+            </div>
         )
     }
 
