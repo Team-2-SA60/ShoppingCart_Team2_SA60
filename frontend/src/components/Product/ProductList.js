@@ -18,18 +18,17 @@ const ProductList = () => {
 
     useEffect(() => {
         setLoading(true);
-        const customer = getCustomer();
+        getCustomer();
         const search = getSearch();
-        if (customer !== null) {
-            getWishListProducts();
-        }
         getProducts(search);
         // eslint-disable-next-line
     },[searchParams, category]);
 
     async function getCustomer() {
         const getCustomer = await checkSession();
-        return getCustomer
+        if (getCustomer !== null) {
+            getWishListProducts();
+        }
     }
 
     function getSearch() {

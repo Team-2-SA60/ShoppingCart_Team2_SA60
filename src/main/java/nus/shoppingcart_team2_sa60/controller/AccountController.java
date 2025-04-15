@@ -83,10 +83,7 @@ public class AccountController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ErrorHandlingUtil.handleBindingErrors(bindingResult));
         }
 
-        // Checks if session already has logged-in user.
         Customer loggedInCustomer = (Customer) session.getAttribute("customer");
-        if (loggedInCustomer == null)
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Customer not logged in");
 
         // Update customer name
         Customer updatedCustomer = aService.editName(loggedInCustomer, customerAccount.getName());
@@ -110,10 +107,7 @@ public class AccountController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ErrorHandlingUtil.handleBindingErrors(bindingResult));
         }
 
-        // Checks if session already has logged-in user.
         Customer loggedInCustomer = (Customer) session.getAttribute("customer");
-        if (loggedInCustomer == null)
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Customer not logged in");
 
         // Check existing password with customer's input
         Customer toUpdateCustomer = aService.checkPassword(loggedInCustomer, customerAccount.getPassword());
@@ -136,10 +130,7 @@ public class AccountController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ErrorHandlingUtil.handleBindingErrors(bindingResult));
         }
 
-        // Checks if session already has logged-in user.
         Customer loggedInCustomer = (Customer) session.getAttribute("customer");
-        if (loggedInCustomer == null)
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Customer not logged in");
 
         // Update customer address
         Customer updatedCustomer = aService.editAddress(loggedInCustomer, addressDTO.toString());
@@ -152,13 +143,26 @@ public class AccountController {
     }
 
 
+    @PutMapping("/delete/address")
+    public ResponseEntity<?> deleteAddress(HttpSession session) {
+
+        Customer loggedInCustomer = (Customer) session.getAttribute("customer");
+
+        // Delete address for logged in customer
+        Customer deletedAddressCustomer = aService.deleteAddress(loggedInCustomer);
+
+        // If cannot find customer in database
+        if (deletedAddressCustomer == null)
+            return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body("Address not deleted");
+
+        return ResponseEntity.ok("Deleted address successfully");
+    }
+
+
     @GetMapping("/creditcard")
     public ResponseEntity<?> getCreditCard(HttpSession session) {
 
-        // Checks if session already has logged-in user.
         Customer loggedInCustomer = (Customer) session.getAttribute("customer");
-        if (loggedInCustomer == null)
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Customer not logged in");
 
         CreditCardDTO creditCardDTO = aService.getCreditCard(loggedInCustomer);
         return ResponseEntity.ok(creditCardDTO);
@@ -174,18 +178,30 @@ public class AccountController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ErrorHandlingUtil.handleBindingErrors(bindingResult));
         }
 
-        // Checks if session already has logged-in user.
         Customer loggedInCustomer = (Customer) session.getAttribute("customer");
-        if (loggedInCustomer == null)
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Customer not logged in");
 
         // Update customer credit card
         Customer updatedCustomer = aService.editCreditCard(loggedInCustomer, creditCard);
 
         // If cannot find customer in database
         if (updatedCustomer == null)
-            return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body("Card not saved");
+            return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body("Credit Card not saved");
 
-        return ResponseEntity.ok("Saved credit card successfully");
+        return ResponseEntity.ok("Saved Credit Card successfully");
+    }
+
+    @PutMapping("/delete/creditcard")
+    public ResponseEntity<?> deleteCreditCard(HttpSession session) {
+
+        Customer loggedInCustomer = (Customer) session.getAttribute("customer");
+
+        // Delete credit card information for logged in customer
+        Customer deletedCreditCardCustomer = aService.deleteCreditCard(loggedInCustomer);
+
+        // If cannot find customer in database
+        if (deletedCreditCardCustomer == null)
+            return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body("Credit Card not deleted");
+
+        return ResponseEntity.ok("Deleted Credit Card successfully");
     }
 }

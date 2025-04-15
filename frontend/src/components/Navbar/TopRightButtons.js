@@ -21,9 +21,9 @@ const TopRightButtons = ({handleLogout}) => {
                 <NavItem>
                     <UncontrolledDropdown className="me-2 cursor-pointer" inNavbar="true" direction="left">
                         <DropdownToggle className="nav-link" tag="a">
-                            <div className='inline-flex text-[10px] gap-4 items-center text-center hover:bg-slate-100 rounded-lg py-0.5 px-3 shadow-md'>
+                            <div className='inline-flex text-[10px] gap-2 items-center text-center hover:bg-slate-100 rounded-lg py-0.5 px-3 shadow-md'>
                                 <img src="../images/account-icon.png" alt='account-icon' style={{ width: '30px', height: '30px' }} />
-                                <div className='text-[15px]'>
+                                <div className='text-[13px] w-[64px] text-nowrap contain-content'>
                                     Hello! <br />
                                     {customer.name}
                                 </div>

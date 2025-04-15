@@ -116,4 +116,35 @@ public class AccountServiceImpl implements AccountService {
         updateCustomer.setCreditCardExpiryYear(creditCardDTO.getCreditCardExpiryYear());
         return aRepo.save(updateCustomer);
     }
+
+    @Override
+    public Customer deleteAddress(Customer loggedInCustomer) {
+
+        // Get up-to-date customer before proceeding to update
+        Optional<Customer> existingCustomer = aRepo.findById(loggedInCustomer.getId());
+        if (existingCustomer.isEmpty())
+            return null;
+
+        // Remove address from customer and save
+        Customer updateCustomer = existingCustomer.get();
+        updateCustomer.setAddress(null);
+        return aRepo.save(updateCustomer);
+    }
+
+    @Override
+    public Customer deleteCreditCard(Customer loggedInCustomer) {
+
+        // Get up-to-date customer before proceeding to update
+        Optional<Customer> existingCustomer = aRepo.findById(loggedInCustomer.getId());
+        if (existingCustomer.isEmpty())
+            return null;
+
+        // Remove all credit card information from customer and save
+        Customer updateCustomer = existingCustomer.get();
+        updateCustomer.setCreditCardName(null);
+        updateCustomer.setCreditCardNumber(null);
+        updateCustomer.setCreditCardExpiryMonth(null);
+        updateCustomer.setCreditCardExpiryYear(null);
+        return aRepo.save(updateCustomer);
+    }
 }

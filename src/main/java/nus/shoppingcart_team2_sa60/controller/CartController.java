@@ -9,7 +9,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -26,11 +25,8 @@ public class CartController {
 
     @GetMapping("/cart")
     public ResponseEntity<List<CartDetailsResponseDTO>> getCartByCustomerId(HttpSession session){
-        Customer customer = (Customer)session.getAttribute("customer");
-        if(customer == null){
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
-        }
 
+        Customer customer = (Customer)session.getAttribute("customer");
         int customerId = customer.getId();
 
         List<CartDetailsResponseDTO> cartDetails = cartService.getCartDetailsByCustomerId(customerId);

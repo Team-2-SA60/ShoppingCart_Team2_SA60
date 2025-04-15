@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Alert, Spinner } from "reactstrap";
+import { Alert, Button, Modal, ModalBody, ModalFooter, Spinner } from "reactstrap";
 import api from "../../utilities/axios";
 
 const AccountCreditCard = () => {
@@ -11,6 +11,7 @@ const AccountCreditCard = () => {
     const [message, setMessage] = useState('');
     const [isLoading, setLoading] = useState(false);
     const [success, setSuccess] = useState(false);
+    const [confirmDelete, setConfirmDelete] = useState(false);
     const navigate = useNavigate();
 
     useState(() => {
@@ -22,6 +23,8 @@ const AccountCreditCard = () => {
             const response = await api.get("/account/creditcard");
             if (response.data.creditCardName !== null) {
                 maskCcNumber(response.data);
+            } else {
+                setExistingCc('');
             }
         } catch (err) {
             const statusCode = err.response?.status;
@@ -99,7 +102,7 @@ const AccountCreditCard = () => {
                     creditCardNumber: ccNumber.replace(/\D/g, '').substring(0, 16),
                     creditCardExpiry: ccExpiry
                 }
-            )
+            );
             console.log(response.data);
 
         } catch (err) {
@@ -111,21 +114,56 @@ const AccountCreditCard = () => {
                 // 403 error if user session is NOT logged in
                 navigate("/login");
             } else if (statusCode === 400) {
-                setMessage(errorMessage[0] || "Change address failed")
+                setMessage(errorMessage[0] || "Saving Credit Card failed");
             } else {
-                setMessage("Change address failed")
-                console.error("Change address failed", err);
+                setMessage("Saving Credit Card failed");
+                console.error("Saving Credit Card failed", err);
             }
             return false;
         }
         return true;
     }
     
+    async function handleDeleteCard(e) {
+        e.preventDefault();
+        setMessage('');
+        setLoading(true);
+        setSuccess(false);
+        const deleteOk = await deleteCard();
+        if (deleteOk) {
+            getCreditCardInfo(); // Refresh current card, pls work ):
+        }
+        setLoading(false);
+        setConfirmDelete(false);
+    }
+
+    async function deleteCard() {
+        try {
+
+            const response = await api.put("/account/delete/creditcard");
+            console.log(response.data);
+
+        } catch (err) {
+
+            const statusCode = err.response?.status;
+
+            if (statusCode === 403) {
+                // 403 error if user session is NOT logged in
+                navigate("/login");
+            } else {
+                setMessage("Deleting Credit Card failed");
+                console.error("Deleting Credit Card failed", err);
+            }
+            return false;
+        }
+        return true;
+    }
 
     const ShowExistingCc = () => {
         return (
             <div className="bg-white text-[10px] grid grid-cols-1 h-12 rounded-md drop-shadow-md border px-1 min-w-32 max-w-40 mr-4">
                 <span className="absolute right-1 -top-4">Current Card</span>
+                <button onClick={() => setConfirmDelete(true)} className="absolute left-1 bottom-0 text-blue-700 underline">Delete</button>
                 <div>
                     <span className="line-clamp-1 text-right">{existingCc.creditCardName}</span>
                 </div>
@@ -136,6 +174,15 @@ const AccountCreditCard = () => {
                     <span className="text-red-500 font-bold">{existingCc.isExpired ? "Expired" : ""}</span>
                     <span className="line-clamp-1 text-right">{existingCc.creditCardExpiry}</span>
                 </div>
+                <Modal className="text-center" size="sm" isOpen={confirmDelete}>
+                    <ModalBody>
+                        Delete current Credit Card?
+                    </ModalBody>
+                    <ModalFooter>
+                        <Button color="primary" onClick={(e) => handleDeleteCard(e)}>Yes</Button>
+                        <Button color="secondary" onClick={() => setConfirmDelete(false)}>Back</Button>
+                    </ModalFooter>
+                </Modal>
             </div>
         )
     }
