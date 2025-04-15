@@ -1,5 +1,5 @@
 {
-  "name": "test_shoppingcart_frontend",
+  "name": "shoppingcart_frontend",
   "version": "0.1.0",
   "private": true,
   "dependencies": {

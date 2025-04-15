@@ -99,7 +99,7 @@ const Login = () => {
                             <li className="m-2.5">📍 Easily track orders</li>
                             <li className="m-2.5">🛒 View order history</li>
                         </ul>
-                        <a href="/account/create" className="no-underline">
+                        <a href="/create_account" className="no-underline">
                             <button className="bg-black text-white font-bold 
                                         w-full px-3.5 py-2.5 rounded-md cursor-pointer 
                                         hover:!bg-slate-800 active:scale-[0.97] md:mt-2.5 transition-all"
