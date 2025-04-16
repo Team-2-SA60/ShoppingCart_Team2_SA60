@@ -10,7 +10,7 @@ const WishList = () => {
 
     const [products, setProducts] = useState([]);
     const [wishListProducts, setWishList] = useState([]);
-    const [currentPage, setCurrentPage] = useState(1);
+    const [currentPage, setCurrentPage] = useState(0);
     const { checkSession } = useSession();
     const [isLoading, setLoading] = useState(true);
     const navigate = useNavigate();
@@ -41,15 +41,24 @@ const WishList = () => {
 
     const productsPerPage = 4;
 
-    const indexOfFirstProduct = currentPage * productsPerPage - productsPerPage
+    const indexOfFirstProduct = (currentPage + 1) * productsPerPage - productsPerPage
     const indexOfLastProduct = indexOfFirstProduct + productsPerPage
 
     const productsOnPage = products.slice(indexOfFirstProduct, indexOfLastProduct);
     const totalPages = Math.ceil(products.length / productsPerPage);
 
-    const handlePageChange = (pageNumber) => {
+    function handlePageChange(e, pageNumber) {
+        e.preventDefault();
+        if (pageNumber < 0) {
+            setCurrentPage(totalPages - 1);
+            return;
+        }
+        if (pageNumber > totalPages - 1) {
+            setCurrentPage(0);
+            return;
+        }
         setCurrentPage(pageNumber);
-    };
+    }
 
     const productList = productsOnPage.map(product => {
         return (

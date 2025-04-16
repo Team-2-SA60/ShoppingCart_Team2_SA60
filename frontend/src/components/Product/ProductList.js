@@ -10,19 +10,24 @@ const ProductList = () => {
 
     const [products, setProducts] = useState([]);
     const [wishListProducts, setWishList] = useState([]);
-    const [currentPage, setCurrentPage] = useState(1);
+    const [currentPage, setCurrentPage] = useState(0);
+    const [totalPages, setTotalPages] = useState(0);
     const { checkSession } = useSession();
     const [searchParams] = useSearchParams();
     const { category } = useParams();
     const [isLoading, setLoading] = useState(true);
 
     useEffect(() => {
-        setLoading(true);
         getCustomer();
+    }, [])
+
+    useEffect(() => {
+        setLoading(true);
         const search = getSearch();
         getProducts(search);
         // eslint-disable-next-line
-    },[searchParams, category]);
+    }, [searchParams, category, currentPage]);
+
 
     async function getCustomer() {
         const getCustomer = await checkSession();
@@ -36,18 +41,24 @@ const ProductList = () => {
         if (search) {
             return search;
         }
-        setCurrentPage(1);
+        //setCurrentPage(0);
     }
 
     async function getProducts(search) {
-        let fetchURL = '/products';
+        const productsPerPage = 4;
 
-        if (search) fetchURL = `/products?keyword=${search}`;
-        if (category) fetchURL = `/products/${category}`;
+        let fetchURL = `/products?page=${currentPage}&size=${productsPerPage}&keyword=`;
+
+        // for search bar
+        if (search) fetchURL += `${search}`;
+
+        // if click category on nav bar
+        if (category) fetchURL = `/products/${category}?page=${currentPage}&size=${productsPerPage}`;
 
         try {
             const response = await api.get(fetchURL);
-            setProducts(response.data);
+            setProducts(response.data.content);
+            setTotalPages(response.data.totalPages);
             setLoading(false);
         } catch (err) {
             console.log("Error fetching products: " + err)
@@ -65,19 +76,20 @@ const ProductList = () => {
         return true;
     }
 
-    const productsPerPage = 4;
-
-    const indexOfFirstProduct = currentPage * productsPerPage - productsPerPage
-    const indexOfLastProduct = indexOfFirstProduct + productsPerPage
-
-    const productsOnPage = products.slice(indexOfFirstProduct, indexOfLastProduct);
-    const totalPages = Math.ceil(products.length / productsPerPage);
-
-    const handlePageChange = (pageNumber) => {
+    function handlePageChange(e, pageNumber) {
+        e.preventDefault();
+        if (pageNumber < 0) {
+            setCurrentPage(totalPages - 1);
+            return;
+        }
         setCurrentPage(pageNumber);
-    };
+    }
 
-    const productList = productsOnPage.map(product => {
+    if (totalPages !== 0 && currentPage > totalPages - 1) {
+        setCurrentPage(0);
+    }
+
+    const productList = products.map(product => {
         return (
             <ProductCard key={product.id} product={product} wishListProducts={wishListProducts} getWishListProducts={getWishListProducts} />
         )
