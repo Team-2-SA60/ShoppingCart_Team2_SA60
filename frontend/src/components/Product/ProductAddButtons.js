@@ -59,11 +59,15 @@ const ProductAddButtons = ({productId}) => {
     return (
         <div>
             <ButtonGroup className='h-8'>
-                <button onClick={handleDecrease} className="border-black border w-6 rounded-l-md bg-red-200 text-black align-middle">
+                <button onClick={handleDecrease} 
+                    className="w-6 h-8 flex items-center justify-center border border-gray-300 rounded-l-md bg-red-50 
+                        hover:bg-red-200 active:scale-[0.98] transition-colors">
                     <b>-</b>
                 </button>
-                <input type="text" onChange={handleChange} value={quantity} className="border-black border-t border-b white w-10 focus:outline-none text-center" />
-                <button onClick={handleIncrease} className="border-black border w-6 rounded-r-md bg-green-200 text-black align-middle">
+                <input type="text" onChange={handleChange} value={quantity} className="w-10 h-8 border-t border-b border-gray-300 text-center focus:outline-none" />
+                <button onClick={handleIncrease}
+                     className="w-6 h-8 flex items-center justify-center border border-gray-300 rounded-r-md bg-green-50 
+                        hover:bg-green-200 active:scale-[0.98] transition-colors">
                     <b>+</b>
                 </button>
                 <div className='ml-4'>
