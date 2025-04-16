@@ -19,6 +19,7 @@ const ProductList = () => {
 
     useEffect(() => {
         getCustomer();
+        // eslint-disable-next-line
     }, [])
 
     useEffect(() => {

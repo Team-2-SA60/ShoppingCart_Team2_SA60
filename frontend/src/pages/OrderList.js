@@ -56,34 +56,26 @@ const OrderList = () => {
         };
 
         return (
-        <div className='flex width-full justify-between content-fill'>
-            <Accordion open={open} toggle={toggle} className='w-full'>
-                <AccordionItem>
-                    <AccordionHeader targetId={order.id} toggle={toggle}>
-                        <div className="col">{order.id}</div>
-                        <div className="col">{order.orderDate}</div>
-                        <div className="col">S${calculateTotal().toFixed(2)}</div>
-                        <div className="col">{order.orderStatus}</div>
-                    </AccordionHeader>
-                    <AccordionBody accordionId={order.id}>
-                        <OrderDetails order={order} />
-                        <div className='grid grid-rows-1 grid-cols-3 gap-3 pb-2 pt-2'>
-                            <div className="col-start-1 col-end-1 font-semibold">Shipping details </div>
-                            <div className="col-start-2 col-end-2">Shipping method: {order.shippingMethod}</div>
-                            <div className="col-start-3 col-end-3">Shipping fee: S${order.shippingFee}</div>
-                        </div>
-                    </AccordionBody>
-                </AccordionItem>
-            </Accordion>
-        </div>
-
-
-            // <tr>
-            //     <td>{order.id}</td>
-            //     <td>{order.orderDate}</td>
-            //     <td>S${calculateTotal().toFixed(2)}</td>
-            //     <td>{order.orderStatus}</td>
-            // </tr>
+            <div key={order.id} className='flex width-full justify-between content-fill'>
+                <Accordion open={open} toggle={toggle} className='w-full'>
+                    <AccordionItem>
+                        <AccordionHeader targetId={order.id}>
+                            <div className="col">{order.id}</div>
+                            <div className="col">{order.orderDate}</div>
+                            <div className="col">S${calculateTotal().toFixed(2)}</div>
+                            <div className="col">{order.orderStatus}</div>
+                        </AccordionHeader>
+                        <AccordionBody accordionId={order.id}>
+                            <OrderDetails order={order} />
+                            <div className='grid grid-rows-1 grid-cols-3 gap-3 pb-2 pt-2'>
+                                <div className="col-start-1 col-end-1 font-semibold">Shipping details </div>
+                                <div className="col-start-2 col-end-2">Shipping method: {order.shippingMethod}</div>
+                                <div className="col-start-3 col-end-3">Shipping fee: S${order.shippingFee}</div>
+                            </div>
+                        </AccordionBody>
+                    </AccordionItem>
+                </Accordion>
+            </div>
         )
     })
 
@@ -91,22 +83,22 @@ const OrderList = () => {
     return (
         <div>
             <AppNavbar />
-            <div className='w-[60vw] h-[70vh] mx-auto'>
-                <h1 className="text-3xl mt-5 pl-4 pt-8 pb-4">Orders</h1>
-                <div className="flex justify-start pl-4 pb-4 w-[20em]">
-                    <div className='hover:underline mr-auto'>
+            <div className='min-w-[550px] w-[60vw] max-w-[900px] m-auto px-3 bg-white rounded-lg border-b drop-shadow-md'>
+                <h1 className="text-3xl mt-5 pl-4 pt-8 pb-2">Orders</h1>
+                <div className="flex justify-start pl-4 w-[20em] border-b">
+                    <div className={`hover:text-black mr-auto transition-all delay-100 ease-linear ${!status ? "border-b-2 border-blue-500 text-blue-500" : "text-slate-400"}`}>
                         <Link to="/orders" className="no-underline text-inherit">All</Link>
                     </div>
-                    <div className='hover:underline mr-auto'>
+                    <div className={`hover:text-black mr-auto transition-all delay-100 ease-linear ${status === 'pending' ? "border-b-2 border-blue-500 text-blue-500" : "text-slate-400"}`}>
                         <Link to="/orders/pending" className="no-underline text-inherit">Pending</Link>
                     </div>
-                    <div className='hover:underline mr-auto'>
+                    <div className={`hover:text-black mr-auto transition-all delay-100 ease-linear ${status === 'completed' ? "border-b-2 border-blue-500 text-blue-500" : "text-slate-400"}`}>
                         <Link to="/orders/completed" className="no-underline text-inherit">Completed</Link>
                     </div>
                 </div>
 
-                <div className="container text-left pb-4">
-                    <div className="flex p-3 w[-100%] row-align-items-start bg-white">
+                <div className="container text-left pt-4 pb-4">
+                    <div className="flex w-full row-align-items-start bg-white">
                         <div className="col">Order Number</div>
                         <div className="col">Order Date</div>
                         <div className="col">Total Price</div>
@@ -121,20 +113,6 @@ const OrderList = () => {
                     </div>
                 </div>
 
-
-                {/* <Table hover className='md:table-fixed bg-white'>
-                    <tr>
-                        <div className='flex width-full justify-between'>
-                            <div>Order Number</div>
-                            <div>Order Date</div>
-                            <div>Total Price</div>
-                            <div>Status</div>
-                        </div>
-                    </tr>
-                    <tr>
-                        {orderList}
-                    </tr>
-                </Table> */}
             </div>
         </div>
     );
