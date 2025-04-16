@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useSession} from "../context/SessionContext";
-import {useNavigate} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import api from "../utilities/axios";
 import AppNavbar from "../components/AppNavbar";
-import {Button} from "reactstrap";
+import {Button, Modal, ModalBody, ModalFooter} from "reactstrap";
 import ShippingAddress from "./ShippingAddress";
 
 const Checkout = () => {
@@ -19,6 +19,8 @@ const Checkout = () => {
         floorUnitNumber: "",
         postalCode: ""
     });
+    const [modalOpen, setModalOpen] = useState(false);
+    const [modalMessage, setModalMessage] = useState("");
 
     useEffect(() => {
         getCustomer();
@@ -40,7 +42,7 @@ const Checkout = () => {
     const calculateSubtotal = () => {
         if (!cartDetails) return 0;
         return cartDetails.reduce((total, item) => {
-            return total + (item.quantity) * (item.unitPrice);
+            return total + (item.quantity) * (item.price);
         }, 0);
     };
 
@@ -55,7 +57,7 @@ const Checkout = () => {
             <div key={cartItem.id} className={gridClass}>
                 <div className="italic">{cartItem.productName}</div>
                 <div className="text-center">{cartItem.quantity}</div>
-                <div className="text-center">S${cartItem.unitPrice.toFixed(2)}</div>
+                <div className="text-center">S${cartItem.price.toFixed(2)}</div>
             </div>
         )
     });
@@ -71,6 +73,11 @@ const Checkout = () => {
         console.log(shippingAddress);
     }
 
+    const toggleModal = () => {
+        setModalOpen(!modalOpen);
+        if (modalOpen) navigate("/");
+    }
+
     async function confirmOrder() {
         const payload = {
             shippingMethod: shippingMethod,
@@ -78,7 +85,11 @@ const Checkout = () => {
         }
         console.log("Submitting: ", payload);
         try {
-            const response = await api.post("/checkout", payload);
+            const response = await api.post("/checkout", payload)
+                .then(response => {
+                    setModalMessage(response.data.message);
+                    toggleModal();
+                });
             console.log(response);
         } catch (err) {
             const errorMessage = err.response?.data?.message; // Message will be in Array
@@ -166,6 +177,14 @@ const Checkout = () => {
                     </div>
                 </div>
             </div>
+            <Modal className="text-center" size="sm" isOpen={modalOpen} toggle={toggleModal}>
+                <ModalBody>
+                    {modalMessage}
+                </ModalBody>
+                <ModalFooter>
+                    <Button color="primary" onClick={toggleModal}>OK</Button>
+                </ModalFooter>
+            </Modal>
         </div>
     );
 }

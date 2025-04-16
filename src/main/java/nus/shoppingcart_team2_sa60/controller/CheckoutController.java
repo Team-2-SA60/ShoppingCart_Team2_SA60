@@ -18,6 +18,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @CrossOrigin
@@ -63,7 +64,12 @@ public class CheckoutController {
         String shippingAddress = checkoutDetails.getShippingAddress().toString();
         Order savedOrder = checkoutService.saveOrder(customer.getId(), cartDetails, shippingMethod, shippingAddress);
 
-        return ResponseEntity.ok(new OrderResponseDTO(savedOrder));
+        return ResponseEntity.ok(
+            Map.of(
+                "message", "Placed order succesfully!",
+                    "order", new OrderResponseDTO(savedOrder)
+            )
+        );
     }
 
 }
