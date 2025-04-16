@@ -9,4 +9,8 @@ public interface ProductService {
     List<Product> findBySearch(String keyword);
     List<Product> findByCategory(String category);
     List<Product> sortByName();
+    List<Product> sortByNameDesc();
+    List<Product> sortByPrice();
+    List<Product> sortByPriceDesc();
+
 }

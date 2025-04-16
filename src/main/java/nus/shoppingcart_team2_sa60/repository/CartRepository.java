@@ -1,5 +1,6 @@
 package nus.shoppingcart_team2_sa60.repository;
 
+import nus.shoppingcart_team2_sa60.model.Customer;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -19,4 +20,8 @@ public interface CartRepository extends JpaRepository<Cart, Integer> {
             "WHERE c.customer.id = :customerId")
     List<CartDetails> getCartDetailsByCustomerId(@Param("customerId") int customerId);
 
+    @Query("Select c " +
+            "FROM Cart c " +
+            "WHERE c.customer.id = :customerId")
+    Cart findCartByCustomer(@Param("customerId") int customerId);
 }

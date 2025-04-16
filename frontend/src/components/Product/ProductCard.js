@@ -1,12 +1,14 @@
 import ProductAddButtons from "./ProductAddButtons";
+import ProductWishList from "./ProductWishList";
 
-const ProductCard = ({product}) => {
+const ProductCard = ({ product, wishListProducts, getWishListProducts }) => {
 
     return (
         <div className="relative bg-white rounded-3xl contain-content pb-4 shadow-lg w-[225px] hover:scale-[1.02] transition-transform duration-300 ease-in-out transform origin-center">
+            <ProductWishList product={product} wishListProducts={wishListProducts} getWishListProducts={getWishListProducts} />
             <div className="flex flex-col justify-center items-center">
                 <img src={`../images/products/${product.image}`} alt={product.name} className='object-cover h-[300px]' /><br />
-                <div className="-mt-2">
+                <div className="-mt-2 w-full">
                     <h5 className="line-clamp-1">{product.name}</h5>
                     <div className="line-clamp-1">{product.description}</div>
                     {product.discount === 0 ? 
@@ -18,7 +20,7 @@ const ProductCard = ({product}) => {
             </div>
             <br/>
             <div className="fixed bottom-3 ml-3">
-                <ProductAddButtons />
+                <ProductAddButtons productId={product.id}/>
             </div>
         </div>
     )

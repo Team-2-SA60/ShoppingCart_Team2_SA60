@@ -66,42 +66,42 @@ VALUES
     -- Cart with ID 7 has items
     (7, 7, 3, 4);
 
-INSERT INTO Orders (customer_id, order_date, order_status, shipping_method, shipping_fee, shipping_address)
+INSERT INTO Orders (customer_id, order_date, order_status, shipping_method, shipping_fee)
 VALUES
-    (4, '2025-04-04', 'completed', 'Free', 0.00, 'Blk 123'),
-    (4, '2025-04-06', 'pending', 'Free', 0.00, 'Blk 321'),
-    (5, '2025-04-07', 'completed', 'Free', 0.00, 'Blk ABC'),
-    (5, '2025-04-09', 'completed', 'Free', 0.00, 'Blk CBA'),
-    (5, '2025-04-13', 'completed', 'Free', 0.00, 'Street 123'),
-    (5, '2025-04-16', 'pending', 'Free', 0.00, 'Street 321'),
-    (6, '2025-04-20', 'completed', 'Free', 0.00, 'Street ABC'),
-    (7, '2025-04-26', 'completed', 'Free', 0.00, 'Street CBA'),
-    (8, '2025-05-01', 'completed', 'Free', 0.00, 'Road 123'),
-    (9, '2025-05-12', 'completed', 'Free', 0.00, 'Road 321'),
-    (10, '2025-05-14', 'completed', 'Free', 0.00, 'Road ABC'),
-    (4, '2025-05-15', 'pending', 'Free', 0.00, 'Road CBA'),
-    (4, '2025-05-20', 'pending', 'Free', 0.00, 'NUS-ISS');
+    (4, '2025-04-04', 'completed', 'Free', 0.00),
+    (4, '2025-05-04', 'pending', 'Free', 0.00),
+    (5, '2025-03-29', 'completed', 'Free', 0.00),
+    (5, '2025-04-01', 'completed', 'Free', 0.00),
+    (5, '2025-04-02', 'completed', 'Free', 0.00),
+    (5, '2025-05-04', 'pending', 'Free', 0.00),
+    (6, '2025-04-01', 'completed', 'Free', 0.00),
+    (7, '2025-04-02', 'completed', 'Free', 0.00),
+    (8, '2025-03-28', 'completed', 'Free', 0.00),
+    (9, '2025-03-30', 'completed', 'Free', 0.00),
+    (10, '2025-03-25', 'completed', 'Free', 0.00),
+    (4, '2025-06-04', 'pending', 'Free', 0.00),
+    (4, '2025-07-04', 'pending', 'Free', 0.00);
 
 
-INSERT INTO Order_Details (order_id, product_id, price_at_purchase, product_qty)
+INSERT INTO Order_Details (order_item_id, order_id, product_id, price_at_purchase, product_qty)
 VALUES
-    ( 1, 1, 15.00, 5),
-    (1, 5, 10.00, 10),
-    (2, 2, 10.00, 2),
-    (2, 3, 10.00, 3),
-    (3, 4, 15.00, 6),
-    (4, 7, 15.00, 4),
-    (4, 6, 15.00, 2),
-    (5, 1, 15.00, 1),
-    (6, 2, 10.00, 15),
-    (6, 3, 10.00, 3),
-    (7, 4, 15.00, 11),
-    (8, 5, 10.00, 1),
-    (9, 7, 15.00, 9),
-    (10, 3, 10.00, 13),
-    (11, 6, 15.00, 5),
-    (12, 2, 15.00, 1),
-    (13, 5, 10.00, 2);
+    (1, 1, 1, 15.00, 5),
+    (2, 1, 5, 10.00, 10),
+    (3, 2, 2, 10.00, 2),
+    (4, 2, 3, 10.00, 3),
+    (5, 3, 4, 15.00, 6),
+    (6, 4, 7, 15.00, 4),
+    (7, 4, 6, 15.00, 2),
+    (8, 5, 1, 15.00, 1),
+    (9, 6, 2, 10.00, 15),
+    (10, 6, 3, 10.00, 3),
+    (11, 7, 4, 15.00, 11),
+    (12, 8, 5, 10.00, 1),
+    (13, 9, 7, 15.00, 9),
+    (14, 10, 3, 10.00, 13),
+    (15, 11, 6, 15.00, 5),
+    (16, 12, 2, 15.00, 1),
+    (17, 13, 5, 10.00, 2);
 
 
 

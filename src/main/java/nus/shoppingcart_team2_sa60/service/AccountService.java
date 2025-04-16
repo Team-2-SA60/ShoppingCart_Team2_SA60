@@ -12,4 +12,6 @@ public interface AccountService {
     Customer editAddress(Customer loggedInCustomer, String address);
     CreditCardDTO getCreditCard(Customer loggedInCustomer);
     Customer editCreditCard(Customer loggedInCustomer, CreditCardDTO creditCardDTO);
+    Customer deleteAddress(Customer loggedInCustomer);
+    Customer deleteCreditCard(Customer loggedInCustomer);
 }

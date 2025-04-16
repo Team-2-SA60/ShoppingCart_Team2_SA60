@@ -22,8 +22,8 @@ const Account = ({activeTab, setActiveTab}) => {
 
     async function getCustomer() {
         const getCustomer = await checkSession();
-        setCustomer(getCustomer);
         if (!getCustomer) navigate("/login");
+        setCustomer(getCustomer);
     }
 
     if (!customer) {

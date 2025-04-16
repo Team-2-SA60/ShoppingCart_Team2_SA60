@@ -13,4 +13,8 @@ public class DateTimeUtil {
     public static LocalDate today() {
         return LocalDate.now();
     }
+
+    public static String orderDateToString(LocalDate orderDate) {
+        return orderDate.format(DateTimeFormatter.ofPattern("dd MMM yyyy"));
+    }
 }

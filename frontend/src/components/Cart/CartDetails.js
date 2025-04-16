@@ -1,24 +1,36 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react'
+import { useNavigate } from "react-router-dom";
+import { useSession } from "../../context/SessionContext";
 import {Container, Button} from 'reactstrap';
-import api from '../utilities/axios';
+import api from '../../utilities/axios';
 import './CartDetails.css';
-import ListCartItem from "../components/ListCartItem";
-import ListCartPrice from '../components/ListCartPrice';
-import AppNavbar from '../components/AppNavbar';
+import ListCartItem from "./ListCartItem";
+import ListCartPrice from './ListCartPrice';
+import AppNavbar from '../AppNavbar';
 
 export default function CartDetails() {
     const [cartItems, setCartItems] = useState([]);
+    const { checkSession } = useSession();
+    const navigate = useNavigate();
 
     useEffect(() => {
-        api.get("/cart")
-            .then(res => {
-                console.log("Fetched cart items:", res.data);
-                setCartItems(res.data);
-            })
-            .catch(err => {
-                console.error("Failed to fetch cart items", err);
-            });
+        getCustomer();
+        fetchCart();
     }, []);
+
+    async function getCustomer() {
+        const getCustomer = await checkSession();
+        if (!getCustomer) navigate("/login");
+    }
+
+    async function fetchCart() {
+        try {
+            const response = await api.get("/cart")
+            setCartItems(response.data);
+        } catch (err) {
+            console.error("Failed to fetch cart items", err);
+        }
+    }
 
     function updateQuantity (id, updateFn) {
         setCartItems(previous => previous.map(item => {
@@ -66,6 +78,7 @@ export default function CartDetails() {
             .then(()=>{
                 console.log('Item deleted');
                 setCartItems(cartItems.filter(item => item.id !== id));
+                checkSession();
             })
             .catch(error => console.error('Error: ', error));
     }

@@ -27,8 +27,8 @@ const OrderList = () => {
     }, [status]);
 
     async function getCustomer() {
-        const customer = await checkSession();
-        if (!customer) navigate("/login");
+        const getCustomer = await checkSession();
+        if (!getCustomer) navigate("/login");
     }
 
     async function getOrders(status) {

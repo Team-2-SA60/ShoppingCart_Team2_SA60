@@ -11,7 +11,7 @@ export default function CartItem({item, handleMinusItemQty, handleSetItemQty, ha
     function handleQtyChange(event) {
         const newQty = event.target.value;
 
-        if (newQty === "" || newQty >= 1 && newQty <= 99) {
+        if (newQty === "" || (newQty >= 1 && newQty <= 99)) {
             setItemQty(newQty);
             if (newQty !== "") {
                 handleSetItemQty(item.id, newQty);
@@ -36,7 +36,10 @@ export default function CartItem({item, handleMinusItemQty, handleSetItemQty, ha
                 <div className="cart-item-details">
                     <h2>{item.productName}</h2>
                     <p>{item.productDescription}</p>
-                    <p>${item.unitPrice.toFixed(2)}</p>
+                    {item.discount === 0 ?
+                        (<p>S${(item.price - item.discount).toFixed(2)}</p>)
+                        :
+                        (<p><s className="text-[14px]">S${(item.price).toFixed(2)}</s> &nbsp; <b className="text-red-600 ">S${(item.price - item.discount).toFixed(2)}</b></p>)}
                 </div>
                 <div className="cart-item-quantity">
                     <button onClick={() => handleMinusItemQty(item.id)} className="border-black border w-6 rounded-l-md bg-red-200 text-black">

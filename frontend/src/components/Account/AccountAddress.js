@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import api from "../../utilities/axios";
-import { Alert, Spinner } from "reactstrap";
+import { Alert, Button, Modal, ModalBody, ModalFooter, Spinner } from "reactstrap";
 import { useNavigate } from "react-router-dom";
+import { useSession } from "../../context/SessionContext";
 
 const AccountAddress = ({customer}) => {
 
@@ -11,6 +12,8 @@ const AccountAddress = ({customer}) => {
     const [message, setMessage] = useState('');
     const [isLoading, setLoading] = useState(false);
     const [success, setSuccess] = useState(false);
+    const [confirmDelete, setConfirmDelete] = useState(false);
+    const { checkSession } = useSession();
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -33,8 +36,9 @@ const AccountAddress = ({customer}) => {
             const changeAddressOK = await changeAddress();
             if (changeAddressOK) {
                 setSuccess(true);
-            };
-        };
+            }
+        }
+        checkSession();
         setLoading(false);
     }
 
@@ -70,19 +74,86 @@ const AccountAddress = ({customer}) => {
             if (statusCode === 403) {
                 // 403 error if user session is NOT logged in
                 navigate("/login");
+            } else if (statusCode === 400) {
+                setMessage(errorMessage[0] || "Chane address failed");
             } else {
-                setMessage(errorMessage[0] || "Change address failed")
-                console.error(errorMessage);
+                setMessage("Change address failed")
+                console.error("Changing address failed: ", err);
             }
             return false;
         }
         return true;
     }
 
+    async function handleDeleteAddress(e) {
+        e.preventDefault();
+        setMessage('');
+        setLoading(true);
+        setSuccess(false);
+        const deleteOk = await deleteAddress();
+        if (deleteOk) {
+            checkSession();
+            setAddress('');
+            setFloorUnit('');
+            setPostal('');
+        }
+        setLoading(false);
+        setConfirmDelete(false);
+    }
+
+    async function deleteAddress() {
+        try {
+
+            const response = await api.put("/account/delete/address");
+            console.log(response.data);
+
+        } catch (err) {
+
+            const statusCode = err.response?.status;
+
+            if (statusCode === 403) {
+                // 403 error if user session is NOT logged in
+                navigate("/login");
+            } else {
+                setMessage("Deleting address failed");
+                console.error("Deleting address failed", err);
+            }
+            return false;
+        }
+        return true;
+    }
+
+    const DeleteAddressBtn = () => {
+        if (!customer.address) return;
+
+        return (
+            <>
+                <Button
+                    size="sm"
+                    color="primary"
+                    onClick={() => setConfirmDelete(true)}
+                    className="absolute top-0 right-3 drop-shadow-md active:scale-[0.98]"
+                >
+                    Delete current address
+                </Button>
+                <Modal className="text-center" size="sm" isOpen={confirmDelete}>
+                    <ModalBody>
+                        Delete current address?
+                    </ModalBody>
+                    <ModalFooter>
+                        <Button color="primary" onClick={(e) => handleDeleteAddress(e)}>Yes</Button>
+                        <Button color="secondary" onClick={() => setConfirmDelete(false)}>Back</Button>
+                    </ModalFooter>
+                </Modal>
+            </>
+        )
+    }
+
     return (
         <div className="flex flex-col h-full relative">
             <div>
                 <h6>Your Address</h6>
+                <DeleteAddressBtn />
             </div>
             <form onSubmit={handleChangeAddress}
                 className="flex flex-wrap justify-around"

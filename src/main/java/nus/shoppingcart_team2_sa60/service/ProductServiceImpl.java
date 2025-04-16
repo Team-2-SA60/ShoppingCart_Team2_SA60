@@ -31,4 +31,19 @@ public class ProductServiceImpl implements ProductService {
     public List<Product> sortByName() {
         return pRepo.sortProductByName();
     }
+
+    @Override
+    public List<Product> sortByNameDesc() {
+        return pRepo.sortProductByNameDesc();
+    }
+
+    @Override
+    public List<Product> sortByPrice() {
+        return pRepo.sortProductByPrice();
+    }
+
+    @Override
+    public List<Product> sortByPriceDesc() {
+        return pRepo.sortProductByPriceDesc();
+    }
 }

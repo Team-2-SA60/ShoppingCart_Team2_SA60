@@ -1,64 +1,38 @@
 import { useEffect, useState } from "react";
-import { useParams, useSearchParams } from "react-router-dom";
 import api from "../../utilities/axios";
-import ProductCard from "./ProductCard"
-import ProductPagination from "./ProductPagination";
-import { Spinner } from "reactstrap";
+import ProductCard from "../Product/ProductCard"
+import ProductPagination from "../Product/ProductPagination";
+import { Button, Spinner } from "reactstrap";
 import { useSession } from "../../context/SessionContext";
+import { useNavigate } from "react-router-dom";
 
-const ProductList = () => {
+const WishList = () => {
 
     const [products, setProducts] = useState([]);
     const [wishListProducts, setWishList] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
     const { checkSession } = useSession();
-    const [searchParams] = useSearchParams();
-    const { category } = useParams();
     const [isLoading, setLoading] = useState(true);
+    const navigate = useNavigate();
 
     useEffect(() => {
         setLoading(true);
         getCustomer();
-        const search = getSearch();
-        getProducts(search);
+        getWishListProducts();
         // eslint-disable-next-line
-    },[searchParams, category]);
+    }, []);
 
     async function getCustomer() {
         const getCustomer = await checkSession();
-        if (getCustomer !== null) {
-            getWishListProducts();
-        }
-    }
-
-    function getSearch() {
-        const search = searchParams.get("search");
-        if (search) {
-            return search;
-        }
-        setCurrentPage(1);
-    }
-
-    async function getProducts(search) {
-        let fetchURL = '/products';
-
-        if (search) fetchURL = `/products?keyword=${search}`;
-        if (category) fetchURL = `/products/${category}`;
-
-        try {
-            const response = await api.get(fetchURL);
-            setProducts(response.data);
-            setLoading(false);
-        } catch (err) {
-            console.log("Error fetching products: " + err)
-        }
-        return true;
+        if (!getCustomer) navigate("/login");
     }
 
     async function getWishListProducts() {
         try {
             const response = await api.get("/wishlist/list")
-            setWishList(response.data)
+            setWishList(response.data);
+            setProducts(response.data);
+            setLoading(false);
         } catch (err) {
             console.log("Error fetching wishlist: " + err)
         }
@@ -83,19 +57,6 @@ const ProductList = () => {
         )
     });
 
-    const header = () => {
-        const search = searchParams.get("search");
-        const endingStr = " T-Shirts"
-
-        if (search) {
-            return "'" + search + "'" + endingStr;
-        } else if (category) {
-            return category + endingStr;
-        } else {
-            return "All" + endingStr;
-        }
-    }
-
     if (isLoading) {
         return (
             <div className="items-center">
@@ -106,24 +67,25 @@ const ProductList = () => {
         )
     }
 
-    if (products.length === 0 && !isLoading) {
+    if (products.length === 0) {
         return (
             <div className="items-center h-full text-center">
-                <h1 className="text-3xl my-5 capitalize">{header()}</h1>
-                <h4 className="text-red-700">!! No items found !!</h4>
+                <h1 className="text-3xl my-5">Your Wishlist</h1>
+                <h4 className="text-red-700">!! No items on your wishlist !!</h4>
+                <Button className="mt-4" tag="a" href="/" color="primary">Browse for products</Button>
             </div>
         )
     }
 
     return (
         <div className="text-center">
-            <h1 className="text-3xl my-5">{header()}</h1>
+            <h1 className="text-3xl my-5">Your Wishlist</h1>
             <div className="grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 gap-24 items-stretch">
                 {productList}
             </div>
-            <ProductPagination currentPage={currentPage} totalPages={totalPages} handlePageChange={handlePageChange}/>
+            <ProductPagination currentPage={currentPage} totalPages={totalPages} handlePageChange={handlePageChange} />
         </div>
     );
 }
 
-export default ProductList;
+export default WishList;

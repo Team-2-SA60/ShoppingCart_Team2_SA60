@@ -26,7 +26,7 @@ public class AccountServiceImpl implements AccountService {
             return null;
         }
 
-        Customer newCustomer = new Customer(customerAccount.getName(), customerAccount.getEmail(), customerAccount.getPassword());
+        Customer newCustomer = new Customer(customerAccount.getTrimmedName(), customerAccount.getEmail(), customerAccount.getPassword());
         return aRepo.save(newCustomer);
     }
 
@@ -41,7 +41,7 @@ public class AccountServiceImpl implements AccountService {
 
         // Set updated name then save;
         Customer updateCustomer = existingCustomer.get();
-        updateCustomer.setName(newName);
+        updateCustomer.setName(newName.trim());
 
         return aRepo.save(updateCustomer);
     }
@@ -110,10 +110,41 @@ public class AccountServiceImpl implements AccountService {
 
         // Only allow to change credit card information, NOTHING else
         Customer updateCustomer = existingCustomer.get();
-        updateCustomer.setCreditCardName(creditCardDTO.getCreditCardName());
+        updateCustomer.setCreditCardName(creditCardDTO.getCreditCardName().trim());
         updateCustomer.setCreditCardNumber(creditCardDTO.getCreditCardNumber());
         updateCustomer.setCreditCardExpiryMonth(creditCardDTO.getCreditCardExpiryMonth());
         updateCustomer.setCreditCardExpiryYear(creditCardDTO.getCreditCardExpiryYear());
+        return aRepo.save(updateCustomer);
+    }
+
+    @Override
+    public Customer deleteAddress(Customer loggedInCustomer) {
+
+        // Get up-to-date customer before proceeding to update
+        Optional<Customer> existingCustomer = aRepo.findById(loggedInCustomer.getId());
+        if (existingCustomer.isEmpty())
+            return null;
+
+        // Remove address from customer and save
+        Customer updateCustomer = existingCustomer.get();
+        updateCustomer.setAddress(null);
+        return aRepo.save(updateCustomer);
+    }
+
+    @Override
+    public Customer deleteCreditCard(Customer loggedInCustomer) {
+
+        // Get up-to-date customer before proceeding to update
+        Optional<Customer> existingCustomer = aRepo.findById(loggedInCustomer.getId());
+        if (existingCustomer.isEmpty())
+            return null;
+
+        // Remove all credit card information from customer and save
+        Customer updateCustomer = existingCustomer.get();
+        updateCustomer.setCreditCardName(null);
+        updateCustomer.setCreditCardNumber(null);
+        updateCustomer.setCreditCardExpiryMonth(null);
+        updateCustomer.setCreditCardExpiryYear(null);
         return aRepo.save(updateCustomer);
     }
 }
