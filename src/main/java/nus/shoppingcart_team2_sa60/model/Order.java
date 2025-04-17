@@ -27,9 +27,10 @@ public class Order {
     private String orderStatus;
     private String shippingMethod;
     private Double shippingFee;
-    public String shippingAddress;
+    private String shippingAddress;
 
-    @OneToMany(mappedBy = "order")
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "order_id")
     private List<OrderDetails> orderDetails;
 
     // constructors

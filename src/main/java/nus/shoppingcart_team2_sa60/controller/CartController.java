@@ -2,6 +2,7 @@ package nus.shoppingcart_team2_sa60.controller;
 
 import jakarta.servlet.http.HttpSession;
 import nus.shoppingcart_team2_sa60.dto.CartDetailsResponseDTO;
+import nus.shoppingcart_team2_sa60.model.CartDetails;
 import nus.shoppingcart_team2_sa60.model.Customer;
 import nus.shoppingcart_team2_sa60.model.Cart;
 import nus.shoppingcart_team2_sa60.service.CartService;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @CrossOrigin
 @RestController
@@ -29,13 +31,15 @@ public class CartController {
         Customer customer = (Customer)session.getAttribute("customer");
         int customerId = customer.getId();
 
-        List<CartDetailsResponseDTO> cartDetails = cartService.getCartDetailsByCustomerId(customerId);
+        List<CartDetails> cartDetails = cartService.getCartDetailsByCustomerId(customerId);
 
         if(cartDetails.isEmpty()){
             return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null);
         }
 
-        return ResponseEntity.ok(cartDetails);
+        return ResponseEntity.ok(cartDetails.stream()
+                .map(CartDetailsResponseDTO::new)
+                .collect(Collectors.toList()));
     }
 
     @PutMapping("cart/addQty/{id}")

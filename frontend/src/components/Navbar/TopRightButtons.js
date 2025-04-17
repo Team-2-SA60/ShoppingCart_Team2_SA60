@@ -49,7 +49,8 @@ const TopRightButtons = ({handleLogout}) => {
                     <NavLink tag={Link} to="/cart">
                         <div className='relative'>
                             <img src="../images/shopping-cart.png" alt='cart-icon' style={{ width: '30px', height: '30px' }} />
-                            <span className='absolute -top-2 -right-2 bg-yellow-400 text-black text-xs rounded-full px-1.5 py-0.5 shadow-md'>
+                            <span className={`absolute -top-2 -right-2 bg-yellow-400 text-black text-xs rounded-full px-1.5 py-0.5 shadow-md
+                                            ${customer.cartSize === 0 ? "hidden" : ""}`}>
                                 {customer.cartSize}
                             </span>
                         </div>

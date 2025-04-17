@@ -26,25 +26,37 @@ export default function CartItem({item, handleMinusItemQty, handleSetItemQty, ha
     }
 
     return(
-        <div>
-            <div className="cart-item">
+        <div className="flex items-center justify-between p-2.5 mb-3 bg-white rounded-lg shadow-sm border border-gray-100">
+            <div className="flex items-center space-x-4 flex-1">
                 <img
                     src={`../images/products/${item.productImage}`}
                     alt={item.productName}
-                    className="cart-item-image rounded-md drop-shadow-md"
+                    className="w-20 h-[110px] object-cover rounded-md shadow-sm"
                 />
-                <div className="cart-item-details">
-                    <h2>{item.productName}</h2>
-                    <p>{item.productDescription}</p>
-                    {item.discount === 0 ?
-                        (<p>S${(item.price - item.discount).toFixed(2)}</p>)
-                        :
-                        (<p><s className="text-[14px]">S${(item.price).toFixed(2)}</s> &nbsp; <b className="text-red-600 ">S${(item.price - item.discount).toFixed(2)}</b></p>)}
+                <div className="flex-1">
+                    <h2 className="font-semibold text-xl">{item.productName}</h2>
+                    <p className="text-gray-600 text-sm line-clamp-2">{item.productDescription}</p>
+                    <div className="mt-2">
+                        {item.discount === 0 ? (
+                            <p className="font-medium">S${(item.price - item.discount).toFixed(2)}</p>
+                        ) : (
+                            <p className="flex items-center">
+                                <s className="text-gray-400 text-sm">S${item.price.toFixed(2)}</s>
+                                <span className="ml-2 font-bold text-red-600">S${(item.price - item.discount).toFixed(2)}</span>
+                            </p>
+                        )}
+                    </div>
                 </div>
 
-                <div className="cart-item-quantity">
-                    <button onClick={() => handleMinusItemQty(item.id)} className="border-black border w-6 rounded-l-md bg-red-200 text-black">
-                        <b>-</b>
+                </div>
+
+            <div className="flex items-center space-x-14">
+                <div className="flex items-center">
+                    <button
+                        onClick={() => handleMinusItemQty(item.id)}
+                        className="w-8 h-8 flex items-center justify-center border border-gray-300 rounded-l-md bg-red-50 hover:bg-red-200 active:scale-[0.98] transition-colors"
+                    >
+                        <span className="font-bold">-</span>
                     </button>
                     <input
                         value={itemQty}
@@ -53,14 +65,21 @@ export default function CartItem({item, handleMinusItemQty, handleSetItemQty, ha
                         type="number"
                         min="1"
                         max="99"
-                        className="border-black border-t border-b w-10 focus:outline-none text-center [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                        className="w-12 h-8 border-t border-b border-gray-300 text-center focus:outline-none [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
                     />
-                    <button onClick={() => handleAddItemQty(item.id)} className="border-black border w-6 rounded-r-md bg-green-200 text-black">
-                        <b>+</b>
+                    <button
+                        onClick={() => handleAddItemQty(item.id)}
+                        className="w-8 h-8 flex items-center justify-center border border-gray-300 rounded-r-md bg-green-50 hover:bg-green-200 active:scale-[0.98] transition-colors"
+                    >
+                        <span className="font-bold">+</span>
                     </button>
 
                 </div>
-                <Button onClick={() => handleDeleteItem(item.id)} color="danger" className="remove-button">
+                <Button
+                    onClick={() => handleDeleteItem(item.id)}
+                    color="danger"
+                    className="ml-4 w-8 h-8 flex items-center justify-center p-0 rounded-full"
+                >
                     X
                 </Button>
             </div>

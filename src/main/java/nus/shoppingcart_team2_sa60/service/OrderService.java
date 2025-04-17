@@ -7,5 +7,4 @@ import java.util.List;
 public interface OrderService {
     List<Order> searchOrdersByCustomerId(int customerId);
     List<Order> searchOrdersByStatus(int customerId, String status);
-
 }
