@@ -26,7 +26,7 @@ public class AccountServiceImpl implements AccountService {
             return null;
         }
 
-        Customer newCustomer = new Customer(customerAccount.getTrimmedName(), customerAccount.getEmail(), customerAccount.getPassword());
+        Customer newCustomer = new Customer(customerAccount.getName().trim(), customerAccount.getEmail(), customerAccount.getPassword());
         return aRepo.save(newCustomer);
     }
 

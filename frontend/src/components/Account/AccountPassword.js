@@ -38,7 +38,8 @@ const AccountPassword = () => {
             return false;
         }
         if (currentPassword === newPassword) {
-            setMessage("New password same as current password")
+            setMessage("New password same as current password");
+            return false;
         }
         if (currentPassword.includes(" ") || newPassword.includes(" ") || confirmNewPassword.includes(" ")) {
             setMessage("Password cannot have space");
