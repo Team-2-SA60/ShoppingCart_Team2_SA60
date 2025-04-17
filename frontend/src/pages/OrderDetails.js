@@ -2,8 +2,6 @@ import React from 'react';
 
 function OrderDetails({order}) {
 
-    const gridClass = '';
-
     const orderDetails = order.orderDetails.map((orderDetail) => {
 
         return (
