@@ -3,6 +3,7 @@ package nus.shoppingcart_team2_sa60.controller;
 import nus.shoppingcart_team2_sa60.model.Product;
 import nus.shoppingcart_team2_sa60.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -15,16 +16,19 @@ public class ProductController {
     private ProductService pService;
 
     @GetMapping("/products")
-    public List<Product> products(@RequestParam(required = false) String keyword) {
-        if (keyword != null) {
-            return pService.findBySearch(keyword);
-        }
-        return pService.findAllProducts();
+    public Page<Product> products(@RequestParam(defaultValue = "0") int page,
+                                  @RequestParam(defaultValue = "4") int size,
+                                  @RequestParam(required = false) String keyword) {
+
+        return pService.findProducts(page, size, keyword);
     }
 
     @GetMapping("/products/{category}")
-    public List<Product> productsByKeyword(@PathVariable String category) {
-        return pService.findByCategory(category);
+    public Page<Product> productsByKeyword(@RequestParam(defaultValue = "0") int page,
+                                           @RequestParam(defaultValue = "4") int size,
+                                            @PathVariable String category) {
+
+        return pService.findByCategory(page, size, category);
     }
 
     @GetMapping("/products/name")
@@ -46,5 +50,4 @@ public class ProductController {
     public List<Product> sortByPriceDesc() {
         return pService.sortByPriceDesc();
     }
-
 }

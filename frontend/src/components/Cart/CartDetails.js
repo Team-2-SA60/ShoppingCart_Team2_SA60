@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from "react-router-dom";
 import { useSession } from "../../context/SessionContext";
-import {Container, Button} from 'reactstrap';
+import {Button} from 'reactstrap';
 import api from '../../utilities/axios';
-import './CartDetails.css';
 import ListCartItem from "./ListCartItem";
 import ListCartPrice from './ListCartPrice';
 import AppNavbar from '../AppNavbar';
@@ -84,22 +83,41 @@ export default function CartDetails() {
     }
 
     return(
-        <div>
-            <AppNavbar/>
-            <Container className="cart-container">
-                <h1 className="text-3xl mt-5">My Cart ({cartItems.length})</h1>
+        <div className="min-h-screen">
+            <AppNavbar />
+            <div className="container mx-auto px-4 py-5 min-w-[600px]">
+                <h1 className="text-3xl font-bold mt-2.5 mb-2.5">My Cart ({cartItems.length})</h1>
                 {cartItems.length === 0 ? (
-                    <div>
-                        <p>Cart is Empty</p>
-                        <Button tag="a" href="/" color="primary">Continue Browsing</Button>
+                    <div className="text-left py-10">
+                        <p className="text-lg mb-4">Your cart is empty</p>
+                        <Button
+                            tag="a"
+                            href="/"
+                            color="primary"
+                            className="px-6 py-2 rounded-lg font-medium"
+                        >
+                            Continue Browsing
+                        </Button>
                     </div>
-                ) : (
-                    <div className="cart-content">
-                        <ListCartItem cartItems={cartItems} handleAddItemQty={handleAddItemQty} handleMinusItemQty={handleMinusItemQty} handleSetItemQty={handleSetItemQty} handleDeleteItem={handleDeleteItem}/>
-                        <ListCartPrice cartItems={cartItems} />
+                ) 
+                : 
+                (
+                    <div className="flex flex-col lg:flex-row gap-8">
+                        <div className="lg:w-2/3">
+                            <ListCartItem
+                                cartItems={cartItems}
+                                handleAddItemQty={handleAddItemQty}
+                                handleMinusItemQty={handleMinusItemQty}
+                                handleSetItemQty={handleSetItemQty}
+                                handleDeleteItem={handleDeleteItem}
+                            />
+                        </div>
+                        <div className="lg:w-1/3">
+                            <ListCartPrice cartItems={cartItems} />
+                        </div>
                     </div>
                 )}
-            </Container>
+            </div>
         </div>
     )
 

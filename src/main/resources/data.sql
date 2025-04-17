@@ -2,6 +2,7 @@ INSERT INTO Products (name, description, category, price, discount, image)
 VALUES
     ('Duck You', 'Duck Graphic Tee', 'Cute',15.00, 0.00, 'duckyou.png'),
     ('Mewing', 'Cat Graphic Tee', 'Cute', 15.00, 5.00, 'mewing.png'),
+    ('Code Doesn''t Work', 'Code Graphic Tee', 'Chill', 10.00, 0.00, 'codedoesntwork.png'),
     ('What The Sigma', 'Cat Graphic Tee', 'Cringe',15.00, 5.00, 'whatthesigma.png'),
     ('Chill Guy', 'Chill Graphic Tee', 'Chill',15.00, 0.00, 'chillguy.png'),
     ('Me Monkey', 'Monkey Graphic Tee', 'Cringe', 15.00, 5.00, 'memonkey.png'),
@@ -11,15 +12,29 @@ VALUES
     ('Tang Ping', 'Chill Graphic Tee', 'Chill', 15.00, 0.00, 'tangping.png'),
     ('Paused My Game', 'Game Graphic Tee', 'Cringe', 10.00, 5.00, 'pausedmygame.png'),
     ('My Perfect Day', 'Game Graphic Tee', 'Cringe', 15.00, 0.00, 'myperfectday.png'),
+    ('Will Code For Beer', 'Code Graphic Tee', 'Chill', 10.00, 0.00, 'willcodeforbeer.png'),
     ('Human By Day', 'Wolf Graphic Tee', 'Cringe', 10.00, 0.00, 'humanbydayalphabynight.png'),
     ('Huh', 'Cat Graphic Tee', 'Cute', 15.00, 5.00, 'huh.png'),
     ('Hamster Is Calling', 'Hamster Graphic Tee', 'Cute', 20.00, 0.00, 'hamsteriscalling.png'),
     ('I Never Argue', 'Cringe Graphic Tee', 'Cringe', 10.00, 0.00, 'ineverargue.png'),
+    ('Bruh', 'Cat Graphic Tee', 'Chill', 8.00, 0.00, 'bruh.png'),
     ('Let Me Cook Lil Bro', 'Cat Graphic Tee', 'Cute', 15.00, 5.00, 'letmecook.png'),
+    ('Houston, I Have So Many Problems', 'Space Graphic Tee', 'Chill', 15.00, 0.00, 'houstonihavesomanyproblems.png'),
     ('Mentally Sick, Physically Thicc', 'Racoon Graphic Tee', 'Cringe', 10.00, 5.00, 'mentallysick.png'),
     ('Mona Lifta', 'Cringe Graphic Tee', 'Cringe', 20.00, 0.00, 'monalifta.png'),
     ('Plz Use It', 'Cringe Graphic Tee', 'Cringe', 15.00, 5.00, 'plzuseit.png'),
-    ('Sleeping Sushi', 'Sushi Graphic Tee', 'Chill', 20.00, 0.00, 'sushi.png');
+    ('Sleeping Sushi', 'Sushi Graphic Tee', 'Chill', 20.00, 0.00, 'sushi.png'),
+    ('This Is Fine', 'Chill Graphic Tee', 'Chill', 25.00, 5.00, 'thisisfine.png'),
+    ('I Eat Soap', 'Cringe Graphic Tee', 'Cringe', 10.00, 5.00, 'ieatsoap.png'),
+    ('Glerp Glorp', 'Cat Graphic Tee', 'Cute', 15.00, 0.00, 'glerpglob.png'),
+    ('Another Day, Another Slay', 'Cringe Graphic Tee', 'Cringe', 10.00, 0.00, 'anotherdayanotherslay.png'),
+    ('Everything Hurts And I''m Tired', 'Duck Graphic Tee', 'Chill', 10.00, 0.00, 'everythinghurtsandimtired.png'),
+    ('I''m Not Lazy', 'Sloth Graphic Tee', 'Cute', 10.00, 5.00, 'imnotlazy.png'),
+    ('Coffee', 'Cat Graphic Tee', 'Cringe', 15.00, 2.00, 'coffeebecausemurderiswrong.png'),
+    ('More Spaghetti, Less Upsetti', 'Cat Graphic Tee', 'Cute', 20.00, 3.00, 'morespaghettilessupsetti.png'),
+    ('I''m The Kind Of Nerd', 'Nerd Graphic Tee', 'Cringe', 10.00, 0.00 , 'imthekindofnerd.png'),
+    ('Bred Sheeran', 'Funny Graphic Tee', 'Cringe', 15.00, 2.00, 'bredsheeran.png'),
+    ('Chill Couple', 'Chill Graphic Tee', 'Chill', 15.00, 3.00, 'chillcouple.png');
 
 
 INSERT INTO Customer (name, email, password)
@@ -69,18 +84,18 @@ VALUES
 INSERT INTO Orders (customer_id, order_date, order_status, shipping_method, shipping_fee)
 VALUES
     (4, '2025-04-04', 'completed', 'Free', 0.00),
-    (4, '2025-05-04', 'pending', 'Free', 0.00),
+    (4, '2025-04-05', 'pending', 'Free', 0.00),
     (5, '2025-03-29', 'completed', 'Free', 0.00),
     (5, '2025-04-01', 'completed', 'Free', 0.00),
     (5, '2025-04-02', 'completed', 'Free', 0.00),
-    (5, '2025-05-04', 'pending', 'Free', 0.00),
+    (5, '2025-04-05', 'pending', 'Free', 0.00),
     (6, '2025-04-01', 'completed', 'Free', 0.00),
     (7, '2025-04-02', 'completed', 'Free', 0.00),
     (8, '2025-03-28', 'completed', 'Free', 0.00),
     (9, '2025-03-30', 'completed', 'Free', 0.00),
     (10, '2025-03-25', 'completed', 'Free', 0.00),
-    (4, '2025-06-04', 'pending', 'Free', 0.00),
-    (4, '2025-07-04', 'pending', 'Free', 0.00);
+    (4, '2025-04-06', 'pending', 'Free', 0.00),
+    (4, '2025-04-07', 'pending', 'Free', 0.00);
 
 
 INSERT INTO Order_Details (order_id, product_id, price_at_purchase, product_qty)
