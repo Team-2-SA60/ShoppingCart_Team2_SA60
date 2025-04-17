@@ -15,6 +15,7 @@ export default function CartDetails() {
     useEffect(() => {
         getCustomer();
         fetchCart();
+        // eslint-disable-next-line
     }, []);
 
     async function getCustomer() {
