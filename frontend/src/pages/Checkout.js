@@ -3,7 +3,7 @@ import { useSession} from "../context/SessionContext";
 import { useNavigate } from "react-router-dom";
 import api from "../utilities/axios";
 import AppNavbar from "../components/AppNavbar";
-import {Button, Modal, ModalBody, ModalFooter} from "reactstrap";
+import {Alert, Button, Modal, ModalBody, ModalFooter} from "reactstrap";
 import ShippingAddress from "./ShippingAddress";
 
 const Checkout = () => {
@@ -21,6 +21,7 @@ const Checkout = () => {
     });
     const [modalOpen, setModalOpen] = useState(false);
     const [modalMessage, setModalMessage] = useState("");
+    const [message, setMessage] = useState('');
 
     useEffect(() => {
         getCustomer();
@@ -92,7 +93,28 @@ const Checkout = () => {
         if (modalOpen) navigate("/");
     }
 
+    function fieldCheck() {
+        if (!shippingMethod) {
+            setMessage("Please specify shipping method");
+            return false;
+        }
+        if (!shippingAddress.address ||
+            !shippingAddress.floorUnitNumber ||
+            !shippingAddress.postalCode) {
+            setMessage("Address fields cannot be blank");
+            return false;
+        }
+        if (shippingAddress.postalCode.length !== 6) {
+            setMessage("Postal code must be 6-digits");
+            return false;
+        }
+        return true;
+    }
+
     async function confirmOrder() {
+        if (!fieldCheck()) {
+            return;
+        }
         const payload = {
             shippingMethod: shippingMethod,
             shippingAddress: shippingAddress
@@ -181,6 +203,14 @@ const Checkout = () => {
                             <Button color="primary" className="checkout-button" onClick={confirmOrder}>
                                 Confirm Check Out
                             </Button>
+                        </div>
+                        <div className="flex justify-center pt-2">
+                            <Alert
+                                color="danger"
+                                isOpen={message !== ''}
+                                className="p-2 mt-2 w-[70%] text-center">
+                                {message}
+                            </Alert>
                         </div>
                     </div>
                     <div className="p-4">
