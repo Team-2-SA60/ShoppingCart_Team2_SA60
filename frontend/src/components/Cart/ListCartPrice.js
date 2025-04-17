@@ -1,5 +1,6 @@
 import React from 'react';
 import { Button } from 'reactstrap';
+import { useNavigate } from 'react-router-dom';
 
 export default function PriceSummary({ cartItems }) {
     const calculateSubtotal = () => {
@@ -8,12 +9,14 @@ export default function PriceSummary({ cartItems }) {
             .toFixed(2);
     };
 
+    const navigate = useNavigate();
+
     return (
         <div className="summary">
             <h2>Summary</h2>
             <hr />
             <p>Sub-total: ${calculateSubtotal()}</p>
-            <Button color="primary" className="checkout-button">
+            <Button onClick={() => navigate('/checkout')} color="primary" className="checkout-button">
                 Check Out
             </Button>
         </div>

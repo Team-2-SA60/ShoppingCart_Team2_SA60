@@ -13,6 +13,7 @@ public class OrderResponseDTO {
     private String orderStatus;
     private String shippingMethod;
     private Double shippingFee;
+    private String shippingAddress;
     private List<OrderDetailsResponseDTO> orderDetails;
 
     public OrderResponseDTO(Order order) {
@@ -21,6 +22,7 @@ public class OrderResponseDTO {
         this.orderStatus = order.getOrderStatus();
         this.shippingMethod = order.getShippingMethod();
         this.shippingFee = order.getShippingFee();
+        this.shippingAddress = order.getShippingAddress();
         this.orderDetails = order.getOrderDetails().stream()
                 .map(OrderDetailsResponseDTO::new)
                 .toList();

@@ -46,6 +46,25 @@ VALUES
     (9),
     (10);
 
+INSERT INTO Cart_Details (cart_id, product_id, product_qty)
+VALUES
+    -- Cart with ID 1 has items
+    (1, 2, 3),
+    (1, 3, 1),
+
+    -- Cart with ID 2 is empty
+    -- Cart with ID 3 has items
+    (3, 1, 2),
+    (3, 5, 1),
+
+    -- Cart with ID 4 is empty
+    -- Cart with ID 5 has items
+    (5, 4, 2),
+    (5, 6, 1),
+
+    -- Cart with ID 6 is empty
+    -- Cart with ID 7 has items
+    (7, 3, 4);
 
 INSERT INTO Orders (customer_id, order_date, order_status, shipping_method, shipping_fee)
 VALUES
@@ -64,25 +83,25 @@ VALUES
     (4, '2025-07-04', 'pending', 'Free', 0.00);
 
 
-INSERT INTO Order_Details (order_item_id, order_id, product_id, price_at_purchase, product_qty)
+INSERT INTO Order_Details (order_id, product_id, price_at_purchase, product_qty)
 VALUES
-    (1, 1, 1, 15.00, 5),
-    (2, 1, 5, 10.00, 10),
-    (3, 2, 2, 10.00, 2),
-    (4, 2, 3, 10.00, 3),
-    (5, 3, 4, 15.00, 6),
-    (6, 4, 7, 15.00, 4),
-    (7, 4, 6, 15.00, 2),
-    (8, 5, 1, 15.00, 1),
-    (9, 6, 2, 10.00, 15),
-    (10, 6, 3, 10.00, 3),
-    (11, 7, 4, 15.00, 11),
-    (12, 8, 5, 10.00, 1),
-    (13, 9, 7, 15.00, 9),
-    (14, 10, 3, 10.00, 13),
-    (15, 11, 6, 15.00, 5),
-    (16, 12, 2, 15.00, 1),
-    (17, 13, 5, 10.00, 2);
+    (1, 1, 15.00, 5),
+    (1, 5, 10.00, 10),
+    (2, 2, 10.00, 2),
+    (2, 3, 10.00, 3),
+    (3, 4, 15.00, 6),
+    (4, 7, 15.00, 4),
+    (4, 6, 15.00, 2),
+    (5, 1, 15.00, 1),
+    (6, 2, 10.00, 15),
+    (6, 3, 10.00, 3),
+    (7, 4, 15.00, 11),
+    (8, 5, 10.00, 1),
+    (9, 7, 15.00, 9),
+    (10, 3, 10.00, 13),
+    (11, 6, 15.00, 5),
+    (12, 2, 15.00, 1),
+    (13, 5, 10.00, 2);
 
 
 

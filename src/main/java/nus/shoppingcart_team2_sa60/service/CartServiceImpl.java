@@ -1,9 +1,7 @@
 package nus.shoppingcart_team2_sa60.service;
 
-import nus.shoppingcart_team2_sa60.dto.CartDetailsResponseDTO;
 import nus.shoppingcart_team2_sa60.model.Cart;
 import nus.shoppingcart_team2_sa60.model.CartDetails;
-import nus.shoppingcart_team2_sa60.model.Customer;
 import nus.shoppingcart_team2_sa60.model.Product;
 import nus.shoppingcart_team2_sa60.repository.CartDetailsRepository;
 import nus.shoppingcart_team2_sa60.repository.CartRepository;
@@ -14,7 +12,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -29,13 +26,8 @@ public class CartServiceImpl implements CartService {
     private ProductRepository productRepo;
 
     @Override
-    public List<CartDetailsResponseDTO> getCartDetailsByCustomerId(int customerId) {
-        List<CartDetails> cartDetailsList = cartRepo.getCartDetailsByCustomerId(customerId);
-
-        // Convert to DTO
-        return cartDetailsList.stream()
-                .map(CartDetailsResponseDTO::new)
-                .collect(Collectors.toList());
+    public List<CartDetails> getCartDetailsByCustomerId(int customerId) {
+        return cartRepo.getCartDetailsByCustomerId(customerId);
     }
 
     @Override
