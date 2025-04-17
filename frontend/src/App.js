@@ -8,6 +8,7 @@ import { SessionProvider } from './context/SessionContext';
 import HomePage from './pages/HomePage';
 import CreateAccount from './pages/CreateAccount';
 import ManageAccount from './pages/ManageAccount';
+import Checkout from "./pages/Checkout";
 import WishListPage from './pages/WishListPage';
 
 
@@ -25,6 +26,7 @@ const App = () => {
           <Route path='/cart' element={<CartDetails />} />
           <Route path='/create_account' element={<CreateAccount />} />
           <Route path='/account' element={<ManageAccount />} />
+          <Route path='/checkout' element={<Checkout />} />
           <Route path="*" element={<Navigate replace to="/" />} />
         </Routes>
       </Router>
