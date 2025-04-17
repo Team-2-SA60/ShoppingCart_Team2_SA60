@@ -7,7 +7,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
-import java.util.List;
 
 @Repository
 public interface ProductRepository extends JpaRepository<Product, Integer> {
@@ -22,19 +21,26 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
             "WHERE LOWER(p.category) = LOWER(:category)")
     Page<Product> findProductsByCategory(@Param("category") String category, Pageable pageable);
 
-    @Query("SELECT p FROM Product p " +
-            "ORDER BY p.name")
-    List<Product> sortProductByName();
+        @Query("SELECT p FROM Product p " +
+        "ORDER BY " +
+        " p.name ASC ")
+        Page<Product> sortProductByNameAsc(Pageable pageable);
 
-    @Query("SELECT p FROM Product p " +
-            "ORDER BY p.name DESC ")   
-    List<Product> sortProductByNameDesc();
+        @Query("SELECT p FROM Product p " +
+        "ORDER BY " +
+        "(p.price - p.discount) ASC " )
+        Page<Product> sortProductByPriceAsc(Pageable pageable);
 
-    @Query("SELECT p FROM Product p " +
-            "ORDER BY (p.price - p.discount)")
-    List<Product> sortProductByPrice();
+        @Query("SELECT p FROM Product p " +
+        "ORDER BY " +
+        " p.name DESC ")
+        Page<Product> sortProductByNameDesc(Pageable pageable);
 
-    @Query("SELECT p FROM Product p " +
-            "ORDER BY (p.price-p.discount) DESC ")   
-    List<Product> sortProductByPriceDesc();
+        @Query("SELECT p FROM Product p " +
+        "ORDER BY " +
+        "(p.price - p.discount) DESC " )
+        Page<Product> sortProductByPriceDesc(Pageable pageable);
+ 
+
+
 }

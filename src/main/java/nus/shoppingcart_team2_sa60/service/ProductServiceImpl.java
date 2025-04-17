@@ -28,22 +28,27 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public List<Product> sortByName() {
-        return pRepo.sortProductByName();
+    public Page<Product> sortByNameAsc(int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        return pRepo.sortProductByNameAsc(pageable);
     }
 
     @Override
-    public List<Product> sortByNameDesc() {
-        return pRepo.sortProductByNameDesc();
+    public Page<Product> sortByPriceAsc(int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        return pRepo.sortProductByPriceAsc(pageable);
     }
 
     @Override
-    public List<Product> sortByPrice() {
-        return pRepo.sortProductByPrice();
+    public Page<Product> sortByNameDesc(int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        return pRepo.sortProductByNameDesc(pageable);
     }
 
     @Override
-    public List<Product> sortByPriceDesc() {
-        return pRepo.sortProductByPriceDesc();
+    public Page<Product> sortByPriceDesc(int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        return pRepo.sortProductByPriceDesc(pageable);
     }
+
 }

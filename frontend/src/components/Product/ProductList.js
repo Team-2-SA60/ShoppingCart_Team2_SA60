@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
-import { useParams, useSearchParams } from "react-router-dom";
+import { data, useParams, useSearchParams } from "react-router-dom";
 import api from "../../utilities/axios";
 import ProductCard from "./ProductCard"
 import ProductPagination from "./ProductPagination";
 import { Spinner } from "reactstrap";
 import { useSession } from "../../context/SessionContext";
+
+
 
 const ProductList = () => {
 
@@ -16,7 +18,10 @@ const ProductList = () => {
     const [searchParams] = useSearchParams();
     const { category } = useParams();
     const [isLoading, setLoading] = useState(true);
+    const [sortBy, setSortBy] = useState("name");
+    const [sortOrder, setSortOrder] = useState("asc");
 
+   
     useEffect(() => {
         getCustomer();
         // eslint-disable-next-line
@@ -29,6 +34,9 @@ const ProductList = () => {
         // eslint-disable-next-line
     }, [searchParams, category, currentPage]);
 
+    useEffect(() => {
+        getProducts("");
+    }, [sortBy, sortOrder]);
 
     async function getCustomer() {
         const getCustomer = await checkSession();
@@ -55,6 +63,10 @@ const ProductList = () => {
 
         // if click category on nav bar
         if (category) fetchURL = `/products/${category}?page=${currentPage}&size=${productsPerPage}`;
+
+        // for sorting
+        if (sortBy) fetchURL = `/products/${sortBy}`;
+        if (sortOrder) fetchURL += `/${sortOrder}`;
 
         try {
             const response = await api.get(fetchURL);
@@ -126,11 +138,25 @@ const ProductList = () => {
                 <h4 className="text-red-700">!! No items found !!</h4>
             </div>
         )
-    }
+    
+  };
 
     return (
         <div className="text-center">
             <h1 className="text-3xl my-5">{header()}</h1>
+            <div className="flex justify-center mb-5">
+                <div className="flex items-center space-x-2">
+                    <label htmlFor="sortBy" className="text-gray-700">Sort by:</label>
+                    <select id="sortBy" value={sortBy} onChange={(e) => setSortBy(e.target.value)} className="border border-gray-300 rounded-md p-1">
+                        <option value="name">Name</option>
+                        <option value="price">Price</option>
+                    </select>
+                    <select id="sortOrder" value={sortOrder} onChange={(e) => setSortOrder(e.target.value)} className="border border-gray-300 rounded-md p-1">
+                        <option value="asc">Ascending</option>
+                        <option value="desc">Descending</option>
+                    </select>
+                </div>
+            </div>
             <div className="grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 gap-24 items-stretch">
                 {productList}
             </div>

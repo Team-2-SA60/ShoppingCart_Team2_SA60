@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Key;
 import java.util.List;
 
 @CrossOrigin
@@ -31,23 +32,30 @@ public class ProductController {
         return pService.findByCategory(page, size, category);
     }
 
-    @GetMapping("/products/name")
-    public List<Product> sortByName() {
-        return pService.sortByName();
+    @GetMapping("/products/name/asc")
+    public Page<Product> sortByNameAsc(@RequestParam(defaultValue = "0") int page,
+                                    @RequestParam(defaultValue = "4") int size) {
+        return pService.sortByNameAsc(page, size);
+    }
+    
+
+    @GetMapping("/products/price/asc")
+    public Page<Product> sortByPriceAsc(@RequestParam(defaultValue = "0") int page,
+                                     @RequestParam(defaultValue = "4") int size) {
+        return pService.sortByPriceAsc(page, size);
     }
 
-    @GetMapping("/products/namedesc")
-    public List<Product> sortByNameDesc() {
-        return pService.sortByNameDesc();
+    @GetMapping("/products/name/desc")
+    public Page<Product> sortByNameDesc(@RequestParam(defaultValue = "0") int page,
+                                    @RequestParam(defaultValue = "4") int size) {
+        return pService.sortByNameDesc(page, size);
     }
+    
 
-    @GetMapping("/products/price")
-    public List<Product> sortByPrice() {
-        return pService.sortByPrice();
+    @GetMapping("/products/price/desc")
+    public Page<Product> sortByPriceDesc(@RequestParam(defaultValue = "0") int page,
+                                     @RequestParam(defaultValue = "4") int size) {
+        return pService.sortByPriceDesc(page, size);
     }
-
-    @GetMapping("/products/priceDesc")
-    public List<Product> sortByPriceDesc() {
-        return pService.sortByPriceDesc();
-    }
+ 
 }
