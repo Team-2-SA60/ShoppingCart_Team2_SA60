@@ -29,7 +29,6 @@ const Login = () => {
             email, password
         })
         .then(res => {
-            console.log("Login success:", res.data);
             navigate("/")
         })
         .catch(err => {

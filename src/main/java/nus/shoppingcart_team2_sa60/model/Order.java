@@ -27,6 +27,7 @@ public class Order {
     private String orderStatus;
     private String shippingMethod;
     private Double shippingFee;
+    public String shippingAddress;
 
     @OneToMany(mappedBy = "order")
     private List<OrderDetails> orderDetails;

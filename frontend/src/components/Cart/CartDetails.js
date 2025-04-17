@@ -45,9 +45,6 @@ export default function CartDetails() {
     function handleAddItemQty(id) {
         updateQuantity(id, quantity => quantity + 1);
         api.put(`cart/addQty/${id}`)
-            .then(() => {
-                console.log('+1 quantity to item');
-            })
             .catch(error => console.error('Error: ', error));
     }
 
@@ -55,9 +52,6 @@ export default function CartDetails() {
         updateQuantity(id, quantity => quantity - 1);
 
         api.put(`cart/minusQty/${id}`)
-            .then(() => {
-            console.log('-1 quantity from item');
-            })
             .catch(error => console.error('Error: ', error));
     }
 
@@ -67,9 +61,6 @@ export default function CartDetails() {
         api.put(`cart/setQty/${id}`, {
             qty : newQty
         })
-            .then(() => {
-                console.log('Changed quantity of item');
-            })
             .catch(error => console.error('Error: ', error));
     }
 
@@ -94,9 +85,9 @@ export default function CartDetails() {
                         <Button tag="a" href="/" color="primary">Continue Browsing</Button>
                     </div>
                 ) : (
-                    <div className="cart-content">
-                        <ListCartItem cartItems={cartItems} handleAddItemQty={handleAddItemQty} handleMinusItemQty={handleMinusItemQty} handleSetItemQty={handleSetItemQty} handleDeleteItem={handleDeleteItem}/>
-                        <ListCartPrice cartItems={cartItems} />
+                    <div className="cart-content ">
+                            <ListCartItem cartItems={cartItems} handleAddItemQty={handleAddItemQty} handleMinusItemQty={handleMinusItemQty} handleSetItemQty={handleSetItemQty} handleDeleteItem={handleDeleteItem}/>
+                            <ListCartPrice cartItems={cartItems} />
                     </div>
                 )}
             </Container>

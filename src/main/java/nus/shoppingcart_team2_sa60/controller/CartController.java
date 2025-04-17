@@ -39,24 +39,28 @@ public class CartController {
     }
 
     @PutMapping("cart/addQty/{id}")
-    public void addCartItemQty(@PathVariable("id") int cartItemId){
+    public ResponseEntity<String> addCartItemQty(@PathVariable("id") int cartItemId){
         cartService.addCartItemQty(cartItemId);
+        return ResponseEntity.ok("Qty added successfully");
     }
 
     @PutMapping("cart/minusQty/{id}")
-    public void minusCartItemQty(@PathVariable("id") int cartItemId){
+    public ResponseEntity<String> minusCartItemQty(@PathVariable("id") int cartItemId){
         cartService.minusCartItemQty(cartItemId);
+        return ResponseEntity.ok("Qty deducted successfully");
     }
 
     @PutMapping("cart/setQty/{id}")
-    public void setCartItemQty(@PathVariable("id") int cartItemId, @RequestBody Map<String, Integer> payLoad){
+    public ResponseEntity<String> setCartItemQty(@PathVariable("id") int cartItemId, @RequestBody Map<String, Integer> payLoad){
         int qty = payLoad.get("qty");
         cartService.setCartItemQty(cartItemId, qty);
+        return ResponseEntity.ok("Qty set successfully");
     }
 
     @DeleteMapping("cart/delete/{id}")
-    public void deleteCartItem(@PathVariable("id") int cartItemId){
+    public ResponseEntity<String> deleteCartItem(@PathVariable("id") int cartItemId){
         cartService.deleteItemFromCart(cartItemId);
+        return ResponseEntity.ok("Item deleted successfully");
     }
 
     @PostMapping("addToCart/{id}")

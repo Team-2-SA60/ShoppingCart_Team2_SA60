@@ -41,6 +41,7 @@ export default function CartItem({item, handleMinusItemQty, handleSetItemQty, ha
                         :
                         (<p><s className="text-[14px]">S${(item.price).toFixed(2)}</s> &nbsp; <b className="text-red-600 ">S${(item.price - item.discount).toFixed(2)}</b></p>)}
                 </div>
+
                 <div className="cart-item-quantity">
                     <button onClick={() => handleMinusItemQty(item.id)} className="border-black border w-6 rounded-l-md bg-red-200 text-black">
                         <b>-</b>
@@ -50,16 +51,20 @@ export default function CartItem({item, handleMinusItemQty, handleSetItemQty, ha
                         onChange={handleQtyChange}
                         onKeyDown={preventInvalidChars}
                         type="number"
+                        min="1"
+                        max="99"
                         className="border-black border-t border-b w-10 focus:outline-none text-center [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
                     />
                     <button onClick={() => handleAddItemQty(item.id)} className="border-black border w-6 rounded-r-md bg-green-200 text-black">
                         <b>+</b>
                     </button>
+
                 </div>
                 <Button onClick={() => handleDeleteItem(item.id)} color="danger" className="remove-button">
                     X
                 </Button>
             </div>
+
         </div>
     )
 
