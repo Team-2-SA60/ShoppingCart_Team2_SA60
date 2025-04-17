@@ -16,18 +16,6 @@ public class AccountValidator implements Validator {
     public void validate(Object target, Errors errors) {
         AccountRequestDTO account = (AccountRequestDTO) target;
 
-        // Password cannot contain space
-        if (account.getPassword() != null) {
-            if (account.getPassword().contains(" ")) {
-                errors.rejectValue("password", "error.password", "Password cannot contain spaces");
-            }
-        }
-        if (account.getNewPassword() != null) {
-            if (account.getNewPassword().contains(" ")) {
-                errors.rejectValue("password", "error.password", "Password cannot contain spaces");
-            }
-        }
-
         // During account creation, Name + email + password should be sent
         // If email is present, then name + password MUST be present to create an account
         if (account.getEmail() != null) {
@@ -39,11 +27,29 @@ public class AccountValidator implements Validator {
             }
         }
 
+        // Password cannot contain space
+        if (account.getPassword() != null) {
+            if (account.getPassword().contains(" ")) {
+                errors.rejectValue("password", "error.password", "Password cannot contain spaces");
+            }
+        }
+
         // During password change, current password + new Password should be sent
-        // If new password is present, then current password MUST be present to change password
         if (account.getNewPassword() != null){
+
+            // New password cannot contain space
+            if (account.getNewPassword().contains(" ")) {
+                errors.rejectValue("password", "error.password", "Password cannot contain spaces");
+            }
+
+            // If new password is present, then current password MUST be present to change password
             if (account.getPassword() == null){
                 errors.rejectValue("password", "error.password", "Password is required");
+            }
+
+            // New password cannot be same as current password
+            if (account.getPassword().equals(account.getNewPassword())){
+                errors.rejectValue("password", "error.password", "New password same as current password");
             }
         }
     }

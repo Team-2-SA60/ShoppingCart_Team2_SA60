@@ -24,8 +24,4 @@ public class AccountRequestDTO {
 
     @Size(min = 1, max = 50, message = "New Password must be between 1 to 50 characters")
     private String newPassword;
-
-    public String getTrimmedName() {
-        return name.trim();
-    }
 }

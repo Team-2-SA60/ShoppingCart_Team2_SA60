@@ -26,6 +26,6 @@ public class AddressRequestDTO {
 
     @Override
     public String toString() {
-        return address + "\n" + floorUnitNumber + "\n" + postalCode;
+        return address.trim() + "\n" + floorUnitNumber.trim() + "\n" + postalCode;
     }
 }
