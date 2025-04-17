@@ -41,6 +41,7 @@ const Checkout = () => {
         const getCustomer = await checkSession();
         setCustomer(getCustomer);
         if (!getCustomer) navigate("/login");
+        if (getCustomer.cartSize === 0) navigate("/");
     }
 
     const calculateSubtotal = () => {
