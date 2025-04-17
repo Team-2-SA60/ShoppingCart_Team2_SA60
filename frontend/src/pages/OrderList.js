@@ -50,9 +50,10 @@ const OrderList = () => {
 
         const calculateTotal = () => {
             if (!order.orderDetails || !Array.isArray(order.orderDetails)) return 0;
-            return order.orderDetails.reduce((total, item) => {
+            const productsTotal = order.orderDetails.reduce((total, item) => {
                 return total + (item.quantity || 0) * (item.unitPrice || 0);
             }, 0);
+            return productsTotal + order.shippingFee;
         };
 
         return (

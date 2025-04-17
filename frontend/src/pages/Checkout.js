@@ -35,6 +35,7 @@ const Checkout = () => {
             .catch(res => {
                 console.log("Error fetching cart", res);
             })
+        // eslint-disable-next-line
     }, [shippingFee]);
 
     async function getCustomer() {
@@ -56,16 +57,15 @@ const Checkout = () => {
 
     useEffect(() => {
         setTotalCost(calculateSubtotal() + shippingFee);
+        // eslint-disable-next-line
     }, [calculateSubtotal(), shippingFee]);
-
-    const gridClass = 'grid grid-rows-${cartDetails.length} grid-cols-3 pt-2 pb-2';
 
     const cartList = cartDetails.map(cartItem => {
         return (
-            <div key={cartItem.id} className={gridClass}>
+            <div key={cartItem.id} className="grid grid-cols-3 pt-2 pb-2">
                 <div className="italic">{cartItem.productName}</div>
                 <div className="text-center">{cartItem.quantity}</div>
-                <div className="text-center">S${cartItem.price.toFixed(2)}</div>
+                <div className="text-right">S${cartItem.price.toFixed(2)}</div>
             </div>
         )
     });
@@ -153,7 +153,7 @@ const Checkout = () => {
         <div className="h-[100vh]">
             <AppNavbar/>
             <div className='p-4 place-items-center'>
-                <div className="flex flex-col xl:flex-row">
+                <div className="flex flex-col items-center xl:flex-row">
                     <div className='flex flex-col'>
                         <div className="p-4 w-[600px]">
                             <h2>Shipping Method</h2>
@@ -186,48 +186,48 @@ const Checkout = () => {
                             </div>
                         </div>
                     </div>
-                    <div>
-                        <div className="w-[600px] bg-slate-50 p-4 rounded-2 border-2 drop-shadow-md">
-                            <h2 className="pb-2">Summary</h2>
-                            <hr/>
-                            <h4>Order Details:</h4>
-                            <div className="grid grid-cols-3 pt-4 pb-2 text-[18px]">
-                                <div>Product name</div>
-                                <div className="text-center">Quantity</div>
-                                <div className="text-center">Price</div>
-                            </div>
-                            <div className="pb-2">
-                                {cartList}
-                            </div>
-                            <hr/>
-                            <div className="grid grid-cols-2 pt-2 pb-4">
-                                <div className="text-[17px] font-bold">Subtotal:</div>
-                                <div className="text-[17px]">S${calculateSubtotal().toFixed(2)}</div>
-                            </div>
-                            <div className="grid grid-cols-2 pt-2 pb-4">
-                                <div className="text-[17px] font-bold">Shipping fee:</div>
-                                <div className="text-[17px]">S${shippingFee.toFixed(2)}</div>
-                            </div>
-                            <div className="grid grid-cols-2 pt-2 pb-4">
-                                <div className="text-[17px] font-bold">Total</div>
-                                <div className="text-[17px]">S${totalCost.toFixed(2)}</div>
-                            </div>
-                            <hr/>
-                            <div className="flex justify-center pt-2">
-                                <Alert
-                                    color="danger"
-                                    isOpen={message !== ''}
-                                    className="p-2 mt-2 w-[70%] text-center">
-                                    {message}
-                                </Alert>
-                            </div>
-                            <div className="flex justify-center pt-2">
-                                <Button color="primary" className="checkout-button" onClick={confirmOrder}>
-                                    Confirm Check Out
-                                </Button>
-                            </div>
+                    
+                    <div className="w-[500px] bg-slate-50 p-4 rounded-2 border-2 drop-shadow-md">
+                        <h2 className="pb-2">Summary</h2>
+                        <hr/>
+                        <h4>Order Details:</h4>
+                        <div className="grid grid-cols-3 pt-4 pb-2 text-[18px]">
+                            <div>Product name</div>
+                            <div className="text-center">Quantity</div>
+                            <div className="text-right">Price</div>
+                        </div>
+                        <div className="pb-2">
+                            {cartList}
+                        </div>
+                        <hr/>
+                        <div className="grid grid-cols-2 pt-2 pb-4">
+                            <div className="text-[17px] font-bold">Subtotal:</div>
+                            <div className="text-[17px] text-right">S${calculateSubtotal().toFixed(2)}</div>
+                        </div>
+                        <div className="grid grid-cols-2 pt-2 pb-4">
+                            <div className="text-[17px] font-bold">Shipping fee:</div>
+                            <div className="text-[17px] text-right">S${shippingFee.toFixed(2)}</div>
+                        </div>
+                        <div className="grid grid-cols-2 pt-2 pb-4">
+                            <div className="text-[17px] font-bold">Total</div>
+                            <div className="text-[17px] text-right">S${totalCost.toFixed(2)}</div>
+                        </div>
+                        <hr/>
+                        <div className="flex justify-center pt-2">
+                            <Alert
+                                color="danger"
+                                isOpen={message !== ''}
+                                className="p-2 mt-2 w-[70%] text-center">
+                                {message}
+                            </Alert>
+                        </div>
+                        <div className="flex justify-center pt-2">
+                            <Button color="primary" className="checkout-button" onClick={confirmOrder}>
+                                Confirm Check Out
+                            </Button>
                         </div>
                     </div>
+                    
                 </div>
             </div>
             <Modal className="text-center" size="sm" isOpen={modalOpen} toggle={toggleModal}>

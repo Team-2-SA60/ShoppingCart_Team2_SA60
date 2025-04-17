@@ -19,14 +19,18 @@ const ProductAddButtons = ({productId}) => {
     const handleDecrease = () => setQuantity(quantity > 1 ? quantity - 1 : 1);
 
     const handleChange = (e) => {
-        const value = e.target.value;
+        let value = e.target.value;
+        value = value.replace(/\D/g, '');
 
-        if (!isNaN(value) && value >= 1) {
-            setQuantity(Number(value));
+        if (!isNaN(value) && value < 1) {
+            setQuantity(1);
+            return;
         }
-        if (!isNaN(value) && value >= 99) {
-            setQuantity(Number(99));
+        if (!isNaN(value) && value > 99) {
+            setQuantity(99);
+            return;
         }
+        setQuantity(value);
     };
 
     if (!customer) {
@@ -64,7 +68,12 @@ const ProductAddButtons = ({productId}) => {
                         hover:bg-red-200 active:scale-[0.98] transition-colors">
                     <b>-</b>
                 </button>
-                <input type="text" onChange={handleChange} value={quantity} className="w-10 h-8 border-t border-b border-gray-300 text-center focus:outline-none" />
+                <input 
+                    type="text" 
+                    onChange={handleChange} 
+                    value={quantity} 
+                    className="w-10 h-8 border-t border-b border-gray-300 text-center focus:outline-none" 
+                />
                 <button onClick={handleIncrease}
                      className="w-6 h-8 flex items-center justify-center border border-gray-300 rounded-r-md bg-green-50 
                         hover:bg-green-200 active:scale-[0.98] transition-colors">
