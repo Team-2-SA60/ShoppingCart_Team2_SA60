@@ -1,7 +1,11 @@
 import React from 'react';
 import { Button } from 'reactstrap';
+import { useNavigate } from "react-router-dom";
 
 export default function PriceSummary({ cartItems }) {
+
+    const navigate = useNavigate();
+
     const calculateSubtotal = () => {
         return cartItems
             .reduce((total, item) => total + (item.price - item.discount) * item.quantity, 0)
@@ -20,6 +24,7 @@ export default function PriceSummary({ cartItems }) {
             </div>
             <Button
                 color="primary"
+                onClick={() => navigate('/checkout')}
                 className="w-full py-2 rounded-lg font-medium hover:shadow-md active:scale-[0.99] transition-all"
             >
                 Check Out
