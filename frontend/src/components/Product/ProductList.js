@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
-import { data, useParams, useSearchParams } from "react-router-dom";
+import { useParams, useSearchParams } from "react-router-dom";
 import api from "../../utilities/axios";
 import ProductCard from "./ProductCard"
 import ProductPagination from "./ProductPagination";
 import { Spinner } from "reactstrap";
 import { useSession } from "../../context/SessionContext";
+import ProductSort from "./ProductSort";
 
 
 
@@ -18,7 +19,7 @@ const ProductList = () => {
     const [searchParams] = useSearchParams();
     const { category } = useParams();
     const [isLoading, setLoading] = useState(true);
-    const [sortBy, setSortBy] = useState("name");
+    const [sortBy, setSortBy] = useState("id");
     const [sortOrder, setSortOrder] = useState("asc");
 
    
@@ -29,13 +30,12 @@ const ProductList = () => {
 
     useEffect(() => {
         setLoading(true);
-        const search = getSearch();
-        getProducts(search);
+        getProducts();
         // eslint-disable-next-line
     }, [searchParams, category, currentPage]);
 
     useEffect(() => {
-        getProducts("");
+        getProducts();
     }, [sortBy, sortOrder]);
 
     async function getCustomer() {
@@ -45,36 +45,38 @@ const ProductList = () => {
         }
     }
 
-    function getSearch() {
+    function buildParams() {
+        const size = 4;
         const search = searchParams.get("search");
-        if (search) {
-            return search;
+
+        let params = {
+            page: currentPage,
+            size: size,
+            sortBy: sortBy,
+            sortOrder: sortOrder
         }
-        //setCurrentPage(0);
+        
+        if (search && !category) {
+            params.keyword = search || "";
+        }
+
+        return params;
     }
 
-    async function getProducts(search) {
-        const productsPerPage = 4;
+    async function getProducts() {
+        let fetchURL = "/products";
+        if (category) {
+            fetchURL += `/${category}`;
+        }
 
-        let fetchURL = `/products?page=${currentPage}&size=${productsPerPage}&keyword=`;
-
-        // for search bar
-        if (search) fetchURL += `${search}`;
-
-        // if click category on nav bar
-        if (category) fetchURL = `/products/${category}?page=${currentPage}&size=${productsPerPage}`;
-
-        // for sorting
-        if (sortBy) fetchURL = `/products/${sortBy}`;
-        if (sortOrder) fetchURL += `/${sortOrder}`;
-
+        const params = buildParams();
         try {
-            const response = await api.get(fetchURL);
+            const response = await api.get(fetchURL, {params});
             setProducts(response.data.content);
             setTotalPages(response.data.totalPages);
             setLoading(false);
         } catch (err) {
-            console.log("Error fetching products: " + err)
+            console.log("Error fetching products: " + err);
         }
         return true;
     }
@@ -103,6 +105,16 @@ const ProductList = () => {
     }
 
     const productList = products.map(product => {
+        if (isLoading) {
+            return (
+                <div className="items-center">
+                    <Spinner>
+                        Loading...
+                    </Spinner>
+                </div>
+            )
+        }
+
         return (
             <ProductCard key={product.id} product={product} wishListProducts={wishListProducts} getWishListProducts={getWishListProducts} />
         )
@@ -121,43 +133,26 @@ const ProductList = () => {
         }
     }
 
-    if (isLoading) {
+    if (products.length === 0 && !isLoading) {
         return (
-            <div className="items-center">
-                <Spinner>
-                    Loading...
-                </Spinner>
+            <div className="text-center w-[70%]">
+                <h1 className="text-3xl mt-5 mb-5">{header()}</h1>
+                <h4 className="text-red-700">!! No items found !!</h4>
             </div>
         )
     }
 
-    if (products.length === 0 && !isLoading) {
-        return (
-            <div className="items-center h-full text-center">
-                <h1 className="text-3xl my-5 capitalize">{header()}</h1>
-                <h4 className="text-red-700">!! No items found !!</h4>
-            </div>
-        )
-    
-  };
-
     return (
-        <div className="text-center">
-            <h1 className="text-3xl my-5">{header()}</h1>
-            <div className="flex justify-center mb-5">
-                <div className="flex items-center space-x-2">
-                    <label htmlFor="sortBy" className="text-gray-700">Sort by:</label>
-                    <select id="sortBy" value={sortBy} onChange={(e) => setSortBy(e.target.value)} className="border border-gray-300 rounded-md p-1">
-                        <option value="name">Name</option>
-                        <option value="price">Price</option>
-                    </select>
-                    <select id="sortOrder" value={sortOrder} onChange={(e) => setSortOrder(e.target.value)} className="border border-gray-300 rounded-md p-1">
-                        <option value="asc">Ascending</option>
-                        <option value="desc">Descending</option>
-                    </select>
+        <div className="text-center w-[70%]">
+            <div className="relative mt-5">
+                <div>
+                    <h1 className="text-3xl mb-5">{header()}</h1>
+                </div>
+                <div className="absolute top-0 left-20">
+                    <ProductSort sortBy={sortBy} setSortBy={setSortBy} sortOrder={sortOrder} setSortOrder={setSortOrder}/>
                 </div>
             </div>
-            <div className="grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 gap-24 items-stretch">
+            <div className="grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 h-[444px] place-items-center">
                 {productList}
             </div>
             <ProductPagination currentPage={currentPage} totalPages={totalPages} handlePageChange={handlePageChange}/>

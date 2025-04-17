@@ -6,9 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 
 @Service
 public class ProductServiceImpl implements ProductService {
@@ -16,39 +16,40 @@ public class ProductServiceImpl implements ProductService {
     private ProductRepository pRepo;
 
     @Override
-    public Page<Product> findProducts(int page, int size, String keyword) {
-        Pageable pageable = PageRequest.of(page, size);
+    public Page<Product> findProducts(int page, int size, String keyword, String sortBy, String sortOrder) {
+
+        Pageable pageable;
+
+        if (sortBy.equals("price")) {
+            pageable = PageRequest.of(page, size);
+            return pRepo.findProductsBySearchAndNetPrice(keyword, sortOrder, pageable);
+        }
+
+        if (sortOrder.equals("desc")) {
+            pageable = PageRequest.of(page, size, Sort.by(sortBy).descending());
+        } else {
+            pageable = PageRequest.of(page, size, Sort.by(sortBy).ascending());
+        }
+
         return pRepo.findProductsBySearch(keyword, pageable);
     }
 
     @Override
-    public Page<Product> findByCategory(int page, int size, String category) {
-        Pageable pageable = PageRequest.of(page, size);
+    public Page<Product> findByCategory(int page, int size, String category, String sortBy, String sortOrder) {
+
+        Pageable pageable;
+
+        if (sortBy.equals("price")) {
+            pageable = PageRequest.of(page, size);
+            return pRepo.findProductsByCategoryAndNetPrice(category, sortOrder, pageable);
+        }
+
+        if (sortOrder.equals("desc")) {
+            pageable = PageRequest.of(page, size, Sort.by(sortBy).descending());
+        } else {
+            pageable = PageRequest.of(page, size, Sort.by(sortBy).ascending());
+        }
+
         return pRepo.findProductsByCategory(category, pageable);
     }
-
-    @Override
-    public Page<Product> sortByNameAsc(int page, int size) {
-        Pageable pageable = PageRequest.of(page, size);
-        return pRepo.sortProductByNameAsc(pageable);
-    }
-
-    @Override
-    public Page<Product> sortByPriceAsc(int page, int size) {
-        Pageable pageable = PageRequest.of(page, size);
-        return pRepo.sortProductByPriceAsc(pageable);
-    }
-
-    @Override
-    public Page<Product> sortByNameDesc(int page, int size) {
-        Pageable pageable = PageRequest.of(page, size);
-        return pRepo.sortProductByNameDesc(pageable);
-    }
-
-    @Override
-    public Page<Product> sortByPriceDesc(int page, int size) {
-        Pageable pageable = PageRequest.of(page, size);
-        return pRepo.sortProductByPriceDesc(pageable);
-    }
-
 }

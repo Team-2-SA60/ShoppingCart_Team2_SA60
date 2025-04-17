@@ -61,25 +61,25 @@ const WishList = () => {
     }
 
     const productList = productsOnPage.map(product => {
+        if (isLoading) {
+            return (
+                <div className="items-center">
+                    <Spinner>
+                        Loading...
+                    </Spinner>
+                </div>
+            )
+        }
+
         return (
             <ProductCard key={product.id} product={product} wishListProducts={wishListProducts} getWishListProducts={getWishListProducts} />
         )
     });
 
-    if (isLoading) {
+    if (products.length === 0 && !isLoading) {
         return (
-            <div className="items-center">
-                <Spinner>
-                    Loading...
-                </Spinner>
-            </div>
-        )
-    }
-
-    if (products.length === 0) {
-        return (
-            <div className="items-center h-full text-center">
-                <h1 className="text-3xl my-5">Your Wishlist</h1>
+            <div className="text-center w-[70%]">
+                <h1 className="text-3xl mt-5 mb-5">Your Wishlist</h1>
                 <h4 className="text-red-700">!! No items on your wishlist !!</h4>
                 <Button className="mt-4" tag="a" href="/" color="primary">Browse for products</Button>
             </div>
@@ -87,9 +87,9 @@ const WishList = () => {
     }
 
     return (
-        <div className="text-center">
-            <h1 className="text-3xl my-5">Your Wishlist</h1>
-            <div className="grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 gap-24 items-stretch">
+        <div className="text-center w-[70%]">
+            <h1 className="text-3xl mt-5 mb-5">Your Wishlist</h1>
+            <div className="grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 h-[444px] place-items-center">
                 {productList}
             </div>
             <ProductPagination currentPage={currentPage} totalPages={totalPages} handlePageChange={handlePageChange} />
