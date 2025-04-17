@@ -19,6 +19,14 @@ export default function CartItem({item, handleMinusItemQty, handleSetItemQty, ha
         }
     }
 
+    function handleBlankQty(event) {
+        const newQty = event.target.value;
+        if (newQty === "") {
+            setItemQty(1);
+            handleSetItemQty(item.id, 1);
+        }
+    }
+
     function preventInvalidChars (event)  {
         if (event.key === '.' || event.key === '-') {
             event.preventDefault();
@@ -62,6 +70,7 @@ export default function CartItem({item, handleMinusItemQty, handleSetItemQty, ha
                         value={itemQty}
                         onChange={handleQtyChange}
                         onKeyDown={preventInvalidChars}
+                        onBlur={handleBlankQty}
                         type="number"
                         min="1"
                         max="99"

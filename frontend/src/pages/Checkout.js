@@ -159,7 +159,7 @@ const Checkout = () => {
                             <h2>Shipping Method</h2>
                             <div className="bg-slate-50 rounded-2 h-[90%] p-4 border drop-shadow-md">
                                 <div className="text-[16px] pb-4 font-bold">Select your shipping method: *</div>
-                                <div className="grid grid-rows-2 grid-cols-2 text-[18px] h-[75%]">
+                                <div className="grid grid-rows-2 grid-cols-2 text-[18px] h-[75%] gap-4">
                                     <div>
                                         <input type="radio"
                                             name="shipping"
