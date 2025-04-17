@@ -40,7 +40,10 @@ const Checkout = () => {
     async function getCustomer() {
         const getCustomer = await checkSession();
         setCustomer(getCustomer);
-        if (!getCustomer) navigate("/login");
+        if (!getCustomer) {
+            navigate("/login");
+            return;
+        }
         if (getCustomer.cartSize === 0) navigate("/");
     }
 
@@ -88,7 +91,6 @@ const Checkout = () => {
     // updates shipping info based on changes in Shipping Address component
     const handleAddressChange = (newData) => {
         setShippingAddress((prev) => ({...prev, ...newData}));
-        console.log(shippingAddress);
     }
 
     const toggleModal = () => {

@@ -15,7 +15,7 @@ const ProductAddButtons = ({productId}) => {
         navigate('/login');
     };
 
-    const handleIncrease = () => setQuantity(quantity > 99 ? 99 : quantity + 1);
+    const handleIncrease = () => setQuantity(quantity >= 99 ? 99 : quantity + 1);
     const handleDecrease = () => setQuantity(quantity > 1 ? quantity - 1 : 1);
 
     const handleChange = (e) => {
