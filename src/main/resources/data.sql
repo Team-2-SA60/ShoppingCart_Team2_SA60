@@ -81,21 +81,21 @@ VALUES
     -- Cart with ID 7 has items
     (7, 3, 4);
 
-INSERT INTO Orders (customer_id, order_date, order_status, shipping_method, shipping_fee)
+INSERT INTO Orders (customer_id, order_date, order_status, shipping_method, shipping_fee, shipping_address)
 VALUES
-    (4, '2025-04-04', 'completed', 'Free', 0.00),
-    (4, '2025-04-05', 'pending', 'Free', 0.00),
-    (5, '2025-03-29', 'completed', 'Free', 0.00),
-    (5, '2025-04-01', 'completed', 'Free', 0.00),
-    (5, '2025-04-02', 'completed', 'Free', 0.00),
-    (5, '2025-04-05', 'pending', 'Free', 0.00),
-    (6, '2025-04-01', 'completed', 'Free', 0.00),
-    (7, '2025-04-02', 'completed', 'Free', 0.00),
-    (8, '2025-03-28', 'completed', 'Free', 0.00),
-    (9, '2025-03-30', 'completed', 'Free', 0.00),
-    (10, '2025-03-25', 'completed', 'Free', 0.00),
-    (4, '2025-04-06', 'pending', 'Free', 0.00),
-    (4, '2025-04-07', 'pending', 'Free', 0.00);
+    (4, '2025-04-04', 'completed', 'Free', 0.00, 'NUS-ISS'),
+    (4, '2025-04-05', 'pending', 'Free', 0.00, 'NUS-ISS'),
+    (5, '2025-03-29', 'completed', 'Free', 0.00, 'NUS-ISS'),
+    (5, '2025-04-01', 'completed', 'Free', 0.00, 'NUS-ISS'),
+    (5, '2025-04-02', 'completed', 'Free', 0.00, 'NUS-ISS'),
+    (5, '2025-04-05', 'pending', 'Free', 0.00, 'NUS-ISS'),
+    (6, '2025-04-01', 'completed', 'Free', 0.00, 'NUS-ISS'),
+    (7, '2025-04-02', 'completed', 'Free', 0.00, 'NUS-ISS'),
+    (8, '2025-03-28', 'completed', 'Free', 0.00, 'NUS-ISS'),
+    (9, '2025-03-30', 'completed', 'Free', 0.00, 'NUS-ISS'),
+    (10, '2025-03-25', 'completed', 'Free', 0.00, 'NUS-ISS'),
+    (4, '2025-04-06', 'pending', 'Free', 0.00, 'NUS-ISS'),
+    (4, '2025-04-07', 'pending', 'Free', 0.00, 'NUS-ISS');
 
 
 INSERT INTO Order_Details (order_id, product_id, price_at_purchase, product_qty)

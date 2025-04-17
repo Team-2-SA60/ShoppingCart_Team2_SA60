@@ -47,7 +47,8 @@ export default function CartItem({item, handleMinusItemQty, handleSetItemQty, ha
                         )}
                     </div>
                 </div>
-            </div>
+
+                </div>
 
             <div className="flex items-center space-x-14">
                 <div className="flex items-center">
@@ -62,6 +63,8 @@ export default function CartItem({item, handleMinusItemQty, handleSetItemQty, ha
                         onChange={handleQtyChange}
                         onKeyDown={preventInvalidChars}
                         type="number"
+                        min="1"
+                        max="99"
                         className="w-12 h-8 border-t border-b border-gray-300 text-center focus:outline-none [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
                     />
                     <button
@@ -70,6 +73,7 @@ export default function CartItem({item, handleMinusItemQty, handleSetItemQty, ha
                     >
                         <span className="font-bold">+</span>
                     </button>
+
                 </div>
                 <Button
                     onClick={() => handleDeleteItem(item.id)}
@@ -79,6 +83,7 @@ export default function CartItem({item, handleMinusItemQty, handleSetItemQty, ha
                     X
                 </Button>
             </div>
+
         </div>
     )
 

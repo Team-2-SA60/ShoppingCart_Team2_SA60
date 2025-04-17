@@ -44,9 +44,6 @@ export default function CartDetails() {
     function handleAddItemQty(id) {
         updateQuantity(id, quantity => quantity + 1);
         api.put(`cart/addQty/${id}`)
-            .then(() => {
-                console.log('+1 quantity to item');
-            })
             .catch(error => console.error('Error: ', error));
     }
 
@@ -54,9 +51,6 @@ export default function CartDetails() {
         updateQuantity(id, quantity => quantity - 1);
 
         api.put(`cart/minusQty/${id}`)
-            .then(() => {
-            console.log('-1 quantity from item');
-            })
             .catch(error => console.error('Error: ', error));
     }
 
@@ -66,9 +60,6 @@ export default function CartDetails() {
         api.put(`cart/setQty/${id}`, {
             qty : newQty
         })
-            .then(() => {
-                console.log('Changed quantity of item');
-            })
             .catch(error => console.error('Error: ', error));
     }
 
@@ -99,17 +90,12 @@ export default function CartDetails() {
                             Continue Browsing
                         </Button>
                     </div>
-                ) 
-                : 
+                )
+                :
                 (
                     <div className="flex flex-col lg:flex-row gap-8">
-                        <div className="lg:w-2/3">
-                            <ListCartItem
-                                cartItems={cartItems}
-                                handleAddItemQty={handleAddItemQty}
-                                handleMinusItemQty={handleMinusItemQty}
-                                handleSetItemQty={handleSetItemQty}
-                                handleDeleteItem={handleDeleteItem}
+                        <div className="lg:w-2/3 ">
+                            <ListCartItem cartItems={cartItems} handleAddItemQty={handleAddItemQty} handleMinusItemQty={handleMinusItemQty} handleSetItemQty={handleSetItemQty} handleDeleteItem={handleDeleteItem}
                             />
                         </div>
                         <div className="lg:w-1/3">

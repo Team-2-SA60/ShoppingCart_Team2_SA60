@@ -20,7 +20,6 @@ const AppNavbar = ({logout}) => {
             .then(()=> {
                 setCustomer(null);
                 setLoggedOut(true);
-                console.log("Logout successful");
             })
             .catch(err => {
                 console.log("Logout failed:", err);

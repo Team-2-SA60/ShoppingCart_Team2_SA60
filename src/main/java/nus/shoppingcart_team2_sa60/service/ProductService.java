@@ -12,5 +12,4 @@ public interface ProductService {
     List<Product> sortByNameDesc();
     List<Product> sortByPrice();
     List<Product> sortByPriceDesc();
-
 }

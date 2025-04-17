@@ -1,8 +1,8 @@
 package nus.shoppingcart_team2_sa60.model;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.Max;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -22,12 +22,11 @@ public class CartDetails {
     @JoinColumn(name = "product_id")
     private Product product;
 
-    @Min(1)
-    @Max(99)
+    @Min(value = 1, message = "Min quantity is 1")
+    @Max(value = 99, message = "Max quantity is 99")
     private int productQty;
 
     // constructors
-
     public CartDetails() {}
 
 }

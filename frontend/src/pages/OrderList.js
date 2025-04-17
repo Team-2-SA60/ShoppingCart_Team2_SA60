@@ -56,7 +56,7 @@ const OrderList = () => {
         };
 
         return (
-            <div key={order.id} className='flex width-full justify-between content-fill'>
+            <div key={order.id} className='flex width-full justify-between'>
                 <Accordion open={open} toggle={toggle} className='w-full'>
                     <AccordionItem>
                         <AccordionHeader targetId={order.id}>
@@ -71,6 +71,7 @@ const OrderList = () => {
                                 <div className="col-start-1 col-end-1 font-semibold">Shipping details </div>
                                 <div className="col-start-2 col-end-2">Shipping method: {order.shippingMethod}</div>
                                 <div className="col-start-3 col-end-3">Shipping fee: S${order.shippingFee}</div>
+                            <div className="col-start-2 col-end-3">Shipping address: {order.shippingAddress}</div>
                             </div>
                         </AccordionBody>
                     </AccordionItem>
