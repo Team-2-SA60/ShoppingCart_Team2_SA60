@@ -62,7 +62,7 @@ const Checkout = () => {
 
     const cartList = cartDetails.map(cartItem => {
         return (
-            <div key={cartItem.id} className="grid grid-cols-3 pt-2 pb-2">
+            <div key={cartItem.id} className="grid grid-cols-3 pt-2 pb-2 items-center">
                 <div className="italic">{cartItem.productName}</div>
                 <div className="text-center">{cartItem.quantity}</div>
                 <div className="text-right">S${cartItem.price.toFixed(2)}</div>
@@ -153,7 +153,7 @@ const Checkout = () => {
         <div className="h-[100vh]">
             <AppNavbar/>
             <div className='p-4 place-items-center'>
-                <div className="flex flex-col items-center xl:flex-row">
+                <div className="flex flex-col items-center lg:flex-row lg:items-start">
                     <div className='flex flex-col'>
                         <div className="p-4 w-[600px]">
                             <h2>Shipping Method</h2>
@@ -187,33 +187,33 @@ const Checkout = () => {
                         </div>
                     </div>
                     
-                    <div className="w-[500px] bg-slate-50 p-4 rounded-2 border-2 drop-shadow-md">
-                        <h2 className="pb-2">Summary</h2>
+                    <div className="w-[500px] bg-slate-50 p-4 mt-1 rounded-3 border-2 drop-shadow-md">
+                        <h2>Summary</h2>
                         <hr/>
                         <h4>Order Details:</h4>
-                        <div className="grid grid-cols-3 pt-4 pb-2 text-[18px]">
+                        <div className="grid grid-cols-3 pt-2 pb-2 text-[18px]">
                             <div>Product name</div>
                             <div className="text-center">Quantity</div>
                             <div className="text-right">Price</div>
                         </div>
-                        <div className="pb-2">
+                        <div>
                             {cartList}
                         </div>
                         <hr/>
-                        <div className="grid grid-cols-2 pt-2 pb-4">
+                        <div className="grid grid-cols-2 pt-2 pb-2">
                             <div className="text-[17px] font-bold">Subtotal:</div>
                             <div className="text-[17px] text-right">S${calculateSubtotal().toFixed(2)}</div>
                         </div>
-                        <div className="grid grid-cols-2 pt-2 pb-4">
+                        <div className="grid grid-cols-2 pt-2 pb-2">
                             <div className="text-[17px] font-bold">Shipping fee:</div>
                             <div className="text-[17px] text-right">S${shippingFee.toFixed(2)}</div>
                         </div>
-                        <div className="grid grid-cols-2 pt-2 pb-4">
+                        <div className="grid grid-cols-2 pt-2 pb-2">
                             <div className="text-[17px] font-bold">Total</div>
                             <div className="text-[17px] text-right">S${totalCost.toFixed(2)}</div>
                         </div>
                         <hr/>
-                        <div className="flex justify-center pt-2">
+                        <div className="flex justify-center">
                             <Alert
                                 color="danger"
                                 isOpen={message !== ''}
