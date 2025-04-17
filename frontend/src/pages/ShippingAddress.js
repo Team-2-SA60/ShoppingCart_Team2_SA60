@@ -60,8 +60,8 @@ const ShippingAddress = ({customer, onAddressChange}) => {
     }
 
     return (
-        <div className="grid grid-rows-[1.5fr_3fr_3fr] grid-cols-2 h-[100%]">
-            <div className="col-span-2">Fill in your shipping details:</div>
+        <div className="grid grid-rows-[1.5fr_3fr_3fr] grid-cols-2 gap-4 h-[100%]">
+            <div className="col-span-2 font-bold">Fill in your shipping details:</div>
             <div className="col-span-2">
                 <label>Address line *</label>
                 <input

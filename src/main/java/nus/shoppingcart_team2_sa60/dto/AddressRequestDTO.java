@@ -11,17 +11,17 @@ import lombok.Getter;
 public class AddressRequestDTO {
 
     @NotBlank(message = "Address cannot be blank")
-    @Pattern(regexp = "^[^\\n]*$")
+    @Pattern(regexp = "^[^\\n]*$", message = "Address cannot have \\n")
     @Size(min = 1, max = 100, message = "Address must be between 1 to 100 characters")
     private String address;
 
     @NotBlank(message = "Floor/Unit Number cannot be blank")
     @Size(min = 1, max = 15, message = "Floor/Unit Number must be between 1 to 15 characters")
-    @Pattern(regexp = "^[^\\n]*$")
+    @Pattern(regexp = "^[^\\n]*$", message = "Floor Unit Number cannot have \\n")
     private String floorUnitNumber;
 
     @NotBlank(message = "Postal Code cannot be blank")
-    @Pattern(regexp = "\\d{6}")
+    @Pattern(regexp = "\\d{6}", message = "Postal Code must be 6 digits")
     private String postalCode;
 
     @Override

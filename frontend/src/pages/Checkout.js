@@ -25,7 +25,9 @@ const Checkout = () => {
 
     useEffect(() => {
         getCustomer();
-        getAddress();
+        if (customer) {
+            getAddress();
+        }
         api.get("/checkout")
             .then(res => {
                 setCartDetails(res.data);
@@ -147,76 +149,80 @@ const Checkout = () => {
     return (
         <div className="h-[100vh]">
             <AppNavbar/>
-            <div className='w-[80vw] h-[90vh] mx-auto p-4'>
-                <div className="grid grid-rows-[2fr_3.5fr] grid-cols-2 h-full w-full gap-4">
-                    <div className="p-4">
-                        <h2>Shipping Method</h2>
-                        <div className="bg-white rounded-2 h-[90%] p-4">
-                            <div className="text-[16px] pb-4">Select your shipping method: *</div>
-                            <div className="grid grid-rows-2 grid-cols-2 text-[18px] h-[75%]">
-                                <div>
-                                    <input type="radio"
-                                           name="shipping"
-                                           value="standard"
-                                           onClick={handleShipping}
-                                           required/> Standard delivery
+            <div className='p-4 place-items-center'>
+                <div className="flex flex-col xl:flex-row">
+                    <div className='flex flex-col'>
+                        <div className="p-4 w-[600px]">
+                            <h2>Shipping Method</h2>
+                            <div className="bg-slate-50 rounded-2 h-[90%] p-4 border drop-shadow-md">
+                                <div className="text-[16px] pb-4 font-bold">Select your shipping method: *</div>
+                                <div className="grid grid-rows-2 grid-cols-2 text-[18px] h-[75%]">
+                                    <div>
+                                        <input type="radio"
+                                            name="shipping"
+                                            value="standard"
+                                            onClick={handleShipping}
+                                            required/> Standard delivery
+                                    </div>
+                                    <div className="text-center italic">Free!</div>
+                                    <div>
+                                        <input type="radio"
+                                            name="shipping"
+                                            value="express"
+                                            onClick={handleShipping}
+                                            required/> Express delivery
+                                    </div>
+                                    <div className="text-center">S$10</div>
                                 </div>
-                                <div className="text-center italic">Free!</div>
-                                <div>
-                                    <input type="radio"
-                                           name="shipping"
-                                           value="express"
-                                           onClick={handleShipping}
-                                           required/> Express delivery
-                                </div>
-                                <div className="text-center">S$10</div>
+                            </div>
+                        </div>
+                        <div className="p-4 w-[600px]">
+                            <h2>Shipping Address</h2>
+                            <div className="bg-slate-50 rounded-2 h-[90%] p-4 border drop-shadow-md">
+                                <ShippingAddress customer={customer} onAddressChange={handleAddressChange} />
                             </div>
                         </div>
                     </div>
-                    <div className="row-span-2 bg-slate-100 p-4">
-                        <h2 className="pb-2">Summary</h2>
-                        <hr/>
-                        <h4>Order Details:</h4>
-                        <div className="grid grid-cols-3 pt-4 pb-2 text-[18px]">
-                            <div>Product name</div>
-                            <div className="text-center">Quantity</div>
-                            <div className="text-center">Price</div>
-                        </div>
-                        <div className="pb-2">
-                            {cartList}
-                        </div>
-                        <hr/>
-                        <div className="grid grid-cols-2 pt-2 pb-4">
-                            <div className="text-[17px] font-bold">Subtotal:</div>
-                            <div className="text-[17px]">S${calculateSubtotal().toFixed(2)}</div>
-                        </div>
-                        <div className="grid grid-cols-2 pt-2 pb-4">
-                            <div className="text-[17px] font-bold">Shipping fee:</div>
-                            <div className="text-[17px]">S${shippingFee.toFixed(2)}</div>
-                        </div>
-                        <div className="grid grid-cols-2 pt-2 pb-4">
-                            <div className="text-[17px] font-bold">Total</div>
-                            <div className="text-[17px]">S${totalCost.toFixed(2)}</div>
-                        </div>
-                        <hr/>
-                        <div className="flex justify-center pt-2">
-                            <Button color="primary" className="checkout-button" onClick={confirmOrder}>
-                                Confirm Check Out
-                            </Button>
-                        </div>
-                        <div className="flex justify-center pt-2">
-                            <Alert
-                                color="danger"
-                                isOpen={message !== ''}
-                                className="p-2 mt-2 w-[70%] text-center">
-                                {message}
-                            </Alert>
-                        </div>
-                    </div>
-                    <div className="p-4">
-                        <h2>Shipping Address</h2>
-                        <div className="bg-white rounded-2 h-[90%] p-4">
-                            <ShippingAddress customer={customer} onAddressChange={handleAddressChange}/>
+                    <div>
+                        <div className="w-[600px] bg-slate-50 p-4 rounded-2 border-2 drop-shadow-md">
+                            <h2 className="pb-2">Summary</h2>
+                            <hr/>
+                            <h4>Order Details:</h4>
+                            <div className="grid grid-cols-3 pt-4 pb-2 text-[18px]">
+                                <div>Product name</div>
+                                <div className="text-center">Quantity</div>
+                                <div className="text-center">Price</div>
+                            </div>
+                            <div className="pb-2">
+                                {cartList}
+                            </div>
+                            <hr/>
+                            <div className="grid grid-cols-2 pt-2 pb-4">
+                                <div className="text-[17px] font-bold">Subtotal:</div>
+                                <div className="text-[17px]">S${calculateSubtotal().toFixed(2)}</div>
+                            </div>
+                            <div className="grid grid-cols-2 pt-2 pb-4">
+                                <div className="text-[17px] font-bold">Shipping fee:</div>
+                                <div className="text-[17px]">S${shippingFee.toFixed(2)}</div>
+                            </div>
+                            <div className="grid grid-cols-2 pt-2 pb-4">
+                                <div className="text-[17px] font-bold">Total</div>
+                                <div className="text-[17px]">S${totalCost.toFixed(2)}</div>
+                            </div>
+                            <hr/>
+                            <div className="flex justify-center pt-2">
+                                <Alert
+                                    color="danger"
+                                    isOpen={message !== ''}
+                                    className="p-2 mt-2 w-[70%] text-center">
+                                    {message}
+                                </Alert>
+                            </div>
+                            <div className="flex justify-center pt-2">
+                                <Button color="primary" className="checkout-button" onClick={confirmOrder}>
+                                    Confirm Check Out
+                                </Button>
+                            </div>
                         </div>
                     </div>
                 </div>
