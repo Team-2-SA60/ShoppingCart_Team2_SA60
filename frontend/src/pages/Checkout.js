@@ -24,6 +24,7 @@ const Checkout = () => {
 
     useEffect(() => {
         getCustomer();
+        getAddress();
         api.get("/checkout")
             .then(res => {
                 setCartDetails(res.data);
@@ -65,6 +66,19 @@ const Checkout = () => {
     function handleShipping(e) {
         setShippingMethod(e.target.value);
         setShippingFee(e.target.value === "express" ? 10.00 : 0.00);
+    }
+
+    // customer existing address if any
+    async function getAddress() {
+        if (!customer.address) {
+            return;
+        }
+        const customerAddress = customer.address.split("\n");
+        setShippingAddress( {
+            address: customerAddress[0],
+            floorUnitNumber: customerAddress[1],
+            postalCode: customerAddress[2]
+        });
     }
 
     // updates shipping info based on changes in Shipping Address component
