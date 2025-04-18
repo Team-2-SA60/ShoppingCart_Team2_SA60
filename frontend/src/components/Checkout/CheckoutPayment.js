@@ -94,6 +94,9 @@ const CheckoutPayment = ({ modalOpen, closePayment, confirmOrder }) => {
                     creditCardName: ccName,
                     creditCardNumber: ccNumber.replace(/\D/g, '').substring(0, 16),
                     creditCardExpiry: ccExpiry
+                }, 
+                {params: 
+                    {cvv: ccCVV}
                 }
             );
             console.log(response.data);
@@ -162,7 +165,7 @@ const CheckoutPayment = ({ modalOpen, closePayment, confirmOrder }) => {
                             <div>
                                 <label className="w-full">CVV *</label>
                                 <input
-                                    type="text"
+                                    type="number"
                                     value={ccCVV}
                                     onChange={(e) => setCVV(e.target.value)}
                                     placeholder="CVV"
