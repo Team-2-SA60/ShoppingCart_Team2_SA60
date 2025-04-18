@@ -93,10 +93,8 @@ const CheckoutPayment = ({ modalOpen, closePayment, confirmOrder }) => {
                 {
                     creditCardName: ccName,
                     creditCardNumber: ccNumber.replace(/\D/g, '').substring(0, 16),
-                    creditCardExpiry: ccExpiry
-                }, 
-                {params: 
-                    {cvv: ccCVV}
+                    creditCardExpiry: ccExpiry,
+                    creditCardCVV: ccCVV
                 }
             );
             console.log(response.data);
