@@ -191,9 +191,8 @@ class ShoppingCartTeam2Sa60ApplicationTests {
     @Test
     void testSearchOrdersByStatus(){
         //Customer with 1 existing completed order
-        List<Order> orders = orderService.searchOrdersByCustomerId(10);
-        String status = orders.get(0).getOrderStatus();
-        assertEquals("completed", status,"Customer should have 1 completed order");
+        List<Order> orders = orderService.searchOrdersByStatus(10, "completed");
+        assertEquals(1, orders.size(), "There should be 1 existing order");
     }
 
     //8. Use Case (Create account): Test creation of valid account

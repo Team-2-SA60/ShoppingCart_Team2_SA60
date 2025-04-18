@@ -42,12 +42,14 @@ export default function CartDetails() {
         }));
     }
 
+    // handle +1 to item qty
     function handleAddItemQty(id) {
         updateQuantity(id, quantity => quantity + 1);
         api.put(`cart/addQty/${id}`)
             .catch(error => console.error('Error: ', error));
     }
 
+    // handle -1 to item qty
     function handleMinusItemQty(id) {
         updateQuantity(id, quantity => quantity - 1);
 
@@ -55,7 +57,7 @@ export default function CartDetails() {
             .catch(error => console.error('Error: ', error));
     }
 
-    //function to handle form input to setQty
+    // handle form input to setQty
     function handleSetItemQty(id, newQty) {
         updateQuantity(id, () => newQty);
         api.put(`cart/setQty/${id}`, {
@@ -64,6 +66,7 @@ export default function CartDetails() {
             .catch(error => console.error('Error: ', error));
     }
 
+    // handle delete item from cart
     function handleDeleteItem(id) {
         api.delete(`cart/delete/${id}`)
             .then(()=>{

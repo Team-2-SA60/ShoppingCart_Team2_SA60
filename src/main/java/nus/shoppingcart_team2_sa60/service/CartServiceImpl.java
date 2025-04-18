@@ -33,26 +33,36 @@ public class CartServiceImpl implements CartService {
     @Override
     public void addCartItemQty(int cartDetailsId) {
         Optional<CartDetails> cartDetails = cartDetailsRepo.findById(cartDetailsId);
+
+        // +1 to cart item
         if (cartDetails.isPresent()) {
             CartDetails cartDetail = cartDetails.get();
             int newQty = cartDetail.getProductQty() + 1;
+
+            // Check that new qty is within 1-99 before saving
             if (newQty >= 1 && newQty <= 99) {
                 cartDetail.setProductQty(newQty);
                 cartDetailsRepo.save(cartDetail);
             }
+
         }
     }
 
     @Override
     public void minusCartItemQty(int cartDetailsId) {
         Optional<CartDetails> cartDetails = cartDetailsRepo.findById(cartDetailsId);
+
+        // -1 to cart item
         if (cartDetails.isPresent()) {
             CartDetails cartDetail = cartDetails.get();
             int newQty = cartDetail.getProductQty() - 1;
+
+            // Check that new qty is within 1-99 before saving
             if (newQty >= 1 && newQty <= 99) {
                 cartDetail.setProductQty(newQty);
                 cartDetailsRepo.save(cartDetail);
             }
+
         }
     }
 
@@ -62,6 +72,7 @@ public class CartServiceImpl implements CartService {
         if (cartDetails.isPresent()) {
             CartDetails cartDetail = cartDetails.get();
 
+            // Check that new qty is within 1-99 before saving
             if (newQty >= 1 && newQty <= 99) {
                 cartDetail.setProductQty(newQty);
                 cartDetailsRepo.save(cartDetail);
@@ -72,10 +83,12 @@ public class CartServiceImpl implements CartService {
     @Override
     public void deleteItemFromCart(int cartDetailsId) {
         Optional<CartDetails> cartDetails = cartDetailsRepo.findById(cartDetailsId);
+
         if (cartDetails.isPresent()) {
             CartDetails cartDetail = cartDetails.get();
             cartDetailsRepo.delete(cartDetail);
         }
+
     }
 
     @Override
@@ -86,13 +99,17 @@ public class CartServiceImpl implements CartService {
     @Override
     public boolean addProductToCart(Cart cart, int productId, int qty) {
         List<CartDetails> cartDetailsList = cart.getCartDetails();
+
+        // Find if the product is already existing in cart
         CartDetails cartDetail = cartDetailsList.stream()
                 .filter(cd -> cd.getProduct().getId() == productId)
                 .findFirst()
                 .orElse(null);
 
+        // Setup boolean flag to detect if max qty of 99 is reached
         boolean maxQtyReached = false;
 
+        // If product is not in the cart, add product by requested qty (from browsing page)
         if (cartDetail == null) {
             Product product = productRepo.findById(productId).get();
             cartDetail = new CartDetails();
@@ -100,15 +117,19 @@ public class CartServiceImpl implements CartService {
             cartDetail.setProductQty(qty);
             cartDetailsList.add(cartDetail);
         } else {
+            // Else if product is alr in cart, add qty to the existing product
             int newQty = cartDetail.getProductQty() + qty;
+            // If qty > 99, reset it back to 99
             if(newQty > 99){
                 cartDetail.setProductQty(99);
+                // Activate boolean flag that max qty was reached
                 maxQtyReached = true;
             } else {
                 cartDetail.setProductQty(newQty);
             }
         }
         cartDetailsRepo.save(cartDetail);
+        // Return boolean flag
         return maxQtyReached;
     }
 }
