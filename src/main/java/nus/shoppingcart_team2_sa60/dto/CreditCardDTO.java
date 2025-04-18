@@ -4,14 +4,12 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import nus.shoppingcart_team2_sa60.model.Customer;
 import nus.shoppingcart_team2_sa60.utils.DateTimeUtil;
 
 import java.time.LocalDate;
 
-@AllArgsConstructor
 @Getter
 public class CreditCardDTO {
     @NotBlank(message = "Credit Card Name is required")
@@ -27,6 +25,9 @@ public class CreditCardDTO {
     @Pattern(regexp = "^\\d{2}/\\d{2}$", message = "Expiry must be in MM/YY format")
     private String creditCardExpiry;
 
+    @Pattern(regexp = "\\d{3}", message = "CVV must be 3 digits")
+    private String creditCardCVV;
+
     public CreditCardDTO() {}
 
     public CreditCardDTO(Customer customer) {
@@ -39,6 +40,12 @@ public class CreditCardDTO {
         if (customer.getCreditCardExpiryMonth() != null && customer.getCreditCardExpiryYear() != null) {
             this.creditCardExpiry = customer.getCreditCardExpiryMonth() + "/" + customer.getCreditCardExpiryYear();
         }
+    }
+
+    public CreditCardDTO(String creditCardName, String creditCardNumber, String creditCardExpiry) {
+        this.creditCardName = creditCardName;
+        this.creditCardNumber = creditCardNumber;
+        this.creditCardExpiry = creditCardExpiry;
     }
 
     public String getCreditCardExpiryMonth() {
