@@ -46,7 +46,7 @@ public class CheckoutServiceImpl implements CheckoutService {
         // save order details from cart details
         cartDetails.forEach(cartDetail -> {
             Product product = cartDetail.getProduct();
-            OrderDetails orderDetails = new OrderDetails(product, cartDetail.getProductQty(), product.getPrice());
+            OrderDetails orderDetails = new OrderDetails(product, cartDetail.getProductQty(), (product.getPrice() - product.getDiscount()));
             orderDetailsToBeSaved.add(orderDetails);
         });
         orderToBeSaved.setOrderDetails(orderDetailsToBeSaved);

@@ -3,7 +3,7 @@ import { Pagination, PaginationItem, PaginationLink } from "reactstrap";
 const ProductPagination = ({currentPage, totalPages, handlePageChange}) => {
     
     return (
-        <div className="flex justify-center mt-6 space-x-2">
+        <div className="flex space-x-2">
             <Pagination>
                 <PaginationItem>
                     <PaginationLink

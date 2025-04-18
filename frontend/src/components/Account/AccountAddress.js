@@ -75,7 +75,7 @@ const AccountAddress = ({customer}) => {
                 // 403 error if user session is NOT logged in
                 navigate("/login");
             } else if (statusCode === 400) {
-                setMessage(errorMessage[0] || "Chane address failed");
+                setMessage(errorMessage[0] || "Change address failed");
             } else {
                 setMessage("Change address failed")
                 console.error("Changing address failed: ", err);
