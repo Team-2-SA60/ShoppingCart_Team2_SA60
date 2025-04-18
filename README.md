@@ -51,8 +51,11 @@ This Project uses JDK-17, node.js v20.19.0 and MySQL
 ```
   git clone https://github.com/Team-2-SA60/ShoppingCart_Team2_SA60.git
 ```
+OR
+- Download ZIP file at [https://github.com/Team-2-SA60/ShoppingCart_Team2_SA60](https://github.com/Team-2-SA60/ShoppingCart_Team2_SA60)
+  - Extract ZIP file to your directory
 
-2. Change working directory
+2. Open Terminal and change working directory
 ```
   cd ShoppingCart_Team2_SA60
 ```
