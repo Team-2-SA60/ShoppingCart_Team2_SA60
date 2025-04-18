@@ -3,8 +3,9 @@ import { useSession} from "../context/SessionContext";
 import { useNavigate } from "react-router-dom";
 import api from "../utilities/axios";
 import AppNavbar from "../components/AppNavbar";
-import {Alert, Button, Modal, ModalBody, ModalFooter} from "reactstrap";
+import {Alert, Button, Spinner, Toast, ToastBody} from "reactstrap";
 import ShippingAddress from "./ShippingAddress";
+import CheckoutPayment from '../components/Checkout/CheckoutPayment';
 
 const Checkout = () => {
 
@@ -20,8 +21,8 @@ const Checkout = () => {
         postalCode: ""
     });
     const [modalOpen, setModalOpen] = useState(false);
-    const [modalMessage, setModalMessage] = useState("");
     const [message, setMessage] = useState('');
+    const [success, setSuccess] = useState(false);
 
     useEffect(() => {
         getCustomer();
@@ -93,9 +94,16 @@ const Checkout = () => {
         setShippingAddress((prev) => ({...prev, ...newData}));
     }
 
-    const toggleModal = () => {
-        setModalOpen(!modalOpen);
-        if (modalOpen) navigate("/");
+    const closePayment = () => {
+        setModalOpen(false);
+    }
+
+    const openPayment = () => {
+        setMessage('');
+        if (!fieldCheck()) {
+            return;
+        }
+        setModalOpen(true);
     }
 
     function fieldCheck() {
@@ -117,37 +125,46 @@ const Checkout = () => {
     }
 
     async function confirmOrder() {
-        if (!fieldCheck()) {
-            return;
-        }
         const payload = {
             shippingMethod: shippingMethod,
             shippingAddress: shippingAddress
         }
         console.log("Submitting: ", payload);
         try {
-            const response = await api.post("/checkout", payload)
-                .then(response => {
-                    setModalMessage(response.data.message);
-                    toggleModal();
-                });
-            console.log(response);
+            await api.post("/checkout", payload);
+            setSuccess(true);
         } catch (err) {
             const errorMessage = err.response?.data?.message; // Message will be in Array
+            setMessage("Checkout encountered error, please try again")
             console.log(errorMessage[0]);
         }
     }
 
-    // HTML render
+    if (success) {
+        setTimeout(function () {
+            navigate("/orders");
+        }, 3000);
 
-    // if (cartDetails.length === 0) {
-    //     return (
-    //         <div>
-    //             <AppNavbar/>
-    //             <div className="p-4">Your cart is empty!</div>
-    //         </div>
-    //     )
-    // }
+        return (
+            <div>
+                <AppNavbar />
+                <div className="flex items-center justify-center min-h-[80vh] w-full box-border">
+                    <div className="p-3 my-2 rounded">
+                        <Toast>
+                            <ToastBody className="text-center">
+                                <h4>Payment completed!</h4>
+                                <Spinner>
+                                    Loading...
+                                </Spinner>
+                                <br />
+                                <a href="/orders">Redirecting to your orders</a>
+                            </ToastBody>
+                        </Toast>
+                    </div>
+                </div>
+            </div>
+        )
+    }
 
     return (
         <div className="h-[100vh]">
@@ -222,22 +239,14 @@ const Checkout = () => {
                             </Alert>
                         </div>
                         <div className="flex justify-center pt-2">
-                            <Button color="primary" className="checkout-button" onClick={confirmOrder}>
-                                Confirm Check Out
+                            <Button color="primary" className="w-full" onClick={openPayment}>
+                                Proceed to Payment
                             </Button>
                         </div>
                     </div>
-                    
                 </div>
             </div>
-            <Modal className="text-center" size="sm" isOpen={modalOpen} toggle={toggleModal}>
-                <ModalBody>
-                    {modalMessage}
-                </ModalBody>
-                <ModalFooter>
-                    <Button color="primary" onClick={toggleModal}>OK</Button>
-                </ModalFooter>
-            </Modal>
+            <CheckoutPayment modalOpen={modalOpen} closePayment={closePayment} confirmOrder={confirmOrder}/>
         </div>
     );
 }
