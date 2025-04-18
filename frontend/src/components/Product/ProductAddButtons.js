@@ -30,7 +30,7 @@ const ProductAddButtons = ({productId}) => {
             setQuantity(99);
             return;
         }
-        setQuantity(value);
+        setQuantity(Number(value));
     };
 
     if (!customer) {

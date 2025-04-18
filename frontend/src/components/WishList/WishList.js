@@ -88,11 +88,16 @@ const WishList = () => {
 
     return (
         <div className="text-center">
-            <h1 className="text-3xl mt-5 mb-5">Your Wishlist</h1>
+            <h1 className="text-3xl mt-5 lg:mb-5">Your Wishlist</h1>
+            <div className="place-items-center lg:hidden">
+                <ProductPagination currentPage={currentPage} totalPages={totalPages} handlePageChange={handlePageChange} />
+            </div>
             <div className="grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 gap-24 h-[444px] place-items-center">
                 {productList}
             </div>
-            <ProductPagination currentPage={currentPage} totalPages={totalPages} handlePageChange={handlePageChange} />
+            <div className="hidden lg:block place-items-center mt-3">
+                <ProductPagination currentPage={currentPage} totalPages={totalPages} handlePageChange={handlePageChange} />
+            </div>
         </div>
     );
 }

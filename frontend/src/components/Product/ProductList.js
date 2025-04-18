@@ -139,19 +139,24 @@ const ProductList = () => {
     }
 
     return (
-        <div className="text-center">
+        <div className="relative text-center">
             <div className="relative mt-5">
                 <div>
-                    <h1 className="text-3xl md:mb-5">{header()}</h1>
+                    <h1 className="text-3xl lg:mb-5">{header()}</h1>
+                    <div className="place-items-center lg:hidden">
+                        <ProductPagination currentPage={currentPage} totalPages={totalPages} handlePageChange={handlePageChange} />
+                    </div>
                 </div>
-                <div className="place-items-center mb-2 md:absolute md:top-0 md:left-15">
+                <div className="flex place-items-center mb-4 md:absolute md:top-0 md:left-15">
                     <ProductSort sortBy={sortBy} setSortBy={setSortBy} sortOrder={sortOrder} setSortOrder={setSortOrder} products={products} />
                 </div>
             </div>
             <div className="grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 gap-24 h-[444px] place-items-center">
                 {productList}
             </div>
-            <ProductPagination currentPage={currentPage} totalPages={totalPages} handlePageChange={handlePageChange}/>
+            <div className="hidden lg:block place-items-center mt-3">
+                <ProductPagination currentPage={currentPage} totalPages={totalPages} handlePageChange={handlePageChange}/>
+            </div>
         </div>
     );
 }
