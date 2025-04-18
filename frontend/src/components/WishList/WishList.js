@@ -63,7 +63,7 @@ const WishList = () => {
     const productList = productsOnPage.map(product => {
         if (isLoading) {
             return (
-                <div className="items-center">
+                <div className="items-center w-[225px]">
                     <Spinner>
                         Loading...
                     </Spinner>
@@ -87,9 +87,9 @@ const WishList = () => {
     }
 
     return (
-        <div className="text-center w-[70%]">
+        <div className="text-center">
             <h1 className="text-3xl mt-5 mb-5">Your Wishlist</h1>
-            <div className="grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 h-[444px] place-items-center">
+            <div className="grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 gap-24 h-[444px] place-items-center">
                 {productList}
             </div>
             <ProductPagination currentPage={currentPage} totalPages={totalPages} handlePageChange={handlePageChange} />

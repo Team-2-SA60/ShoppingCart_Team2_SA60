@@ -1,4 +1,8 @@
-const ProductSort = ({sortBy, setSortBy, sortOrder, setSortOrder}) => {
+const ProductSort = ({sortBy, setSortBy, sortOrder, setSortOrder, products}) => {
+
+    if (products.length === 0) {
+        return;
+    }
 
     return (
         <div className="flex items-center gap-2">

@@ -103,7 +103,7 @@ const ProductList = () => {
     const productList = products.map(product => {
         if (isLoading) {
             return (
-                <div className="items-center">
+                <div className="items-center w-[225px]">
                     <Spinner>
                         Loading...
                     </Spinner>
@@ -139,16 +139,16 @@ const ProductList = () => {
     }
 
     return (
-        <div className="text-center w-[70%]">
+        <div className="text-center">
             <div className="relative mt-5">
                 <div>
-                    <h1 className="text-3xl mb-5">{header()}</h1>
+                    <h1 className="text-3xl md:mb-5">{header()}</h1>
                 </div>
-                <div className="absolute top-0 left-20">
-                    <ProductSort sortBy={sortBy} setSortBy={setSortBy} sortOrder={sortOrder} setSortOrder={setSortOrder}/>
+                <div className="place-items-center mb-2 md:absolute md:top-0 md:left-15">
+                    <ProductSort sortBy={sortBy} setSortBy={setSortBy} sortOrder={sortOrder} setSortOrder={setSortOrder} products={products} />
                 </div>
             </div>
-            <div className="grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 h-[444px] place-items-center">
+            <div className="grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 gap-24 h-[444px] place-items-center">
                 {productList}
             </div>
             <ProductPagination currentPage={currentPage} totalPages={totalPages} handlePageChange={handlePageChange}/>
