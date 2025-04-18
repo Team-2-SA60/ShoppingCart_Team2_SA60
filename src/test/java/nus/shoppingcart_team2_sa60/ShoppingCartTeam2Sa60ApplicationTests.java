@@ -51,7 +51,7 @@ class ShoppingCartTeam2Sa60ApplicationTests {
     // 1. Use Case (Browse Products): Product List is available for browsing, should not be null or empty
     @Test
     void testProductListAvailableForBrowsing() {
-        Page<Product> products = productService.findProducts(1, 4, "");
+        Page<Product> products = productService.findProducts(1, 4, "", "id", "asc");
         assertNotNull(products, "Product list should not be null");
         assertFalse(products.isEmpty(), "Product list should not be empty");
     }
