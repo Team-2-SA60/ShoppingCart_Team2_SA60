@@ -7,6 +7,7 @@ const ProductSort = ({sortBy, setSortBy, sortOrder, setSortOrder}) => {
                 <option value="id">Default</option>
                 <option value="name">Name</option>
                 <option value="price">Price</option>
+                <option value="discount">Discount</option>
             </select>
             <select id="sortOrder" value={sortOrder} onChange={(e) => setSortOrder(e.target.value)} className="border border-gray-300 rounded-md p-1">
                 <option value="asc">Ascending</option>

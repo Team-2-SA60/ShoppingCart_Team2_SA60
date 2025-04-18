@@ -32,11 +32,7 @@ const ProductList = () => {
         setLoading(true);
         getProducts();
         // eslint-disable-next-line
-    }, [searchParams, category, currentPage]);
-
-    useEffect(() => {
-        getProducts();
-    }, [sortBy, sortOrder]);
+    }, [searchParams, category, currentPage, sortBy, sortOrder]);
 
     async function getCustomer() {
         const getCustomer = await checkSession();
