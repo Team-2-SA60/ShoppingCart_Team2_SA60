@@ -118,13 +118,13 @@ const CheckoutPayment = ({ modalOpen, closePayment, confirmOrder }) => {
     }
 
     return (
-        <Modal size="sm" isOpen={modalOpen} centered backdrop="static">
+        <Modal size="md" isOpen={modalOpen} centered backdrop="static">
             <ModalHeader className="justify-center">
                 Credit Card Payment
             </ModalHeader>
             <ModalBody>
                 <form onSubmit={handlePayment}>
-                    <div>
+                    <div className="w-[400px] mx-auto">
                         <div className="text-left">
                             <label>Card Number *</label>
                             <input
@@ -171,19 +171,32 @@ const CheckoutPayment = ({ modalOpen, closePayment, confirmOrder }) => {
                                 />
                             </div>
                         </div>
-                        <div className="flex flex-col mt-1 place-content-end">
+                        <div className="flex flex-col mt-2 place-content-end">
                             <div>
                                 <Alert
                                     color="danger"
                                     isOpen={message !== ''}
-                                    className="p-2 mt-2 text-sm"
+                                    className="p-2 text-sm"
                                 >
                                     {message}
                                 </Alert>
                             </div>
                             <div className="flex gap-2 place-content-end">
-                                <Button color="secondary" className="w-[80px]" onClick={closePayment}>Back</Button>
-                                <Button color="primary" className="w-[80px]" type="submit">
+                                <Button 
+                                    color="secondary" 
+                                    className="w-[80px]" 
+                                    onClick={() => {
+                                        setMessage('');
+                                        closePayment();
+                                    }}
+                                >
+                                    <span>Back</span>
+                                </Button>
+                                <Button 
+                                    color="primary" 
+                                    className="w-[80px]" 
+                                    type="submit"
+                                >
                                     {isLoading ?
                                         <Spinner size={'sm'}>Loading...</Spinner>
                                         :
