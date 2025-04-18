@@ -51,7 +51,7 @@ const Checkout = () => {
     const calculateSubtotal = () => {
         if (!cartDetails) return 0;
         return cartDetails.reduce((total, item) => {
-            return total + (item.quantity) * (item.price);
+            return total + (item.price - item.discount) * item.quantity;
         }, 0);
     };
 
@@ -65,7 +65,7 @@ const Checkout = () => {
             <div key={cartItem.id} className="grid grid-cols-3 pt-2 pb-2 items-center">
                 <div className="italic">{cartItem.productName}</div>
                 <div className="text-center">{cartItem.quantity}</div>
-                <div className="text-right">S${cartItem.price.toFixed(2)}</div>
+                <div className="text-right">S${((cartItem.price - cartItem.discount) * cartItem.quantity).toFixed(2)}</div>
             </div>
         )
     });
@@ -134,6 +134,7 @@ const Checkout = () => {
             console.log(response);
         } catch (err) {
             const errorMessage = err.response?.data?.message; // Message will be in Array
+            setMessage(errorMessage[0]);
             console.log(errorMessage[0]);
         }
     }
@@ -217,7 +218,7 @@ const Checkout = () => {
                             <Alert
                                 color="danger"
                                 isOpen={message !== ''}
-                                className="p-2 mt-2 w-[70%] text-center">
+                                className="p-2 mt-2 w-[85%] text-[14px] text-center">
                                 {message}
                             </Alert>
                         </div>
@@ -227,7 +228,6 @@ const Checkout = () => {
                             </Button>
                         </div>
                     </div>
-                    
                 </div>
             </div>
             <Modal className="text-center" size="sm" isOpen={modalOpen} toggle={toggleModal}>
