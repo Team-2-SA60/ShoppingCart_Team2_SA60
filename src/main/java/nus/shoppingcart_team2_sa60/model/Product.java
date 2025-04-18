@@ -31,17 +31,4 @@ public class Product {
         this.discount = discount;
         this.image = image;
     }
-
-    @Override
-    public String toString() {
-        return "Product{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", description='" + description + '\'' +
-                ", category='" + category + '\'' +
-                ", price=" + price +
-                ", discount=" + discount +
-                ", image='" + image + '\'' +
-                '}';
-    }
 }
