@@ -96,6 +96,8 @@ const ProductList = () => {
         setCurrentPage(pageNumber);
     }
 
+    // During search or category filter, total pages may become less than current page
+    // Following code helps to reset current page back to 0
     if (totalPages !== 0 && currentPage > totalPages - 1) {
         setCurrentPage(0);
     }
@@ -103,7 +105,7 @@ const ProductList = () => {
     const productList = products.map(product => {
         if (isLoading) {
             return (
-                <div className="items-center w-[225px]">
+                <div key={product.id} className="items-center w-[225px]">
                     <Spinner>
                         Loading...
                     </Spinner>

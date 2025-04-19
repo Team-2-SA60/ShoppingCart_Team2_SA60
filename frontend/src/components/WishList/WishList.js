@@ -60,6 +60,13 @@ const WishList = () => {
         setCurrentPage(pageNumber);
     }
 
+    // During deletion of products from wishlist, if user deletes all products on page 2
+    // It will it stuck on page 2 even when there's nothing left
+    // Following code helps to set page to totalPages - 1
+    if (totalPages !== 0 && currentPage > totalPages - 1) {
+        setCurrentPage(totalPages - 1);
+    }
+
     const productList = productsOnPage.map(product => {
         if (isLoading) {
             return (
@@ -75,6 +82,7 @@ const WishList = () => {
             <ProductCard key={product.id} product={product} wishListProducts={wishListProducts} getWishListProducts={getWishListProducts} />
         )
     });
+
 
     if (products.length === 0 && !isLoading) {
         return (

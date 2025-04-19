@@ -13,7 +13,7 @@ const ManageAccount = () => {
         <div>
             <AppNavbar logout={logout} />
             <div className='flex items-center justify-center min-h-[80vh] w-full'>
-                <div className='bg-slate-100 w-[600px] p-2.5 rounded-xl border drop-shadow-md'>
+                <div className='bg-slate-100 w-[600px] p-2.5 rounded-xl border drop-shadow-md contain-content'>
                     <div className='grid grid-rows-1 grid-flow-col gap-4'>
                         <div className='place-content-center border-r-2 text-right'>
                             <Button onClick={() => setActiveTab(0)} color='link'
@@ -33,7 +33,7 @@ const ManageAccount = () => {
                                 <span>Log Out</span>
                             </Button>
                         </div>
-                        <div className='w-[460px]'>
+                        <div className='w-[440px]'>
                             <Account activeTab={activeTab} setActiveTab={setActiveTab} />
                         </div>
                     </div>

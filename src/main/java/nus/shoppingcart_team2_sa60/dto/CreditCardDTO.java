@@ -25,7 +25,7 @@ public class CreditCardDTO {
     @Pattern(regexp = "^\\d{2}/\\d{2}$", message = "Expiry must be in MM/YY format")
     private String creditCardExpiry;
 
-    @Pattern(regexp = "\\d{3}", message = "CVV must be 3 digits")
+    @Pattern(regexp = "^\\d{3}$", message = "CVV must be 3 digits")
     private String creditCardCVV;
 
     public CreditCardDTO() {}

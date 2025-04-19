@@ -17,6 +17,7 @@ const ShippingAddress = ({customer, onAddressChange}) => {
             return;
         }
         getAddress();
+        // eslint-disable-next-line
     }, [customer])
 
     async function getAddress() {
