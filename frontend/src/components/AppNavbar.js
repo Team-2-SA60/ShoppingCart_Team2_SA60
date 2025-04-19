@@ -46,7 +46,7 @@ const AppNavbar = ({logout}) => {
         <>
             <Navbar color="light" light full="true" expand="md" className="shadow-sm">
 
-                <NavbarBrand tag={Link} to="/"><img src="../images/Delulu.png" alt="DeluluLogo" className="w-[200px] min-w-[200px] ml-8" /></NavbarBrand>
+                <NavbarBrand tag={Link} to="/"><img src="../images/delulu.png" alt="DeluluLogo" className="w-[200px] min-w-[200px] ml-8" /></NavbarBrand>
 
                 <Nav className="hidden md:flex flex-auto justify-center items-center px-4 w-[15%]">
                     <SearchBar handleSearch={handleSearch} search={search} setSearch={setSearch} />
