@@ -38,7 +38,7 @@ const AppNavbar = ({logout}) => {
     function handleSearch(e) {
         e.preventDefault();
         const searchTrimmed = search.trim();
-        navigate(`/?search=${searchTrimmed}`);
+        navigate(`/?search=${encodeURIComponent(searchTrimmed)}`);
         setSearch("");
     }
 

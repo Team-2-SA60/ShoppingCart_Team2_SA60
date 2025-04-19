@@ -53,7 +53,7 @@ const ProductList = () => {
         }
         
         if (search && !category) {
-            params.keyword = search || "";
+            params.keyword = encodeURIComponent(search) || "";
         }
 
         return params;
