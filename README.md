@@ -84,22 +84,28 @@ spring.datasource.username=YOUR_MYSQL_USERNAME
 spring.datasource.password=YOUR_MYSQL_PASSWORD
 ```
 
-6. Run Back-End Spring-Boot
+6. Run Spring-Boot
 ```
 ./mvnw spring-boot:run
 ```
 
-7. On another terminal, change working directory to 'frontend'
+7. Access website with [http://localhost:8080/](http://localhost:8080/)
+#
+**Optional**
+
+8. To run a separate frontend server for ReactJS. 
+Open another terminal, change working directory to 'frontend'
 ```
 cd frontend
 ```
 
-8. Run Front-End ReactJS
+9. Run Front-End ReactJS
 ```
 npm start
 ```
 
-9. Access website with [http://localhost:3000/](http://localhost:3000/)
+10. Access website with [http://localhost:3000/](http://localhost:3000/)
+    
 ## 🍰 Contributors - based on features ##
 
 **Core Features**
