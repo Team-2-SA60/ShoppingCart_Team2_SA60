@@ -118,6 +118,13 @@ const CheckoutPayment = ({ modalOpen, closePayment, confirmOrder }) => {
         return true;
     }
 
+    // Prevent invalid chars for CVV
+    const preventInvalidChars = (e) => {
+        if (e.key === '-' || e.key === '.' || e.key === 'e' || e.key === 'E') {
+            e.preventDefault();
+        }
+    }
+
     return (
         <Modal size="md" isOpen={modalOpen} centered backdrop="static">
             <ModalHeader className="justify-center">
@@ -166,6 +173,7 @@ const CheckoutPayment = ({ modalOpen, closePayment, confirmOrder }) => {
                                     type="number"
                                     value={ccCVV}
                                     onChange={(e) => setCVV(e.target.value)}
+                                    onKeyDown={preventInvalidChars}
                                     placeholder="CVV"
                                     className="w-[50%] p-1 mt-[5px] my-[3%] border-[1px] border-slate-300 rounded-md"
                                     required
