@@ -49,10 +49,6 @@ public class CheckoutController {
     public ResponseEntity<List<CartDetailsResponseDTO>> prepareOrder(HttpSession session) {
         Customer customer = (Customer) session.getAttribute("customer");
 
-        if (customer == null) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
-        }
-
         List<CartDetails> cartDetails = cartService.getCartDetailsByCustomerId(customer.getId());
         return ResponseEntity.ok(cartDetails.stream()
                 .map(CartDetailsResponseDTO::new)
@@ -68,10 +64,6 @@ public class CheckoutController {
         }
 
         Customer customer = (Customer) session.getAttribute("customer");
-
-        if (customer == null) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
-        }
 
         List<CartDetails> cartDetails = cartService.getCartDetailsByCustomerId(customer.getId());
         String shippingMethod = checkoutDetails.getShippingMethod();

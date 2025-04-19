@@ -134,9 +134,19 @@ const Checkout = () => {
             await api.post("/checkout", payload);
             setSuccess(true);
         } catch (err) {
+            
+            const statusCode = err.response?.status;
             const errorMessage = err.response?.data?.message; // Message will be in Array
-            setMessage("Checkout encountered error, please try again")
-            console.log(errorMessage[0]);
+
+            if (statusCode === 403) {
+                // 403 error if user session is NOT logged in
+                navigate("/login");
+            } else if (statusCode === 400) {
+                setMessage(errorMessage[0] || "Checkout encountered error, please try again");
+            } else {
+                setMessage("Checkout encountered error, please try again")
+                console.error("Checkout encountered error: ", err);
+            }
         }
     }
 
