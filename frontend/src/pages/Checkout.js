@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import api from "../utilities/axios";
 import AppNavbar from "../components/AppNavbar";
 import {Alert, Button, Spinner, Toast, ToastBody} from "reactstrap";
-import ShippingAddress from "./ShippingAddress";
+import ShippingAddress from "../components/Checkout/ShippingAddress";
 import CheckoutPayment from '../components/Checkout/CheckoutPayment';
 
 const Checkout = () => {
@@ -37,7 +37,7 @@ const Checkout = () => {
                 console.log("Error fetching cart", res);
             })
         // eslint-disable-next-line
-    }, [shippingFee]);
+    }, []);
 
     async function getCustomer() {
         const getCustomer = await checkSession();

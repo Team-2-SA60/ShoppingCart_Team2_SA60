@@ -13,6 +13,7 @@ public class ProductController {
     @Autowired
     private ProductService pService;
 
+    // Default method for landing page as well as for search bar
     @GetMapping("/products")
     public Page<Product> findProducts(@RequestParam(defaultValue = "0") int page,
                                       @RequestParam(defaultValue = "4") int size,
@@ -23,6 +24,7 @@ public class ProductController {
         return pService.findProducts(page, size, keyword, sortBy, sortOrder);
     }
 
+    // Method for category filter
     @GetMapping("/products/{category}")
     public Page<Product> findByCategory(@RequestParam(defaultValue = "0") int page,
                                         @RequestParam(defaultValue = "4") int size,

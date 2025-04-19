@@ -32,10 +32,10 @@ const WishList = () => {
             const response = await api.get("/wishlist/list")
             setWishList(response.data);
             setProducts(response.data);
-            setLoading(false);
         } catch (err) {
             console.log("Error fetching wishlist: " + err)
         }
+        setLoading(false);
         return true;
     }
 

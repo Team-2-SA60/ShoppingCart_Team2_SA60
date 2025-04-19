@@ -36,7 +36,7 @@ public class WishListController {
         // Add to wishlist
         WishList addedProduct = wlService.addToWishList(loggedInCustomer, productId);
 
-        // If Product was already in customer's wishlist, product will return as null
+        // Return 417 error if Product was already in customer's wishlist, product will return as null
         if (addedProduct == null) {
             return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body("Product not added to wishlist");
         }

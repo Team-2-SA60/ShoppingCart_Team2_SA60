@@ -4,7 +4,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import api from '../utilities/axios';
 import { useSession } from '../context/SessionContext';
 import { Accordion, AccordionBody, AccordionHeader, AccordionItem } from 'reactstrap';
-import OrderDetails from './OrderDetails';
+import OrderDetails from '../components/OrderHistory/OrderDetails';
 import { useParams } from 'react-router-dom';
 
 const OrderList = () => {

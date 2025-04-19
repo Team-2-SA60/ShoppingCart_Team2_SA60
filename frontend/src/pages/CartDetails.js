@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from "react-router-dom";
-import { useSession } from "../../context/SessionContext";
+import { useSession } from "../context/SessionContext";
 import {Button} from 'reactstrap';
-import api from '../../utilities/axios';
-import ListCartItem from "./ListCartItem";
-import ListCartPrice from './ListCartPrice';
-import AppNavbar from '../AppNavbar';
+import api from '../utilities/axios';
+import ListCartItem from "../components/Cart/ListCartItem";
+import ListCartPrice from '../components/Cart/ListCartPrice';
+import AppNavbar from '../components/AppNavbar';
 
 export default function CartDetails() {
     const [cartItems, setCartItems] = useState([]);

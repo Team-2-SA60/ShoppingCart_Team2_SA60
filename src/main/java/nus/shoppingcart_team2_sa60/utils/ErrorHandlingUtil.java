@@ -9,6 +9,7 @@ import java.util.Map;
 
 public class ErrorHandlingUtil {
 
+    // To standardise how validation errors put into response
     public static Map<String, List<String>> handleBindingErrors (BindingResult bindingResult) {
         Map<String, List<String>> errors = new HashMap<>();
         List<String> errorMessages = new ArrayList<>();

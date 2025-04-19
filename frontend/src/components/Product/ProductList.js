@@ -70,10 +70,10 @@ const ProductList = () => {
             const response = await api.get(fetchURL, {params});
             setProducts(response.data.content);
             setTotalPages(response.data.totalPages);
-            setLoading(false);
         } catch (err) {
             console.log("Error fetching products: " + err);
         }
+        setLoading(false);
         return true;
     }
 

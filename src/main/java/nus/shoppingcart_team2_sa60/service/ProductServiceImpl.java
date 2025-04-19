@@ -15,16 +15,19 @@ public class ProductServiceImpl implements ProductService {
     @Autowired
     private ProductRepository pRepo;
 
+    // Default impl for landing page as well as for search bar
     @Override
     public Page<Product> findProducts(int page, int size, String keyword, String sortBy, String sortOrder) {
 
         Pageable pageable;
 
+        // Sort by net price, need a separate repo method on its own as we don't store net price as a product attribute
         if (sortBy.equals("price")) {
             pageable = PageRequest.of(page, size);
             return pRepo.findProductsBySearchAndNetPrice(keyword, sortOrder, pageable);
         }
 
+        // Sort by selected attribute (default is "id") and the order
         if (sortOrder.equals("desc")) {
             pageable = PageRequest.of(page, size, Sort.by(sortBy).descending());
         } else {
@@ -34,16 +37,19 @@ public class ProductServiceImpl implements ProductService {
         return pRepo.findProductsBySearch(keyword, pageable);
     }
 
+    // Impl for category filter
     @Override
     public Page<Product> findByCategory(int page, int size, String category, String sortBy, String sortOrder) {
 
         Pageable pageable;
 
+        // Sort by net price, need a separate repo method on its own as we don't store net price as a product attribute
         if (sortBy.equals("price")) {
             pageable = PageRequest.of(page, size);
             return pRepo.findProductsByCategoryAndNetPrice(category, sortOrder, pageable);
         }
 
+        // Sort by selected attribute (default is "id") and the order
         if (sortOrder.equals("desc")) {
             pageable = PageRequest.of(page, size, Sort.by(sortBy).descending());
         } else {
