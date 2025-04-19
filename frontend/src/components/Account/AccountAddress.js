@@ -122,6 +122,12 @@ const AccountAddress = ({customer}) => {
         }
         return true;
     }
+    // Prevent keying in of invalid chars for postal code
+    const preventInvalidChars = (e) => {
+        if (e.key === '-' || e.key === '.' || e.key === 'e' || e.key === 'E') {
+            e.preventDefault();
+        }
+    }
 
     const DeleteAddressBtn = () => {
         if (!customer.address) return;
@@ -187,6 +193,7 @@ const AccountAddress = ({customer}) => {
                         value={postal}
                         placeholder="6-digits postal code"
                         onChange={(e) => setPostal(e.target.value)}
+                        onKeyDown={preventInvalidChars}
                         className="p-1 mt-[5px] my-[3%] border-[1px] border-slate-300 rounded-md w-full"
                         required
                     />

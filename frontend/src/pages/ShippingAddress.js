@@ -60,6 +60,13 @@ const ShippingAddress = ({customer, onAddressChange}) => {
         }
     }
 
+    // Prevent invalid chars in address field
+    const preventInvalidChars = (e) => {
+        if (e.key === '-' || e.key === '.' || e.key === 'e' || e.key === 'E') {
+            e.preventDefault();
+        }
+    }
+
     return (
         <div className="grid grid-rows-[1.5fr_3fr_3fr] grid-cols-2 gap-4 h-[100%]">
             <div className="col-span-2 font-bold">Fill in your shipping details:</div>
@@ -89,6 +96,7 @@ const ShippingAddress = ({customer, onAddressChange}) => {
                     type="number"
                     value={postalCode}
                     onChange={handlePostalChange}
+                    onKeyDown={preventInvalidChars}
                     placeholder="6-digits postal code"
                     className="p-1 mt-[5px] border-[1px] border-slate-300 rounded-md w-full"
                     required/>
